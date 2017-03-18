@@ -1,0 +1,7 @@
+﻿  FCLayer.cpp
+c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\fclayer.h(3): fatal error C1083: Cannot open include file: 'cuda.h': No such file or directory
+  ConvNet.cpp
+c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convnet.cpp(5): fatal error C1083: Cannot open include file: 'cuda_runtime.h': No such file or directory
+  ConvLayer.cpp
+c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convlayer.h(2): fatal error C1083: Cannot open include file: 'cudnn.h': No such file or directory
+  Generating Code...

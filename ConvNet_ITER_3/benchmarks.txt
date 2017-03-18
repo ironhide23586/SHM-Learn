@@ -1,0 +1,41 @@
+1024-
+GPU - 0.00098
+Caffe+GPU - 0.0038
+
+512-
+GPU - 0.0006
+Caffe+GPU - 0.00266
+
+256-
+GPU - 0.00047s
+Caffe+GPU - 0.0023s
+
+128
+GPU - 0.00048s
+Caffe+GPU - 0.003s
+
+64-
+GPU - 0.0003s
+Caffe+GPU - 0.002s
+
+
+Weak Scaling -
+1024 -
+GPU - 580 batches/s
+Caffe+GPU - 267 batches/s
+
+512 -
+GPU - 1637 batches/s
+Caffe+GPU - 360
+
+256 -
+GPU - 2067 batches/s
+Caffe+GPU - 415
+
+128 -
+GPU - 2379 batches/s
+Caffe+GPU - 439
+
+64 -
+GPU - 2998 batches/s
+Caffe+GPU - 465
