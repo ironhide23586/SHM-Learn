@@ -1,0 +1,26 @@
+Jobid: 1060805
+qsub -n 1 -t 10 -A EnergyFEC_2 -I -q debug
+Tue Mar 28 05:32:40 2017 +0000 (UTC) submitted with cwd set to: /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node
+jobid 1060805 submitted from terminal /dev/pts/28
+Tue Mar 28 05:33:06 2017 +0000 (UTC) 
+Tue Mar 28 05:33:06 2017 +0000 (UTC) Command: '/usr/bin/ssh' 'cc013.cooley' '/usr/bin/cobalt-launcher.py' '--nf' '/var/tmp/cobalt.1060805' '--jobid' '1060805' '--cwd' '/gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node' '--env' 'COBALT_JOBID=1060805' '/bin/sleep' '600'
+Tue Mar 28 05:33:06 2017 +0000 (UTC) 
+Tue Mar 28 05:33:06 2017 +0000 (UTC) Environment:
+Tue Mar 28 05:33:06 2017 +0000 (UTC) SHELL=/bin/bash
+Tue Mar 28 05:33:06 2017 +0000 (UTC) COBALT_NODEFILE=/tmp/tmppb7vsH
+Tue Mar 28 05:33:06 2017 +0000 (UTC) COBALT_PARTNAME=cc013.cooley
+Tue Mar 28 05:33:06 2017 +0000 (UTC) COBALT_JOBID=1060805
+Tue Mar 28 05:33:06 2017 +0000 (UTC) COBALT_STARTTIME=1490679170
+Tue Mar 28 05:33:06 2017 +0000 (UTC) LOGNAME=souham
+Tue Mar 28 05:33:06 2017 +0000 (UTC) USER=souham
+Tue Mar 28 05:33:06 2017 +0000 (UTC) COBALT_ENDTIME=1490679770
+Tue Mar 28 05:33:06 2017 +0000 (UTC) COBALT_PARTSIZE=1
+Tue Mar 28 05:33:06 2017 +0000 (UTC) HOME=/home/souham
+Tue Mar 28 05:33:06 2017 +0000 (UTC) COBALT_JOBSIZE=1
+Tue Mar 28 05:33:06 2017 +0000 (UTC) 
+Tue Mar 28 05:33:06 2017 +0000 (UTC) Info: stdin received from /dev/null
+Tue Mar 28 05:33:06 2017 +0000 (UTC) Info: stdout sent to /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node/1060805.output
+Tue Mar 28 05:33:06 2017 +0000 (UTC) Info: stderr sent to /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node/1060805.error
+Tue Mar 28 05:33:06 2017 +0000 (UTC) 
+Tue Mar 28 05:42:56 2017 +0000 (UTC) Info: maximum execution time exceeded; initiating job termination
+Tue Mar 28 05:43:07 2017 +0000 (UTC) Info: job is in the process of exiting; user delete request ignored
