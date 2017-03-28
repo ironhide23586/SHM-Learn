@@ -3,6 +3,7 @@
 //#include "cuda_runtime.h"
 //#include "device_launch_parameters.h"
 #include "math_functions.h"
+#include <cmath>
 
 #define GPU_WARP_DISPATCHERS 2
 #define GPU_WARP_SIZE 32
@@ -36,6 +37,10 @@ void print_d_var2(float *d_v, int r, int c, bool print_elem = true) {
   std::cout << "Maximum at index " << maxi_idx << " = " << maxi << std::endl;
   std::cout << "Average of all elements = " << sum / (r * c) << std::endl;
   free(h_v);
+}
+
+int my_ceilf_division(float a, float b) {
+  return 1 + ((a - 1) / b);
 }
 
 __global__ void FloatGPUMemset_GPUKernel(float *d_array,
@@ -243,14 +248,14 @@ void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   if (threadblock_size > max_threadblock_size)
     threadblock_size = max_threadblock_size;
-  int num_threadblocks = std::ceilf((float)reqd_threads / threadblock_size);
-  int thread_chunk_size = std::ceilf((float)cols / max_threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)reqd_threads, threadblock_size);
+  int thread_chunk_size = my_ceilf_division((float)cols, max_threadblock_size);
   ShiftRight_PopulateHelper_GPUKernel <<< num_threadblocks,
                                           threadblock_size >>> 
                                           (d_mat, d_helper, org_size,
                                            rows, cols);
-  reqd_threads = std::ceilf((float)cols / thread_chunk_size);
-  threadblock_size = std::ceilf((float)reqd_threads / GPU_WARP_SIZE)
+  reqd_threads = my_ceilf_division((float)cols, thread_chunk_size);
+  threadblock_size = my_ceilf_division((float)reqd_threads, GPU_WARP_SIZE)
                      * GPU_WARP_SIZE;
   ReAlignMemory_ShiftRight_GPUKernel <<< rows,
                                          threadblock_size,
@@ -317,14 +322,14 @@ void ReAlignMemory_ShiftLeft(float *d_mat, float *d_helper,
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   if (threadblock_size > max_threadblock_size)
     threadblock_size = max_threadblock_size;
-  int num_threadblocks = std::ceilf((float)reqd_threads / threadblock_size);
-  int thread_chunk_size = std::ceilf((float)(cols - 1) / max_threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)reqd_threads, threadblock_size);
+  int thread_chunk_size = my_ceilf_division((float)(cols - 1), max_threadblock_size);
   ShiftLeft_PopulateHelper_GPUKernel <<< num_threadblocks,
                                           threadblock_size >>> 
                                           (d_mat, d_helper, org_size,
                                            rows, cols);
-  reqd_threads = std::ceilf((float)(cols - 1) / thread_chunk_size);
-  threadblock_size = std::ceilf((float)reqd_threads / GPU_WARP_SIZE)
+  reqd_threads = my_ceilf_division((float)(cols - 1), thread_chunk_size);
+  threadblock_size = my_ceilf_division((float)reqd_threads, GPU_WARP_SIZE)
                      * GPU_WARP_SIZE;
   ReAlignMemory_ShiftLeft_GPUKernel <<< rows,
                                         threadblock_size,
@@ -351,14 +356,14 @@ void ReAlignMemory_ShiftLeft_CPU(float *d_mat, int rows, int cols) {
 
 void SubtractElemwise(float *d_mat, float delta, int mat_size) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float)mat_size / threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)mat_size, threadblock_size);
   SubtractElemwise_GPUKernel <<< num_threadblocks, threadblock_size >>>
                                  (d_mat, delta, mat_size);
 }
 
 void FloatGPUMemset(float *d_array, int array_size, float val) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float)array_size / threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)array_size, threadblock_size);
   FloatGPUMemset_GPUKernel <<< num_threadblocks,
                                threadblock_size >>>
                                (d_array, array_size, val);
@@ -366,7 +371,7 @@ void FloatGPUMemset(float *d_array, int array_size, float val) {
 
 void ReplaceVal(float *d_mat, int total_size, float val, float replace_val) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float)total_size / threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)total_size, threadblock_size);
   ReplaceVal_GPUKernel <<< num_threadblocks, threadblock_size >>>
                            (d_mat, total_size, val, replace_val);
 }
@@ -374,7 +379,7 @@ void ReplaceVal(float *d_mat, int total_size, float val, float replace_val) {
 void Replace2Vals(float *d_mat, int total_size, float val0, float val1,
                   float replace_val0, float replace_val1) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float)total_size / threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)total_size, threadblock_size);
   Replace2Vals_GPUKernel <<< num_threadblocks, threadblock_size >>>
                             (d_mat, total_size, val0, val1,
                              replace_val0, replace_val1);
@@ -382,7 +387,7 @@ void Replace2Vals(float *d_mat, int total_size, float val0, float val1,
 
 void FillOnes(float *d_data, int batch_size, int elem_size) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float)batch_size / threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)batch_size, threadblock_size);
   FillOnes_GPUKernel <<< num_threadblocks, 
                          threadblock_size >>> (d_data, elem_size + 1, 
                                                batch_size);
@@ -390,7 +395,7 @@ void FillOnes(float *d_data, int batch_size, int elem_size) {
 
 void InitIdentityMatrix(float *d_mat, int side) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float)(side * side) / threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)(side * side), threadblock_size);
   InitIdentityMatrix_GPUKernel <<< num_threadblocks,
                                    threadblock_size >>> (d_mat, side);
 }
@@ -398,7 +403,7 @@ void InitIdentityMatrix(float *d_mat, int side) {
 void WeightMatrixRegularizeElemWise(float *d_mat_in, int d_mat_cols,
                                     float reg_inp_scalar, int d_mat_size) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float) d_mat_size / threadblock_size);
+  int num_threadblocks = my_ceilf_division((float) d_mat_size, threadblock_size);
   WeightMatrixRegularizeElemWise_GPUKernel <<< num_threadblocks,
                                                threadblock_size >>>
                                                (d_mat_in, d_mat_cols,
@@ -411,7 +416,7 @@ void ElemwiseGradCompute(float *d_data, float *d_out_minus_labels,
   int reqd_threads = (input_batch_size * (input_neurons + 1))
                      * output_neurons;
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float)reqd_threads / threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)reqd_threads, threadblock_size);
   ElemwiseGradCompute_GPUKernel <<< num_threadblocks, threadblock_size >>>
                                     (d_data, d_out_minus_labels, d_elem_grads,
                                      input_batch_size, input_neurons,
@@ -425,7 +430,7 @@ void ComputeGradientsFromElemGrads(float *d_elem_grads,
                                    int output_neurons) {
   int reqd_threads = (input_neurons + 1) * output_neurons;
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float)reqd_threads / threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)reqd_threads, threadblock_size);
   
   ComputeGradientsFromElemGrads_GPUKernel <<< num_threadblocks,
                                               threadblock_size >>>
@@ -441,7 +446,7 @@ void ComputeSoftmaxLoss(float *d_out, float *d_labels,
                         int input_batch_size, int output_neurons) {
   int reqd_threads = input_batch_size * output_neurons;
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float)reqd_threads / threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)reqd_threads, threadblock_size);
   ComputeSoftmaxLoss_GPUKernel <<< num_threadblocks, threadblock_size >>>
                                   (d_out, d_labels,
                                    d_out_minus_labels, coeff,
@@ -453,7 +458,7 @@ void ReluBackprop(float *d_backprop_derivatives, float *d_out_xw_act,
                   int derivative_matrix_size) { 
   int reqd_threads = derivative_matrix_size;
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float)reqd_threads / threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)reqd_threads, threadblock_size);
   ReluBackprop_GPUKernel <<< num_threadblocks, threadblock_size >>>
                              (d_backprop_derivatives, d_out_xw_act,
                               d_fwd_layer_derivatives, relu_clip, 
@@ -465,7 +470,7 @@ void SigmoidBackprop(float *d_backprop_derivatives, float *d_out_xw_act,
                      int derivative_matrix_size) {
   int reqd_threads = derivative_matrix_size;
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float)reqd_threads / threadblock_size);
+  int num_threadblocks = my_ceilf_division((float)reqd_threads, threadblock_size);
   SigmoidBackprop_GPUKernel <<< num_threadblocks, threadblock_size >>>
                                 (d_backprop_derivatives, d_out_xw_act,
                                  d_fwd_layer_derivatives,
