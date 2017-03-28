@@ -4,6 +4,10 @@
 #define GPU_WARP_DISPATCHERS 2
 #define GPU_WARP_SIZE 32
 
+int my_ceilf_division_ConvLayer(float a, float b) {
+  return 1 + ((a - 1) / b);
+}
+
 __global__ void WeightMatrixRegularizeElemWiseConv_GPUKernel(float *d_mat_in,
                                                              float reg_inp_scalar,
                                                              int d_mat_size) {
@@ -15,7 +19,7 @@ __global__ void WeightMatrixRegularizeElemWiseConv_GPUKernel(float *d_mat_in,
 void WeightMatrixRegularizeElemWiseConv(float *d_mat_in,
                                         float reg_inp_scalar, int d_mat_size) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
-  int num_threadblocks = std::ceilf((float) d_mat_size / threadblock_size);
+  int num_threadblocks = my_ceilf_division_ConvLayer(d_mat_size, threadblock_size);
   WeightMatrixRegularizeElemWiseConv_GPUKernel <<< num_threadblocks,
                                                threadblock_size >>>
                                                (d_mat_in, reg_inp_scalar, 

@@ -1,0 +1,24 @@
+Jobid: 1060768
+qsub -n 1 -t 60 -I -A EnergyFEC_2
+Tue Mar 28 04:41:53 2017 +0000 (UTC) submitted with cwd set to: /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node
+jobid 1060768 submitted from terminal /dev/pts/23
+Tue Mar 28 04:42:12 2017 +0000 (UTC) 
+Tue Mar 28 04:42:12 2017 +0000 (UTC) Command: '/usr/bin/ssh' 'cc054.cooley' '/usr/bin/cobalt-launcher.py' '--nf' '/var/tmp/cobalt.1060768' '--jobid' '1060768' '--cwd' '/gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node' '--env' 'COBALT_JOBID=1060768' '/bin/sleep' '3600'
+Tue Mar 28 04:42:12 2017 +0000 (UTC) 
+Tue Mar 28 04:42:12 2017 +0000 (UTC) Environment:
+Tue Mar 28 04:42:12 2017 +0000 (UTC) SHELL=/bin/bash
+Tue Mar 28 04:42:12 2017 +0000 (UTC) COBALT_NODEFILE=/tmp/tmpafuI9_
+Tue Mar 28 04:42:12 2017 +0000 (UTC) COBALT_PARTNAME=cc054.cooley
+Tue Mar 28 04:42:12 2017 +0000 (UTC) COBALT_JOBID=1060768
+Tue Mar 28 04:42:12 2017 +0000 (UTC) COBALT_STARTTIME=1490676119
+Tue Mar 28 04:42:12 2017 +0000 (UTC) LOGNAME=souham
+Tue Mar 28 04:42:12 2017 +0000 (UTC) USER=souham
+Tue Mar 28 04:42:12 2017 +0000 (UTC) COBALT_ENDTIME=1490679719
+Tue Mar 28 04:42:12 2017 +0000 (UTC) COBALT_PARTSIZE=1
+Tue Mar 28 04:42:12 2017 +0000 (UTC) HOME=/home/souham
+Tue Mar 28 04:42:12 2017 +0000 (UTC) COBALT_JOBSIZE=1
+Tue Mar 28 04:42:12 2017 +0000 (UTC) 
+Tue Mar 28 04:42:12 2017 +0000 (UTC) Info: stdin received from /dev/null
+Tue Mar 28 04:42:12 2017 +0000 (UTC) Info: stdout sent to /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node/1060768.output
+Tue Mar 28 04:42:12 2017 +0000 (UTC) Info: stderr sent to /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node/1060768.error
+Tue Mar 28 04:42:12 2017 +0000 (UTC) 

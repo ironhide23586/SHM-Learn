@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <iostream>
+//#include "GlobalInclude.h"
 
 // Computes W - lambda * W^2
 void WeightMatrixRegularizeElemWiseConv(float *d_mat_in,

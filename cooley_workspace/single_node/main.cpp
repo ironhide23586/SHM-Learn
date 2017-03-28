@@ -6,7 +6,8 @@
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
-#include "sample.h"
+//#include "sample.h"
+//#include "GlobalInclude.h"
 
 #include "ConvLayer.h"
 #include "FCLayer.h"
@@ -17,9 +18,10 @@
 #include <random>
 #include <chrono>
 #include <cmath>
+//#include <math.h>
 
 #include <fstream>
-
+#include <string.h>
 
 //#define DATA_SIDE 32 //Throws GPU setup error if above 257
 //#define CHANNELS 3
@@ -193,6 +195,10 @@ void move_to_gpu_stage(float *x, float *y, float *gpu_stage, int x_len, int y_le
   memcpy(&gpu_stage[x_len], y, sizeof(float) * y_len);
 }
 
+int my_floorf_division(float a, float b) {
+  return ((a - 1) / b);
+}
+
 int main() {
   cudaDeviceReset();
   int batch_size = BATCH_SIZE;
@@ -259,7 +265,7 @@ int main() {
 
   float *h_out = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
   int batch = 1;
-  int lim = std::floorf((float)EPOCH_SIZE / BATCH_SIZE);
+  int lim = my_floorf_division(EPOCH_SIZE, BATCH_SIZE);
   int epoch = 1, prog = 1;
   int prev_read_imgs;
 
