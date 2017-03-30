@@ -148,9 +148,10 @@ void FCLayer::SetActivationFunc(cudnnActivationMode_t activation_mode_arg,
 }
 
 void FCLayer::SoftmaxOut() {
-  cudnnSoftmaxForward(cudnn_handle, CUDNN_SOFTMAX_ACCURATE,
+  cudnnStatus_stat = cudnnSoftmaxForward(cudnn_handle, CUDNN_SOFTMAX_ACCURATE,
                       CUDNN_SOFTMAX_MODE_CHANNEL, &alpha, d_out_tensor,
                       d_out_xw_act, &beta, d_out_tensor, d_out);
+  std::cout << "------------>" << cudnnStatus_stat << std::endl;
 }
 
 void FCLayer::ComputeSoftmaxGradients(float *h_pinned_labels) {

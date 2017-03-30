@@ -28,7 +28,7 @@
 #define DATA_SIDE 28 //Throws GPU setup error if above 257
 #define CHANNELS 1
 
-#define BATCH_SIZE 128
+#define BATCH_SIZE 10
 #define LABELS 10
 
 #define EPOCHS 10
@@ -256,6 +256,8 @@ int main() {
   fcl0.SetActivationFunc(CUDNN_ACTIVATION_SIGMOID);
   fcl0.is_input_layer = true;
 
+  print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols, false);
+
   FCLayer fcl2(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
                fcl0.output_neurons, LABELS, true, lr, mom, reg);
   fcl2.InitBackpropVars();
@@ -300,6 +302,10 @@ int main() {
     fcl0.ForwardProp();
     fcl2.LoadData(fcl0.d_out, true);
     fcl2.ForwardProp();
+
+    print_d_var3(fcl2.d_out_xw_act, fcl2.input_batch_size, fcl2.output_neurons);
+    print_d_var3(fcl2.d_out, fcl2.input_batch_size, fcl2.output_neurons);
+    return 0;
     
     //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols);
     //print_d_var3(fcl0.d_data, BATCH_SIZE, fcl0.input_neurons + 1);
@@ -328,11 +334,11 @@ int main() {
     train_end = std::chrono::high_resolution_clock::now();
     //float dur = dur0 + dur1_sft + dur1_lyr + dur2;
 
-    print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons);
+    //print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons);
     //return 0;
     fcl0.ForwardProp();
     fcl2.LoadData(fcl0.d_out, true);
-    print_d_var3(fcl2.d_data, fcl2.input_batch_size, fcl2.input_neurons);
+    print_d_var3(fcl2.d_data, fcl2.input_batch_size, fcl2.input_neurons, false);
     fcl2.ForwardProp();
 
     //now0 = std::chrono::high_resolution_clock::now();

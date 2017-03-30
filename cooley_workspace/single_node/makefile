@@ -3,7 +3,7 @@ all: program
 program: cppcode.o
 	g++ -std=c++11 -o convnet -L/soft/visualization/cuda-8.0.61/lib64 -lcuda \
 	-lcudart -lcudnn -lcublas -lcurand main.cpp FCLayerCU.o FCLayerCPP.o \
-	ConvLayerCU.o ConvLayerCPP.o -nostartfiles
+	ConvLayerCU.o ConvLayerCPP.o
 	rm *.o
 
 cppcode.o: cudacode.o
