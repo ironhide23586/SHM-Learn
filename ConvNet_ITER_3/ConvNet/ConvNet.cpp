@@ -27,7 +27,7 @@
 #define DATA_SIDE 28 //Throws GPU setup error if above 257
 #define CHANNELS 1
 
-#define BATCH_SIZE 128
+#define BATCH_SIZE 10
 #define LABELS 10
 
 #define EPOCHS 10
@@ -251,6 +251,8 @@ int main() {
   fcl0.SetActivationFunc(CUDNN_ACTIVATION_SIGMOID);
   fcl0.is_input_layer = true;
 
+  //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols, false);
+
   FCLayer fcl2(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
                fcl0.output_neurons, LABELS, true, lr, mom, reg);
   fcl2.InitBackpropVars();
@@ -295,14 +297,10 @@ int main() {
     fcl0.ForwardProp();
     fcl2.LoadData(fcl0.d_out, true);
     fcl2.ForwardProp();
-    
-    //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols);
-    //print_d_var3(fcl0.d_data, BATCH_SIZE, fcl0.input_neurons + 1);
 
-    //print_d_var3(fcl0.d_out, BATCH_SIZE, fcl0.output_neurons + 1);
+    print_d_var3(fcl2.d_out_xw_act, fcl2.input_batch_size, fcl2.output_neurons);
+    print_d_var3(fcl2.d_out, fcl2.input_batch_size, fcl2.output_neurons);
 
-    //dur0 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now0 - train_start).count() * 1e-9f;
-    
     fcl2.ComputeSoftmaxGradients(y);
     now1_sft = std::chrono::high_resolution_clock::now();
     //dur1_sft = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now1_sft - now0).count() * 1e-9f;
@@ -323,8 +321,10 @@ int main() {
     train_end = std::chrono::high_resolution_clock::now();
     //float dur = dur0 + dur1_sft + dur1_lyr + dur2;
 
+    //print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons);
     fcl0.ForwardProp();
     fcl2.LoadData(fcl0.d_out, true);
+    //print_d_var3(fcl2.d_data, fcl2.input_batch_size, fcl2.input_neurons, false);
     fcl2.ForwardProp();
 
     //now0 = std::chrono::high_resolution_clock::now();
@@ -336,8 +336,10 @@ int main() {
     my_loss = 0.0f;
     for (int i = 0; i < BATCH_SIZE; i++) {
       for (int j = 0; j < LABELS; j++) {
+        std::cout << y[j + i * LABELS] << "," << h_out[j + i * LABELS] << "[" << j << "] ";
         my_loss -= ((y[j + i * LABELS] * log(h_out[j + i * LABELS])));
       }
+      std::cout << std::endl;
     }
     my_loss /= BATCH_SIZE;
     wt_sum = 0.0f;

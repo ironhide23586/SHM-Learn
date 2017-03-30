@@ -1,16 +1,16 @@
 ﻿  ConvNet.cpp
-c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convnet.cpp(133): warning C4101: 'start_idx': unreferenced local variable
-c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convnet.cpp(157): warning C4101: 'start_idx': unreferenced local variable
-c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convnet.cpp(262): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convnet.cpp(218): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\users\monst\desktop\shm-learn\convnet_iter_3\convnet\convnet.cpp(133): warning C4101: 'start_idx': unreferenced local variable
+d:\users\monst\desktop\shm-learn\convnet_iter_3\convnet\convnet.cpp(157): warning C4101: 'start_idx': unreferenced local variable
+d:\users\monst\desktop\shm-learn\convnet_iter_3\convnet\convnet.cpp(264): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\users\monst\desktop\shm-learn\convnet_iter_3\convnet\convnet.cpp(218): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convnet.cpp(219): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\users\monst\desktop\shm-learn\convnet_iter_3\convnet\convnet.cpp(219): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convnet.cpp(221): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\users\monst\desktop\shm-learn\convnet_iter_3\convnet\convnet.cpp(221): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convnet.cpp(222): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+d:\users\monst\desktop\shm-learn\convnet_iter_3\convnet\convnet.cpp(222): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convnet.cpp(213): warning C4101: 'y_dist': unreferenced local variable
-c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convnet.cpp(266): warning C4101: 'batch_verify': unreferenced local variable
-  ConvNet.vcxproj -> C:\Users\monst\Desktop\thesis\Codes\GPU Codes\ConvNet_ITER_2 (On new machine)\x64\Debug\ConvNet.exe
-  ConvNet.vcxproj -> C:\Users\monst\Desktop\thesis\Codes\GPU Codes\ConvNet_ITER_2 (On new machine)\x64\Debug\ConvNet.pdb (Full PDB)
+d:\users\monst\desktop\shm-learn\convnet_iter_3\convnet\convnet.cpp(213): warning C4101: 'y_dist': unreferenced local variable
+d:\users\monst\desktop\shm-learn\convnet_iter_3\convnet\convnet.cpp(268): warning C4101: 'batch_verify': unreferenced local variable
+  ConvNet.vcxproj -> D:\Users\monst\Desktop\SHM-Learn\ConvNet_ITER_3\x64\Debug\ConvNet.exe
+  ConvNet.vcxproj -> D:\Users\monst\Desktop\SHM-Learn\ConvNet_ITER_3\x64\Debug\ConvNet.pdb (Full PDB)
