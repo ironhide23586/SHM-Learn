@@ -256,7 +256,7 @@ int main() {
   fcl0.SetActivationFunc(CUDNN_ACTIVATION_SIGMOID);
   fcl0.is_input_layer = true;
 
-  print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols, false);
+  //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols, false);
 
   FCLayer fcl2(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
                fcl0.output_neurons, LABELS, true, lr, mom, reg);
@@ -303,7 +303,9 @@ int main() {
     fcl2.LoadData(fcl0.d_out, true);
     fcl2.ForwardProp();
 
-    print_d_var3(fcl2.d_out_xw_act, fcl2.input_batch_size, fcl2.output_neurons);
+    //print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons);
+    print_d_var3(fcl0.d_out, fcl0.input_batch_size, fcl0.output_neurons, false);
+    //print_d_var3(fcl2.d_out_xw_act, fcl2.input_batch_size, fcl2.output_neurons);
     print_d_var3(fcl2.d_out, fcl2.input_batch_size, fcl2.output_neurons);
     return 0;
     

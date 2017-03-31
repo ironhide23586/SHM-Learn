@@ -331,13 +331,15 @@ void FCLayer::ForwardProp() {
                                      output_neurons, d_data,
                                      (input_neurons + 1), &beta,
                                      d_out_xw, output_neurons);
+  std::cout << "-.-.-.->" << cublasStatus_stat << std::endl;
   if (!is_softmax_layer && !activation_set) { //Defaults to 0 clipped ReLU
     SetActivationFunc(CUDNN_ACTIVATION_RELU);
   }
   if (activation_set) {
-    cudnnActivationForward(cudnn_handle, cudnn_activation_desc, &alpha,
+    cudnnStatus_stat = cudnnActivationForward(cudnn_handle, cudnn_activation_desc, &alpha,
                            d_out_tensor, d_out_xw, &beta, d_out_tensor,
                            d_out_xw_act);
+    std::cout << "Activation ----> " << cudnnStatus_stat << std::endl;
   }
   else {
     d_out_xw_act = d_out_xw;
