@@ -298,7 +298,8 @@ int main() {
     fcl2.LoadData(fcl0.d_out, true);
     fcl2.ForwardProp();
 
-    print_d_var3(fcl2.d_out_xw_act, fcl2.input_batch_size, fcl2.output_neurons);
+    print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons, false);
+    //print_d_var3(fcl2.d_out_xw_act, fcl2.input_batch_size, fcl2.output_neurons);
     print_d_var3(fcl2.d_out, fcl2.input_batch_size, fcl2.output_neurons);
 
     fcl2.ComputeSoftmaxGradients(y);
