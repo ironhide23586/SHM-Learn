@@ -57,7 +57,12 @@ ConvLayer::ConvLayer(const cudnnHandle_t &cudnn_handle_arg,
   d_out_allocated = false;
   grads_initialized = false;
   is_input_layer = false;
+  pooling_params_initialized = false;
   neg_one_scalar = -1.0f;
+  x_upscale = 1;
+  y_upscale = 1;
+  alpha = 1.0f;
+  beta = 0.0f;
 }
 
 void ConvLayer::AllocateGPUMemory() {

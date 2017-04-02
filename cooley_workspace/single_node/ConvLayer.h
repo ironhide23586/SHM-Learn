@@ -58,14 +58,14 @@ public:
   int pool_output_n, pool_output_c;
   int pool_output_h, pool_output_w;
 
-  int x_upscale = 1, y_upscale = 1;
+  int x_upscale, y_upscale;
 
   int pool_width, pool_height;
   int pool_vert_stride, pool_hor_stride;
   int pool_pad_h, pool_pad_w;
 
   bool pooling_enabled; //Pooling done if set to true
-  bool pooling_params_initialized = false;
+  bool pooling_params_initialized;
   bool input_data_on_gpu; // Set this to true if input data is already on GPU
   bool activation_set;
   bool grads_initialized;
@@ -103,7 +103,7 @@ private:
   void InitBackpropVars(void);
   void Convolve_worker(void);
 
-  float alpha = 1.0f, beta = 0.0f;
+  float alpha, beta;
   
   float *grad_swap_tmp;
   float reg_inp_scalar;
