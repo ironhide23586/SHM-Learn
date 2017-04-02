@@ -8,10 +8,11 @@
 //#include "sample.h"
 //#include "GlobalInclude.h"
 
+#include <cudnn.h>
+
 #include "ConvLayer.h"
 #include "FCLayer.h"
 
-#include <cudnn.h>
 
 #include <limits>
 #include <random>
@@ -242,7 +243,12 @@ int main() {
 	cudaGetDeviceCount(&numGPUs);
 	cudaSetDevice(0);
 	cudnnHandle_t cudnnHandle;
-	cudnnCreate(&cudnnHandle);
+
+  cudnnStatus_t cudnn_status;
+  cudnn_status = cudnnCreate(&cudnnHandle);
+  std::cout << "cuDNN initialization -->" << cudnn_status << std::endl;
+
+
   cudaDeviceProp cudaProp;
   cudaGetDeviceProperties(&cudaProp, 0);
 
@@ -304,7 +310,7 @@ int main() {
     fcl2.ForwardProp();
 
     //print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons);
-    print_d_var3(fcl0.d_out, fcl0.input_batch_size, fcl0.output_neurons, false);
+    //print_d_var3(fcl0.d_out, fcl0.input_batch_size, fcl0.output_neurons, false);
     //print_d_var3(fcl2.d_out_xw_act, fcl2.input_batch_size, fcl2.output_neurons);
     print_d_var3(fcl2.d_out, fcl2.input_batch_size, fcl2.output_neurons);
     return 0;
