@@ -153,10 +153,10 @@ void ConvLayer::SetPoolingParams(cudnnPoolingMode_t pool_mode_arg,
 
 void ConvLayer::InitializeFilters(float mean, float stddev) {
   curandGenerator_t rng;
-  // curandCreateGenerator(&rng, CURAND_RNG_PSEUDO_XORWOW);
-  // curandGenerateNormal(rng, d_filt, sizeof(float) * feature_maps
-  //                      * input_c * kernel_h * kernel_w, mean, stddev);
-  // curandDestroyGenerator(rng);
+  curandCreateGenerator(&rng, CURAND_RNG_PSEUDO_XORWOW);
+  curandGenerateNormal(rng, d_filt, sizeof(float) * feature_maps
+                       * input_c * kernel_h * kernel_w, mean, stddev);
+  curandDestroyGenerator(rng);
   //cudaMemset(d_filt, 1, sizeof(float) * feature_maps * input_c
   //           * kernel_h * kernel_w);
 }
