@@ -139,14 +139,14 @@ void FCLayer::SetActivationFunc(cudnnActivationMode_t activation_mode_arg,
   activation_set = true;
   activation_mode = activation_mode_arg;
   cudnnStatus_stat = cudnnCreateActivationDescriptor(&cudnn_activation_desc);
-  std::cout << "Activation desc created -->" << cudnnStatus_stat << std::endl;
+  //std::cout << "Activation desc created -->" << cudnnStatus_stat << std::endl;
   cudnnStatus_stat = cudnnSetActivationDescriptor(cudnn_activation_desc, activation_mode_arg,
                                CUDNN_PROPAGATE_NAN, relu_clip);
-  std::cout << "Activation desc set -->" << cudnnStatus_stat << std::endl;
+  //std::cout << "Activation desc set -->" << cudnnStatus_stat << std::endl;
   cudaError_stat = cudaMalloc((void **)&d_out_xw_act,
                               sizeof(float) * input_batch_size
                               * (output_neurons + 1));
-  std:: cout << "d_out_xw_act allocated -->" << cudaError_stat << std::endl;
+  //std:: cout << "d_out_xw_act allocated -->" << cudaError_stat << std::endl;
   relu_activation_clip = relu_clip;
 }
 
@@ -154,7 +154,7 @@ void FCLayer::SoftmaxOut() {
   cudnnStatus_stat = cudnnSoftmaxForward(cudnn_handle, CUDNN_SOFTMAX_ACCURATE,
                       CUDNN_SOFTMAX_MODE_CHANNEL, &alpha, d_out_tensor,
                       d_out_xw_act, &beta, d_out_tensor, d_out);
-  std::cout << "Softmax Fwd -->" << cudnnStatus_stat << std::endl;
+  //std::cout << "Softmax Fwd -->" << cudnnStatus_stat << std::endl;
 }
 
 void FCLayer::ComputeSoftmaxGradients(float *h_pinned_labels) {
@@ -286,14 +286,14 @@ void FCLayer::AllocateGPUMemory() {
   cudaError_stat = cudaMalloc((void **)&d_out_xw,
                               sizeof(float) * input_batch_size
                               * (output_neurons + 1));
-  std::cout << "d_out_xw allocated -->" << cudaError_stat << std::endl;
+  //std::cout << "d_out_xw allocated -->" << cudaError_stat << std::endl;
   
   cudnnStatus_stat = cudnnCreateTensorDescriptor(&d_out_tensor);
-  std::cout << "d_out_tensor initialization -->" << cudnnStatus_stat << std::endl;
+  //std::cout << "d_out_tensor initialization -->" << cudnnStatus_stat << std::endl;
   cudnnStatus_stat = cudnnSetTensor4dDescriptor(d_out_tensor, CUDNN_TENSOR_NCHW,
                              CUDNN_DATA_FLOAT, input_batch_size,
                              output_neurons, 1, 1);
-  std::cout << "d_out_tensor setting -->" << cudnnStatus_stat << std::endl;
+  //std::cout << "d_out_tensor setting -->" << cudnnStatus_stat << std::endl;
   if (is_input_layer) {
     cudaError_stat = cudaMalloc((void **)&d_data, sizeof(float)
                                 * input_data_matrix_size);
@@ -337,18 +337,18 @@ void FCLayer::ForwardProp() {
                                      output_neurons, d_data,
                                      (input_neurons + 1), &beta,
                                      d_out_xw, output_neurons);
-  std::cout << "BLAS xw + b -->" << cublasStatus_stat << std::endl;
+  //std::cout << "BLAS xw + b -->" << cublasStatus_stat << std::endl;
   if (!is_softmax_layer && !activation_set) { //Defaults to 0 clipped ReLU
     SetActivationFunc(CUDNN_ACTIVATION_RELU);
   }
   if (activation_set) {
-    print_d_var(d_out_xw, input_batch_size, output_neurons, false);
-    print_d_var(d_out_xw_act, input_batch_size, output_neurons, false);
-    std::cout << alpha << ", " << beta << std::endl;
+    //print_d_var(d_out_xw, input_batch_size, output_neurons, false);
+    //print_d_var(d_out_xw_act, input_batch_size, output_neurons, false);
+    //std::cout << alpha << ", " << beta << std::endl;
     cudnnStatus_stat = cudnnActivationForward(cudnn_handle, cudnn_activation_desc, &alpha,
-                           d_out_tensor, d_out_xw, &beta, d_out_tensor,
-                           d_out_xw_act);
-    std::cout << "Activation Fwd ---->" << cudnnStatus_stat << std::endl;
+                                             d_out_tensor, d_out_xw, &beta, d_out_tensor,
+                                             d_out_xw_act);
+    //std::cout << "Activation Fwd ---->" << cudnnStatus_stat << std::endl;
   }
   else {
     d_out_xw_act = d_out_xw;

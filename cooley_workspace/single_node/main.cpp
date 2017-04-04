@@ -29,7 +29,7 @@
 #define DATA_SIDE 28 //Throws GPU setup error if above 257
 #define CHANNELS 1
 
-#define BATCH_SIZE 10
+#define BATCH_SIZE 64
 #define LABELS 10
 
 #define EPOCHS 10
@@ -354,7 +354,7 @@ int main() {
     //return 0;
     fcl0.ForwardProp();
     fcl2.LoadData(fcl0.d_out, true);
-    print_d_var3(fcl2.d_data, fcl2.input_batch_size, fcl2.input_neurons, false);
+    //print_d_var3(fcl2.d_data, fcl2.input_batch_size, fcl2.input_neurons, false);
     fcl2.ForwardProp();
 
     //now0 = std::chrono::high_resolution_clock::now();
@@ -369,7 +369,7 @@ int main() {
         //std::cout << y[j + i * LABELS] << "," << h_out[j + i * LABELS] << "[" << j << "] ";
         my_loss -= ((y[j + i * LABELS] * log(h_out[j + i * LABELS])));
       }
-      std::cout << std::endl;
+      //std::cout << std::endl;
       //return 0;
     }
     my_loss /= BATCH_SIZE;
