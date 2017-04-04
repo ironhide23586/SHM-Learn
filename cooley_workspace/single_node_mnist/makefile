@@ -1,5 +1,7 @@
 CUDA_PATH=/home/souham/.local/cuda-8.0
 CUDNN_PATH=$(CUDA_PATH)
+
+# For Tesla K80-
 COMPUTE_CAPABILITY=37
 
 all: program
