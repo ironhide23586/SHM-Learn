@@ -320,8 +320,8 @@ int main() {
     //print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons);
     //print_d_var3(fcl0.d_out, fcl0.input_batch_size, fcl0.output_neurons, false);
     //print_d_var3(fcl2.d_out_xw_act, fcl2.input_batch_size, fcl2.output_neurons);
-    print_d_var3(fcl2.d_out, fcl2.input_batch_size, fcl2.output_neurons);
-    return 0;
+    //print_d_var3(fcl2.d_out, fcl2.input_batch_size, fcl2.output_neurons);
+    //return 0;
 
     //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols);
     //print_d_var3(fcl0.d_data, BATCH_SIZE, fcl0.input_neurons + 1);
@@ -366,11 +366,11 @@ int main() {
     my_loss = 0.0f;
     for (int i = 0; i < BATCH_SIZE; i++) {
       for (int j = 0; j < LABELS; j++) {
-        std::cout << y[j + i * LABELS] << "," << h_out[j + i * LABELS] << "[" << j << "] ";
+        //std::cout << y[j + i * LABELS] << "," << h_out[j + i * LABELS] << "[" << j << "] ";
         my_loss -= ((y[j + i * LABELS] * log(h_out[j + i * LABELS])));
       }
       std::cout << std::endl;
-      return 0;
+      //return 0;
     }
     my_loss /= BATCH_SIZE;
     wt_sum = 0.0f;
