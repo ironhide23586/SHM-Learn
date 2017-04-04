@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
@@ -6,20 +5,23 @@
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
-#include "sample.h"
+//#include "sample.h"
+//#include "GlobalInclude.h"
+
+#include <cudnn.h>
 
 #include "ConvLayer.h"
 #include "FCLayer.h"
 
-#include <cudnn.h>
 
 #include <limits>
 #include <random>
 #include <chrono>
 #include <cmath>
+//#include <math.h>
 
 #include <fstream>
-
+#include <string.h>
 
 //#define DATA_SIDE 32 //Throws GPU setup error if above 257
 //#define CHANNELS 3
@@ -27,7 +29,7 @@
 #define DATA_SIDE 28 //Throws GPU setup error if above 257
 #define CHANNELS 1
 
-#define BATCH_SIZE 10
+#define BATCH_SIZE 64
 #define LABELS 10
 
 #define EPOCHS 10
@@ -80,7 +82,7 @@ void print_h_var3(float *h_v, int r, int c) {
 }
 
 void sumCols(float *mat, int rows, int cols, float *sums) {
-//#pragma omp parallel
+  //#pragma omp parallel
   for (int j = 0; j < cols; j++) {
     sums[j] = 0.0f;
     for (int i = 0; i < rows; i++) {
@@ -110,14 +112,14 @@ void readBatch(FILE *fp, float *h_imgs, float *h_lbls) {
   int row_size = (CHANNELS * DATA_SIDE * DATA_SIDE) + 1;
   int batch_bytes = BATCH_SIZE * row_size;
   int start_idx;
-  unsigned char *buff = (unsigned char *)malloc(sizeof(unsigned char) * BATCH_SIZE 
-                                                * ((CHANNELS * DATA_SIDE * DATA_SIDE) 
+  unsigned char *buff = (unsigned char *)malloc(sizeof(unsigned char) * BATCH_SIZE
+                                                * ((CHANNELS * DATA_SIDE * DATA_SIDE)
                                                    + 1));
   fread(buff, sizeof(unsigned char), batch_bytes, fp);
   memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
   for (int i = 0; i < BATCH_SIZE; i++) {
     start_idx = i * row_size;
-    h_lbls[((int) buff[start_idx] - 1) + i * LABELS] = 1.0f;
+    h_lbls[((int)buff[start_idx] - 1) + i * LABELS] = 1.0f;
     int col = 0;
     for (int j = start_idx + 1; j < start_idx + row_size; j++) {
       h_imgs[col + i * (row_size - 1)] = (float)buff[j];
@@ -193,12 +195,31 @@ void move_to_gpu_stage(float *x, float *y, float *gpu_stage, int x_len, int y_le
   memcpy(&gpu_stage[x_len], y, sizeof(float) * y_len);
 }
 
+int my_floorf_division(float a, float b) {
+  return ((a - 1) / b);
+}
+
 int main() {
-  cudaDeviceReset();
+  cudaError_t cudaError_stat;
+  curandStatus_t curandStatus_stat;
+  cudnnStatus_t cudnnStatus_stat;
+  cublasStatus_t cublasStatus_stat;
+
+  int numGPUs;
+
+  cudaGetDeviceCount(&numGPUs);
+  cudaSetDevice(0);
+  cudaDeviceProp cudaProp;
+  cudaGetDeviceProperties(&cudaProp, 0);
+  std::cout << "Using GPU Device -> " << cudaProp.name << std::endl;
+  cudaError_stat = cudaDeviceReset();
+  std::cout << "cuda dev reset -->" << cudaError_stat << std::endl;
+
   int batch_size = BATCH_SIZE;
   float my_loss, loss, wt_sum, fcl0_wt_sum, fcl2_wt_sum, dur, avg_dur;
-	cublasHandle_t cublasHandle;
-  cublasCreate_v2(&cublasHandle);
+  cublasHandle_t cublasHandle;
+  cublasStatus_stat = cublasCreate_v2(&cublasHandle);
+  std::cout << "cublas handle create -->" << cublasStatus_stat << std::endl;
 
   float *x, *y;
   //x = (float *)malloc(sizeof(float) * BATCH_SIZE * CHANNELS * DATA_SIDE * DATA_SIDE);
@@ -217,13 +238,13 @@ int main() {
 
   FILE *fp_x = fopen("train-images.idx3-ubyte", "rb");
   FILE *fp_y = fopen("train-labels.idx1-ubyte", "rb");
-  
+
   FILE *fp_x_test = fopen("t10k-images.idx3-ubyte", "rb");
   FILE *fp_y_test = fopen("t10k-labels.idx1-ubyte", "rb");
 
   ofstream results_file;
   results_file.open("shmlearn_results.txt");
-  
+
   fseek(fp_x, 16, 0);
   fseek(fp_y, 8, 0);
 
@@ -233,20 +254,16 @@ int main() {
   readBatch_mnist_lim(fp_x_test, fp_y_test, x_test, y_test);
   read_imgs = 0;
 
-	int numGPUs;
-	cudaGetDeviceCount(&numGPUs);
-	cudaSetDevice(0);
-	cudnnHandle_t cudnnHandle;
-	cudnnCreate(&cudnnHandle);
-  cudaDeviceProp cudaProp;
-  cudaGetDeviceProperties(&cudaProp, 0);
+  cudnnHandle_t cudnnHandle;
+
+  cudnnStatus_t cudnn_status;
+  cudnn_status = cudnnCreate(&cudnnHandle);
+  std::cout << "cuDNN initialization -->" << cudnn_status << std::endl;
 
   float base_lr = 0.05f, gamma = 0.4f, power = 0;
   float lr = base_lr * powf(1 + gamma, -power);
   float reg = 0.01f;
   float mom = 0.0f;
-
-  std::cout << "Using GPU Device -> " << cudaProp.name << std::endl;
 
   FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, BATCH_SIZE, CHANNELS * DATA_SIDE * DATA_SIDE,
                64, false, lr, mom, reg);
@@ -263,7 +280,7 @@ int main() {
 
   float *h_out = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
   int batch = 1;
-  int lim = std::floorf((float)EPOCH_SIZE / BATCH_SIZE);
+  int lim = my_floorf_division(EPOCH_SIZE, BATCH_SIZE);
   int epoch = 1, prog = 1;
   int prev_read_imgs;
 
@@ -284,7 +301,7 @@ int main() {
   //print_d_var3(fcl2.d_weight_matrix, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
 
   while (epoch <= EPOCHS) {
-    readBatch_mnist_lim(fp_x, fp_y, x, y); 
+    readBatch_mnist_lim(fp_x, fp_y, x, y);
     if (prog == 1) {
       prev_read_imgs = read_imgs;
     }
@@ -292,7 +309,7 @@ int main() {
     fcl0.learning_rate = lr;
     fcl2.learning_rate = lr;
 
-   //fcl0.LoadData(x, false);
+    //fcl0.LoadData(x, false);
     train_start = std::chrono::high_resolution_clock::now();
     fcl0.LoadData(x, false);
     now0 = std::chrono::high_resolution_clock::now();
@@ -300,9 +317,18 @@ int main() {
     fcl2.LoadData(fcl0.d_out, true);
     fcl2.ForwardProp();
 
-    //print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons, false);
+    //print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons);
+    //print_d_var3(fcl0.d_out, fcl0.input_batch_size, fcl0.output_neurons, false);
     //print_d_var3(fcl2.d_out_xw_act, fcl2.input_batch_size, fcl2.output_neurons);
     //print_d_var3(fcl2.d_out, fcl2.input_batch_size, fcl2.output_neurons);
+    //return 0;
+
+    //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols);
+    //print_d_var3(fcl0.d_data, BATCH_SIZE, fcl0.input_neurons + 1);
+
+    //print_d_var3(fcl0.d_out, BATCH_SIZE, fcl0.output_neurons + 1);
+
+    //dur0 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now0 - train_start).count() * 1e-9f;
 
     fcl2.ComputeSoftmaxGradients(y);
     now1_sft = std::chrono::high_resolution_clock::now();
@@ -325,6 +351,7 @@ int main() {
     //float dur = dur0 + dur1_sft + dur1_lyr + dur2;
 
     //print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons);
+    //return 0;
     fcl0.ForwardProp();
     fcl2.LoadData(fcl0.d_out, true);
     //print_d_var3(fcl2.d_data, fcl2.input_batch_size, fcl2.input_neurons, false);
@@ -335,7 +362,7 @@ int main() {
     //h_out = fcl2.d_out;
     //now2 = std::chrono::high_resolution_clock::now();
     //dur0 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now2 - now0).count() * 1e-9f;
-    
+
     my_loss = 0.0f;
     for (int i = 0; i < BATCH_SIZE; i++) {
       for (int j = 0; j < LABELS; j++) {
@@ -343,6 +370,7 @@ int main() {
         my_loss -= ((y[j + i * LABELS] * log(h_out[j + i * LABELS])));
       }
       //std::cout << std::endl;
+      //return 0;
     }
     my_loss /= BATCH_SIZE;
     wt_sum = 0.0f;
@@ -385,7 +413,7 @@ int main() {
       //lr = base_lr * powf(1 + gamma * cnt, -power);
     }
     prev_read_imgs = read_imgs;
-    
+
     now0 = std::chrono::high_resolution_clock::now();
     results_file << ts << " " << my_loss << "\n";
     now2 = std::chrono::high_resolution_clock::now();
@@ -400,7 +428,7 @@ int main() {
   auto et = std::chrono::system_clock::now();
   auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(et - st);
 
-	cudnnDestroy(cudnnHandle);
+  cudnnDestroy(cudnnHandle);
   cublasDestroy_v2(cublasHandle);
 
   //print_d_var3(fcl1.d_out, fcl1.input_batch_size, fcl1.output_neurons);
@@ -408,11 +436,11 @@ int main() {
   //std::cout << "Elapsed time to train " << epoch - 1
   //  << " Epochs (1 Epoch has " << EPOCH_SIZE / BATCH_SIZE << " batches) = "
   //  << (float) elapsed.count() / 1000000 << " s" << std::endl;
-  //std::cout << "Time per batch of " << BATCH_SIZE << " images = " 
+  //std::cout << "Time per batch of " << BATCH_SIZE << " images = "
   //  << (float)elapsed.count() / ((epoch - 1) * EPOCH_SIZE / BATCH_SIZE) / 1000000
   //  << " s";
-  
+
   //print_d_var3(fcl1.d_out, fcl1.input_batch_size, fcl1.output_neurons);
   int k = getchar();
-	return 0;
+  return 0;
 }

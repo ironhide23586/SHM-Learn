@@ -303,7 +303,7 @@ c:\program files\nvidia gpu computing toolkit\cuda\v8.0\include\host_defines.h
 c:\program files\nvidia gpu computing toolkit\cuda\v8.0\include\vector_functions.h
 c:\program files\nvidia gpu computing toolkit\cuda\v8.0\include\device_launch_parameters.h
 c:\program files\nvidia gpu computing toolkit\cuda\v8.0\include\vector_types.h
-d:\users\monst\desktop\shm-learn\convnet_iter_3\convnet\ConvLayer.h
+d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_mnist\convnet\ConvLayer.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include\cudnn.h
 c:\program files\nvidia gpu computing toolkit\cuda\v8.0\include\driver_types.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include\cuda_runtime.h

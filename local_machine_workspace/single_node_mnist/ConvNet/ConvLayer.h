@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <iostream>
+//#include "GlobalInclude.h"
 
 // Computes W - lambda * W^2
 void WeightMatrixRegularizeElemWiseConv(float *d_mat_in,
@@ -40,12 +41,12 @@ public:
                          double relu_clip = 1.0f);
   void ComputeLayerGradients(float *d_backprop_derivatives);
   void UpdateWeights(float *d_filter_gradients, float *d_bias_gradients);
-  
+
 
   int kernel_h, kernel_w;
-	int vert_stride, hor_stride;
+  int vert_stride, hor_stride;
   int pad_h, pad_w;
-	int feature_maps;
+  int feature_maps;
 
   int input_n, input_c;
   int input_h, input_w;
@@ -57,14 +58,14 @@ public:
   int pool_output_n, pool_output_c;
   int pool_output_h, pool_output_w;
 
-  int x_upscale = 1, y_upscale = 1;
+  int x_upscale, y_upscale;
 
   int pool_width, pool_height;
   int pool_vert_stride, pool_hor_stride;
   int pool_pad_h, pool_pad_w;
 
   bool pooling_enabled; //Pooling done if set to true
-  bool pooling_params_initialized = false;
+  bool pooling_params_initialized;
   bool input_data_on_gpu; // Set this to true if input data is already on GPU
   bool activation_set;
   bool grads_initialized;
@@ -102,8 +103,8 @@ private:
   void InitBackpropVars(void);
   void Convolve_worker(void);
 
-  float alpha = 1.0f, beta = 0.0f;
-  
+  float alpha, beta;
+
   float *grad_swap_tmp;
   float reg_inp_scalar;
   float neg_one_scalar;
@@ -135,4 +136,3 @@ private:
   cudnnStatus_t cudnnStatus_stat;
   cublasStatus_t cublasStatus_stat;
 };
-

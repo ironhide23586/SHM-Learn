@@ -162,12 +162,10 @@
   <ItemGroup>
     <ClInclude Include="ConvLayer.h" />
     <ClInclude Include="FCLayer.h" />
-    <ClInclude Include="sample.h" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="ConvLayer.cu" />
     <CudaCompile Include="FCLayer.cu" />
-    <CudaCompile Include="sample.cu" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data_batch_1.bin" />

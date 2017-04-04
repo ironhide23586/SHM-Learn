@@ -23,25 +23,25 @@ ConvLayer::ConvLayer(const cudnnHandle_t &cudnn_handle_arg,
                      float momentum_arg, float regularization_coeff_arg,
                      regularizer_type_Conv regularizer_arg,
                      float weight_init_mean_arg, float weight_init_stddev_arg)
-    : cudnn_handle(cudnn_handle_arg),
-      cublas_handle(cublas_handle_arg),
-      input_n(input_n_arg),
-      input_c(input_c_arg),
-      input_h(input_h_arg),
-      input_w(input_w_arg),
-      pad_h(pad_h_arg),
-      pad_w(pad_w_arg),
-      vert_stride(vert_stride_arg),
-      hor_stride(hor_stride_arg),
-      kernel_h(kernel_h_arg),
-      kernel_w(kernel_w_arg),
-      feature_maps(feature_maps_arg),
-      learning_rate(learning_rate_arg),
-      momentum(momentum_arg),
-      regularization_coeff(regularization_coeff_arg),
-      regularizer(regularizer_arg),
-      weight_init_mean(weight_init_mean_arg),
-      weight_init_stddev(weight_init_stddev_arg) {
+  : cudnn_handle(cudnn_handle_arg),
+  cublas_handle(cublas_handle_arg),
+  input_n(input_n_arg),
+  input_c(input_c_arg),
+  input_h(input_h_arg),
+  input_w(input_w_arg),
+  pad_h(pad_h_arg),
+  pad_w(pad_w_arg),
+  vert_stride(vert_stride_arg),
+  hor_stride(hor_stride_arg),
+  kernel_h(kernel_h_arg),
+  kernel_w(kernel_w_arg),
+  feature_maps(feature_maps_arg),
+  learning_rate(learning_rate_arg),
+  momentum(momentum_arg),
+  regularization_coeff(regularization_coeff_arg),
+  regularizer(regularizer_arg),
+  weight_init_mean(weight_init_mean_arg),
+  weight_init_stddev(weight_init_stddev_arg) {
   cudnnCreateTensorDescriptor(&dataTensor);
   cudnnSetTensor4dDescriptor(dataTensor, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
                              input_n, input_c, input_h, input_w);
@@ -57,24 +57,29 @@ ConvLayer::ConvLayer(const cudnnHandle_t &cudnn_handle_arg,
   d_out_allocated = false;
   grads_initialized = false;
   is_input_layer = false;
+  pooling_params_initialized = false;
   neg_one_scalar = -1.0f;
+  x_upscale = 1;
+  y_upscale = 1;
+  alpha = 1.0f;
+  beta = 0.0f;
 }
 
 void ConvLayer::AllocateGPUMemory() {
-  cudaMalloc((void **) &d_data,
+  cudaMalloc((void **)&d_data,
              input_n * input_c * input_h * input_w * sizeof(float));
   cudnnSetConvolution2dDescriptor(convDesc, pad_h, pad_w, vert_stride,
                                   hor_stride, x_upscale, y_upscale,
                                   CUDNN_CONVOLUTION);
-                                  //pad_h, pad_w, vert_filter_stride, 
-                                  //hor_filt_stride, x-upscale, y_upscale
+  //pad_h, pad_w, vert_filter_stride,
+  //hor_filt_stride, x-upscale, y_upscale
 
   cudnnSetFilter4dDescriptor(filterDesc, CUDNN_DATA_FLOAT, CUDNN_TENSOR_NCHW,
                              feature_maps, input_c, kernel_h, kernel_w);
-                             //no_of_feature_maps, c, h, w; feaure_maps = out_channels
+  //no_of_feature_maps, c, h, w; feaure_maps = out_channels
   filter_linear_size = input_c * kernel_h * kernel_w;
   filter_total_size = feature_maps * filter_linear_size;
-  cudaMalloc((void **) &d_filt,
+  cudaMalloc((void **)&d_filt,
              sizeof(float) * feature_maps
              * input_c * kernel_h * kernel_w);
   cudnnGetConvolution2dForwardOutputDim(convDesc, dataTensor, filterDesc,
@@ -86,10 +91,10 @@ void ConvLayer::AllocateGPUMemory() {
   conv_output_w = output_w;
   cudnnSetTensor4dDescriptor(convTensor, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
                              output_n, output_c, output_h, output_w);
-  cudaMalloc((void **)&d_conv, sizeof(float) * output_n 
+  cudaMalloc((void **)&d_conv, sizeof(float) * output_n
              * ((output_c * output_h * output_w) + 1)); //+1->future bias
   cudnnGetConvolutionForwardAlgorithm(cudnn_handle, dataTensor, filterDesc,
-                                      convDesc, convTensor, 
+                                      convDesc, convTensor,
                                       CUDNN_CONVOLUTION_FWD_PREFER_FASTEST,
                                       0, &fwd_algo);
   cudnnGetConvolutionForwardWorkspaceSize(cudnn_handle, dataTensor,
@@ -106,8 +111,8 @@ void ConvLayer::LoadData(float *input_data_arg, bool input_data_on_gpu_arg) {
   input_data_on_gpu = input_data_on_gpu_arg;
   if (!input_data_on_gpu)
     cudaMemcpy(d_data, input_data,
-    sizeof(float) * input_n * input_c * input_h * input_w,
-    cudaMemcpyHostToDevice);
+               sizeof(float) * input_n * input_c * input_h * input_w,
+               cudaMemcpyHostToDevice);
   else
     d_data = input_data;
 }
@@ -138,12 +143,12 @@ void ConvLayer::SetPoolingParams(cudnnPoolingMode_t pool_mode_arg,
   pool_output_c = output_c;
   pool_output_h = output_h;
   pool_output_w = output_w;
-  cudnnSetTensor4dDescriptor(poolTensor, CUDNN_TENSOR_NCHW, 
-                              CUDNN_DATA_FLOAT, output_n, output_c,
-                              output_h, output_w);
+  cudnnSetTensor4dDescriptor(poolTensor, CUDNN_TENSOR_NCHW,
+                             CUDNN_DATA_FLOAT, output_n, output_c,
+                             output_h, output_w);
   cudaMalloc((void **)&d_pool,
-              sizeof(float) * output_n * ((output_c * output_h * output_w)
-              + 1)); //+1 to accomodate bias in future
+             sizeof(float) * output_n * ((output_c * output_h * output_w)
+                                         + 1)); //+1 to accomodate bias in future
 }
 
 void ConvLayer::InitializeFilters(float mean, float stddev) {
@@ -152,7 +157,8 @@ void ConvLayer::InitializeFilters(float mean, float stddev) {
   curandGenerateNormal(rng, d_filt, sizeof(float) * feature_maps
                        * input_c * kernel_h * kernel_w, mean, stddev);
   curandDestroyGenerator(rng);
-  //cudaMemset(d_filt, 1, sizeof(float) * feature_maps * input_c * kernel_h * kernel_w);
+  //cudaMemset(d_filt, 1, sizeof(float) * feature_maps * input_c
+  //           * kernel_h * kernel_w);
 }
 
 void ConvLayer::InitializeBiases() {
@@ -202,8 +208,8 @@ void ConvLayer::Convolve_worker() {
 
 float* ConvLayer::GetOutput() {
   output_copied_to_host = true;
-  h_output = (float *) malloc(sizeof(float) * output_n 
-                              * output_c * output_h * output_w);
+  h_output = (float *)malloc(sizeof(float) * output_n
+                             * output_c * output_h * output_w);
   float *d_out = pooling_enabled ? d_pool : d_conv;
   cudaMemcpy(h_output, d_out,
              sizeof(float) * output_n * output_c * output_h * output_w,
@@ -298,7 +304,7 @@ void ConvLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
   }
 }
 
-void ConvLayer::UpdateWeights(float *d_filter_gradients, 
+void ConvLayer::UpdateWeights(float *d_filter_gradients,
                               float *d_bias_gradients) {
   //print_d_var2(d_filt, feature_maps, filter_linear_size);
   reg_inp_scalar = 1.0f - regularization_coeff;
@@ -373,8 +379,8 @@ void ConvLayer::InitBackpropVars() {
                               bwd_filter_workspace_size);
 
   cudaError_stat = cudaMalloc((void **)&d_filter_gradients,
-                               sizeof(float) * feature_maps
-                               * filter_linear_size);
+                              sizeof(float) * feature_maps
+                              * filter_linear_size);
   cudaError_stat = cudaMalloc((void **)&d_filter_gradients_prev,
                               sizeof(float) * feature_maps
                               * filter_linear_size);

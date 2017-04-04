@@ -1,6 +1,6 @@
 #include "FCLayer.h"
 
-void print_d_var(float *d_v, int r, int c, bool print_elem=true) {
+void print_d_var(float *d_v, int r, int c, bool print_elem = true) {
   std::cout << "*****************************" << std::endl;
   float *h_v = (float *)malloc(sizeof(float) * r * c);
   cudaMemcpy(h_v, d_v, sizeof(float) * r * c, cudaMemcpyDeviceToHost);
@@ -84,19 +84,19 @@ FCLayer::FCLayer(const cudnnHandle_t &cudnn_handle_arg,
                  regularizer_type_FC regularizer_arg,
                  float weight_init_mean_arg,
                  float weight_init_stddev_arg)
-    : cudnn_handle(cudnn_handle_arg),
-      cublas_handle(cublas_handle_arg),
-      cuda_device_prop(cuda_device_prop_arg),
-      input_batch_size(input_batch_size_arg),
-      input_neurons(input_n_arg),
-      output_neurons(output_n_arg),
-      is_softmax_layer(is_softmax_layer_arg),
-      learning_rate(learning_rate_arg),
-      momentum(momentum_arg),
-      regularization_coeff(regularization_coeff_arg),
-      regularizer(regularizer_arg),
-      weight_init_mean(weight_init_mean_arg),
-      weight_init_stddev(weight_init_stddev_arg) {
+  : cudnn_handle(cudnn_handle_arg),
+  cublas_handle(cublas_handle_arg),
+  cuda_device_prop(cuda_device_prop_arg),
+  input_batch_size(input_batch_size_arg),
+  input_neurons(input_n_arg),
+  output_neurons(output_n_arg),
+  is_softmax_layer(is_softmax_layer_arg),
+  learning_rate(learning_rate_arg),
+  momentum(momentum_arg),
+  regularization_coeff(regularization_coeff_arg),
+  regularizer(regularizer_arg),
+  weight_init_mean(weight_init_mean_arg),
+  weight_init_stddev(weight_init_stddev_arg) {
   is_input_layer = false;
   weight_matrix_size = (input_neurons + 1) * output_neurons;
   input_data_matrix_size = input_batch_size * (input_neurons + 1);
@@ -138,19 +138,23 @@ void FCLayer::SetActivationFunc(cudnnActivationMode_t activation_mode_arg,
                                 double relu_clip) {
   activation_set = true;
   activation_mode = activation_mode_arg;
-  cudnnCreateActivationDescriptor(&cudnn_activation_desc);
-  cudnnSetActivationDescriptor(cudnn_activation_desc, activation_mode_arg,
-                               CUDNN_PROPAGATE_NAN, relu_clip);
+  cudnnStatus_stat = cudnnCreateActivationDescriptor(&cudnn_activation_desc);
+  //std::cout << "Activation desc created -->" << cudnnStatus_stat << std::endl;
+  cudnnStatus_stat = cudnnSetActivationDescriptor(cudnn_activation_desc, activation_mode_arg,
+                                                  CUDNN_PROPAGATE_NAN, relu_clip);
+  //std::cout << "Activation desc set -->" << cudnnStatus_stat << std::endl;
   cudaError_stat = cudaMalloc((void **)&d_out_xw_act,
                               sizeof(float) * input_batch_size
                               * (output_neurons + 1));
+  //std:: cout << "d_out_xw_act allocated -->" << cudaError_stat << std::endl;
   relu_activation_clip = relu_clip;
 }
 
 void FCLayer::SoftmaxOut() {
-  cudnnSoftmaxForward(cudnn_handle, CUDNN_SOFTMAX_ACCURATE,
-                      CUDNN_SOFTMAX_MODE_CHANNEL, &alpha, d_out_tensor,
-                      d_out_xw_act, &beta, d_out_tensor, d_out);
+  cudnnStatus_stat = cudnnSoftmaxForward(cudnn_handle, CUDNN_SOFTMAX_ACCURATE,
+                                         CUDNN_SOFTMAX_MODE_CHANNEL, &alpha, d_out_tensor,
+                                         d_out_xw_act, &beta, d_out_tensor, d_out);
+  //std::cout << "Softmax Fwd -->" << cudnnStatus_stat << std::endl;
 }
 
 void FCLayer::ComputeSoftmaxGradients(float *h_pinned_labels) {
@@ -282,11 +286,14 @@ void FCLayer::AllocateGPUMemory() {
   cudaError_stat = cudaMalloc((void **)&d_out_xw,
                               sizeof(float) * input_batch_size
                               * (output_neurons + 1));
-  
-  cudnnCreateTensorDescriptor(&d_out_tensor);
-  cudnnSetTensor4dDescriptor(d_out_tensor, CUDNN_TENSOR_NCHW,
-                             CUDNN_DATA_FLOAT, input_batch_size,
-                             output_neurons, 1, 1);
+  //std::cout << "d_out_xw allocated -->" << cudaError_stat << std::endl;
+
+  cudnnStatus_stat = cudnnCreateTensorDescriptor(&d_out_tensor);
+  //std::cout << "d_out_tensor initialization -->" << cudnnStatus_stat << std::endl;
+  cudnnStatus_stat = cudnnSetTensor4dDescriptor(d_out_tensor, CUDNN_TENSOR_NCHW,
+                                                CUDNN_DATA_FLOAT, input_batch_size,
+                                                output_neurons, 1, 1);
+  //std::cout << "d_out_tensor setting -->" << cudnnStatus_stat << std::endl;
   if (is_input_layer) {
     cudaError_stat = cudaMalloc((void **)&d_data, sizeof(float)
                                 * input_data_matrix_size);
@@ -330,13 +337,18 @@ void FCLayer::ForwardProp() {
                                      output_neurons, d_data,
                                      (input_neurons + 1), &beta,
                                      d_out_xw, output_neurons);
+  //std::cout << "BLAS xw + b -->" << cublasStatus_stat << std::endl;
   if (!is_softmax_layer && !activation_set) { //Defaults to 0 clipped ReLU
     SetActivationFunc(CUDNN_ACTIVATION_RELU);
   }
   if (activation_set) {
-    cudnnActivationForward(cudnn_handle, cudnn_activation_desc, &alpha,
-                           d_out_tensor, d_out_xw, &beta, d_out_tensor,
-                           d_out_xw_act);
+    //print_d_var(d_out_xw, input_batch_size, output_neurons, false);
+    //print_d_var(d_out_xw_act, input_batch_size, output_neurons, false);
+    //std::cout << alpha << ", " << beta << std::endl;
+    cudnnStatus_stat = cudnnActivationForward(cudnn_handle, cudnn_activation_desc, &alpha,
+                                              d_out_tensor, d_out_xw, &beta, d_out_tensor,
+                                              d_out_xw_act);
+    //std::cout << "Activation Fwd ---->" << cudnnStatus_stat << std::endl;
   }
   else {
     d_out_xw_act = d_out_xw;
@@ -359,7 +371,7 @@ void FCLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
     else {
       h_tmp_wt_mat[i] = GetRandomNum();
       wt_avg += h_tmp_wt_mat[i];
-    } 
+    }
   }
   wt_avg /= (weight_matrix_size - weight_matrix_cols);
   for (long int i = 0; i < weight_matrix_cols; i++) {
@@ -389,15 +401,15 @@ void FCLayer::SumColumns(float *d_mat, float *d_out, int rows, int cols) {
   cublasStatus_stat = cublasSgemv_v2(cublas_handle, CUBLAS_OP_N,
                                      cols, rows,
                                      &alpha, d_mat, cols,
-                                     d_onevect, 1, 
+                                     d_onevect, 1,
                                      &beta, d_out, 1);
   cudaError_stat = cudaFree(d_onevect);
 }
 
 cublasStatus_t FCLayer::MatMulT(float *d_A, float *d_B, float *d_C,
-                               int rows_A, int cols_A, 
-                               int rows_B, int cols_B, float scale_coeff,
-                               float prior_coeff) {
+                                int rows_A, int cols_A,
+                                int rows_B, int cols_B, float scale_coeff,
+                                float prior_coeff) {
   return cublasSgemm_v2(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_T,
                         cols_A, cols_B, rows_A, &scale_coeff,
                         d_A, cols_A, d_B, cols_B, &prior_coeff, d_C,
@@ -411,7 +423,7 @@ void FCLayer::InitBackpropVars() {
                                 * input_batch_size);
   }
   if (is_softmax_layer) {
-    
+
     cudaError_stat = cudaMalloc((void **)&d_labels,
                                 sizeof(float) * input_batch_size
                                 * output_neurons);
@@ -439,7 +451,7 @@ void FCLayer::InitBackpropVars() {
 }
 
 void FCLayer::reinit_vars() {
- // cudaError_stat = cudaFree(d_softmax_gradients_T);
+  // cudaError_stat = cudaFree(d_softmax_gradients_T);
   //cudaError_stat = cudaFree(d_data);
   cudaError_stat = cudaFree(d_shift_helper);
   //cudaError_stat = cudaFree(d_out);
@@ -506,7 +518,7 @@ void FCLayer::reinit_vars() {
   //float h_w[12] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
   float h_w[18];
   for (int i = 0; i < 18; i++) {
-    h_w[i] = (float) i / 10;
+    h_w[i] = (float)i / 10;
   }
   float h_prev_grad[12] = { -0.7,  -0.8, -0.9, -1,
     0.75, 1.1, 1.45, 1.8,
