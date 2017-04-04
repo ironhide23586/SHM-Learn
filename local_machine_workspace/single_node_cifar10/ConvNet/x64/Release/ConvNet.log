@@ -1,0 +1,111 @@
+﻿  Compiling CUDA source file ConvLayer.cu...
+  Compiling CUDA source file FCLayer.cu...
+  
+  C:\Users\monst\Desktop\thesis\Codes\GPU Codes\ConvNet_ITER_2 (On new machine)\ConvNet>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2015 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include"     --keep-dir x64\Release -maxrregcount=0  --machine 64 --compile -cudart static     -DNDEBUG -D_CONSOLE -D_UNICODE -DUNICODE -Xcompiler "/EHsc /W3 /nologo /O2 /FS /Zi  /MD " -o x64\Release\ConvLayer.cu.obj "C:\Users\monst\Desktop\thesis\Codes\GPU Codes\ConvNet_ITER_2 (On new machine)\ConvNet\ConvLayer.cu" 
+  
+  C:\Users\monst\Desktop\thesis\Codes\GPU Codes\ConvNet_ITER_2 (On new machine)\ConvNet>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2015 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include"     --keep-dir x64\Release -maxrregcount=0  --machine 64 --compile -cudart static     -DNDEBUG -D_CONSOLE -D_UNICODE -DUNICODE -Xcompiler "/EHsc /W3 /nologo /O2 /FS /Zi  /MD " -o x64\Release\FCLayer.cu.obj "C:\Users\monst\Desktop\thesis\Codes\GPU Codes\ConvNet_ITER_2 (On new machine)\ConvNet\FCLayer.cu" 
+CUDACOMPILE : nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+  ConvLayer.cu
+CUDACOMPILE : nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+  FCLayer.cu
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/ConvLayer.cu(18): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(240): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(241): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(246): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(247): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(275): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(276): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(281): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(282): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(321): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(329): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(337): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(345): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(353): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(361): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(374): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(388): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(404): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(416): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:/Users/monst/Desktop/thesis/Codes/GPU Codes/ConvNet_ITER_2 (On new machine)/ConvNet/FCLayer.cu(428): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  ConvNet.cpp
+ConvNet.cpp(133): warning C4101: 'start_idx': unreferenced local variable
+ConvNet.cpp(157): warning C4101: 'start_idx': unreferenced local variable
+ConvNet.cpp(248): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+ConvNet.cpp(206): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+ConvNet.cpp(207): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+ConvNet.cpp(209): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+ConvNet.cpp(210): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+ConvNet.cpp(201): warning C4101: 'y_dist': unreferenced local variable
+ConvNet.cpp(252): warning C4101: 'batch_verify': unreferenced local variable
+  FCLayer.cpp
+FCLayer.cpp(115): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+FCLayer.cpp(146): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+FCLayer.cpp(478): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+FCLayer.cpp(478): warning C4305: 'initializing': truncation from 'double' to 'float'
+ConvLayer.cu.obj : error LNK2001: unresolved external symbol cudaConfigureCall
+FCLayer.cu.obj : error LNK2001: unresolved external symbol cudaConfigureCall
+sample.cu.obj : error LNK2001: unresolved external symbol cudaConfigureCall
+ConvLayer.cu.obj : error LNK2001: unresolved external symbol cudaSetupArgument
+FCLayer.cu.obj : error LNK2001: unresolved external symbol cudaSetupArgument
+sample.cu.obj : error LNK2001: unresolved external symbol cudaSetupArgument
+ConvLayer.cu.obj : error LNK2001: unresolved external symbol cudaLaunch
+FCLayer.cu.obj : error LNK2001: unresolved external symbol cudaLaunch
+sample.cu.obj : error LNK2001: unresolved external symbol cudaLaunch
+ConvLayer.cu.obj : error LNK2001: unresolved external symbol __cudaRegisterFatBinary
+FCLayer.cu.obj : error LNK2001: unresolved external symbol __cudaRegisterFatBinary
+sample.cu.obj : error LNK2001: unresolved external symbol __cudaRegisterFatBinary
+ConvLayer.cu.obj : error LNK2001: unresolved external symbol __cudaUnregisterFatBinary
+FCLayer.cu.obj : error LNK2001: unresolved external symbol __cudaUnregisterFatBinary
+sample.cu.obj : error LNK2001: unresolved external symbol __cudaUnregisterFatBinary
+ConvLayer.cu.obj : error LNK2001: unresolved external symbol __cudaRegisterFunction
+FCLayer.cu.obj : error LNK2001: unresolved external symbol __cudaRegisterFunction
+sample.cu.obj : error LNK2001: unresolved external symbol __cudaRegisterFunction
+FCLayer.cu.obj : error LNK2001: unresolved external symbol cudaMemcpy
+sample.cu.obj : error LNK2001: unresolved external symbol cudaMemcpy
+ConvLayer.obj : error LNK2001: unresolved external symbol cudaMemcpy
+sample.cu.obj : error LNK2001: unresolved external symbol cudaDeviceSynchronize
+sample.cu.obj : error LNK2001: unresolved external symbol cudaGetLastError
+sample.cu.obj : error LNK2001: unresolved external symbol cudaFree
+ConvLayer.obj : error LNK2001: unresolved external symbol cudaFree
+sample.cu.obj : error LNK2001: unresolved external symbol cudaMalloc
+ConvLayer.obj : error LNK2001: unresolved external symbol cudaMalloc
+sample.cu.obj : error LNK2001: unresolved external symbol cudaSetDevice
+ConvNet.obj : error LNK2001: unresolved external symbol cudaSetDevice
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnConvolutionForward
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnCreateActivationDescriptor
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnGetConvolutionForwardWorkspaceSize
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnSetActivationDescriptor
+ConvLayer.obj : error LNK2001: unresolved external symbol curandDestroyGenerator
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnSetPooling2dDescriptor
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnCreateConvolutionDescriptor
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnPoolingForward
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnSetFilter4dDescriptor
+ConvLayer.obj : error LNK2001: unresolved external symbol cudaMemset
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnSetTensor4dDescriptor
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnSetConvolution2dDescriptor
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnCreateTensorDescriptor
+ConvLayer.obj : error LNK2001: unresolved external symbol curandCreateGenerator
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnAddTensor
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnGetPooling2dForwardOutputDim
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnCreateFilterDescriptor
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnCreatePoolingDescriptor
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnGetConvolution2dForwardOutputDim
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnGetConvolutionForwardAlgorithm
+ConvLayer.obj : error LNK2001: unresolved external symbol curandGenerateNormal
+ConvLayer.obj : error LNK2001: unresolved external symbol cudnnActivationForward
+ConvNet.obj : error LNK2001: unresolved external symbol cudnnCreate
+ConvNet.obj : error LNK2001: unresolved external symbol cudnnDestroy
+ConvNet.obj : error LNK2001: unresolved external symbol cublasDestroy_v2
+ConvNet.obj : error LNK2001: unresolved external symbol cudaGetDeviceCount
+ConvNet.obj : error LNK2001: unresolved external symbol cudaGetDeviceProperties
+ConvNet.obj : error LNK2001: unresolved external symbol cublasCreate_v2
+FCLayer.obj : error LNK2001: unresolved external symbol cudnnSoftmaxForward
+FCLayer.obj : error LNK2001: unresolved external symbol cublasSgeam
+FCLayer.obj : error LNK2001: unresolved external symbol cublasSgemm_v2
+FCLayer.obj : error LNK2001: unresolved external symbol cublasSgemv_v2
+C:\Users\monst\Desktop\thesis\Codes\GPU Codes\ConvNet_ITER_2 (On new machine)\x64\Release\ConvNet.exe : fatal error LNK1120: 44 unresolved externals
