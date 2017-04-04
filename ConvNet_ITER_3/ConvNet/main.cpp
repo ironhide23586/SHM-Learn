@@ -246,6 +246,8 @@ int main() {
   float reg = 0.01f;
   float mom = 0.0f;
 
+  std::cout << "Using GPU Device -> " << cudaProp.name << std::endl;
+
   FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, BATCH_SIZE, CHANNELS * DATA_SIDE * DATA_SIDE,
                64, false, lr, mom, reg);
   fcl0.SetActivationFunc(CUDNN_ACTIVATION_SIGMOID);
