@@ -5,8 +5,9 @@
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
-//#include "sample.h"
-//#include "GlobalInclude.h"
+#include <opencv2/core/core.hpp>
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 #include <cudnn.h>
 
@@ -26,8 +27,8 @@
 //#define DATA_SIDE 32 //Throws GPU setup error if above 257
 //#define CHANNELS 3
 
-#define DATA_SIDE 28 //Throws GPU setup error if above 257
-#define CHANNELS 1
+#define DATA_SIDE 32 //Throws GPU setup error if above 257
+#define CHANNELS 3
 
 #define BATCH_SIZE 64
 #define LABELS 10
@@ -36,6 +37,7 @@
 #define EPOCH_SIZE 60000
 
 using namespace std;
+using namespace cv;
 
 int read_imgs;
 
@@ -180,11 +182,11 @@ void readBatch_cifar10_lim(FILE *fp, float *h_imgs, float *h_lbls) {
   memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
   for (int i = 0; i < BATCH_SIZE; i++) {
     start_idx = i * row_size;
-    h_lbls[((int)buff[start_idx] - 1) + i * LABELS] = 1.0f;
+    h_lbls[((int)buff[start_idx]) + i * LABELS] = 1.0f;
     int col = 0;
     for (int j = start_idx + 1; j < start_idx + row_size; j++) {
       h_imgs[col + i * (row_size - 1)] = (float)buff[j];
-      h_imgs[col + i * (row_size - 1)] /= 255.0f;
+      //h_imgs[col + i * (row_size - 1)] /= 255.0f;
       col++;
     }
   }
@@ -197,6 +199,26 @@ void move_to_gpu_stage(float *x, float *y, float *gpu_stage, int x_len, int y_le
 
 int my_floorf_division(float a, float b) {
   return ((a - 1) / b);
+}
+
+void show_img(cv::Mat &img) {
+  cv::Mat img_scaled = cv::Mat(600, 600, CV_8UC3);
+  cv::resize(img, img_scaled, img_scaled.size());
+  cv::namedWindow("image");
+  cv::imshow("image", img_scaled);
+  cv::waitKey();
+}
+
+cv::Mat lin2mat(float *img_lin) {
+  cv::Mat ans = cv::Mat(DATA_SIDE, DATA_SIDE, CV_8UC3); 
+  for (int r = 0; r < DATA_SIDE; r++) {
+    for (int c = 0; c < DATA_SIDE; c++) {
+      for (int chan = 0; chan < CHANNELS; chan++) {
+        ans.data[chan + c * CHANNELS + r * DATA_SIDE * CHANNELS] = img_lin[c + r * DATA_SIDE + chan * DATA_SIDE * DATA_SIDE];
+      }
+    }
+  }
+  return ans;
 }
 
 int main() {
@@ -214,6 +236,10 @@ int main() {
   std::cout << "Using GPU Device -> " << cudaProp.name << std::endl;
   cudaError_stat = cudaDeviceReset();
   std::cout << "cuda dev reset -->" << cudaError_stat << std::endl;
+
+  cv::Mat img = cv::imread("t0.jpg");
+  //show_img(img);
+
 
   int batch_size = BATCH_SIZE;
   float my_loss, loss, wt_sum, fcl0_wt_sum, fcl2_wt_sum, dur, avg_dur;
@@ -234,13 +260,39 @@ int main() {
   float *x_test = (float *)malloc(sizeof(float) * BATCH_SIZE * CHANNELS * DATA_SIDE * DATA_SIDE);
   float *y_test = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
 
-  FILE *fp_data_train = fopen("cifar-10-binary\cifar-10-batches-bin\data_batch_1.bin", "rb");
-  FILE *fp_data_test = fopen("cifar-10-binary\cifar-10-batches-bin\test_batch.bin", "rb");
+  FILE *fp_data_train = fopen("data_batch_1.bin", "r");
+  FILE *fp_data_test = fopen("test_batch.bin", "r");
 
   readBatch_cifar10_lim(fp_data_test, x_test, y_test);
+  
 
   ofstream results_file;
   results_file.open("shmlearn_results.txt");
+
+  std::vector<std::string> labels =
+  {
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  };
+
+
+  
+  for (int i = 0; i < 10; i++) {
+    for (int k = 0; k < 10; k++) {
+      if (y_test[k + i * 10] > 0)
+        std::cout << labels[k] << std::endl;
+    }
+    show_img(lin2mat(&x_test[i * 3072]));
+  }
+  
   
   read_imgs = 0;
   

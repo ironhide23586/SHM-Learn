@@ -116,8 +116,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>cudart.lib;cudnn.lib;cublas.lib;curand.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opencv_world320.lib;opencv_world320d.lib;cudart.lib;cudnn.lib;cublas.lib;curand.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Microsoft Visual Studio 14.0\VC\lib\amd64;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -162,12 +162,10 @@
   <ItemGroup>
     <ClInclude Include="ConvLayer.h" />
     <ClInclude Include="FCLayer.h" />
-    <ClInclude Include="sample.h" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="ConvLayer.cu" />
     <CudaCompile Include="FCLayer.cu" />
-    <CudaCompile Include="sample.cu" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data_batch_1.bin" />

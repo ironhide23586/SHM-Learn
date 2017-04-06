@@ -29,18 +29,12 @@
     <ClInclude Include="FCLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sample.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ConvLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="FCLayer.cu">
-      <Filter>Source Files</Filter>
-    </CudaCompile>
-    <CudaCompile Include="sample.cu">
       <Filter>Source Files</Filter>
     </CudaCompile>
     <CudaCompile Include="ConvLayer.cu">

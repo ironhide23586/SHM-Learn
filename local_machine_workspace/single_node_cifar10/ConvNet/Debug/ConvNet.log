@@ -1,7 +1,172 @@
-﻿  FCLayer.cpp
-c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\fclayer.h(3): fatal error C1083: Cannot open include file: 'cuda.h': No such file or directory
-  ConvNet.cpp
-c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convnet.cpp(5): fatal error C1083: Cannot open include file: 'cuda_runtime.h': No such file or directory
-  ConvLayer.cpp
-c:\users\monst\desktop\thesis\codes\gpu codes\convnet_iter_2 (on new machine)\convnet\convlayer.h(2): fatal error C1083: Cannot open include file: 'cudnn.h': No such file or directory
-  Generating Code...
+﻿Build started 4/5/2017 11:21:05 PM.
+     1>Project "D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\ConvNet.vcxproj" on node 2 (Build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\ConvNet.tlog\unsuccessfulbuild".
+       AddCudaCompileDeps:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /DWIN32 /D_DEBUG /D_CONSOLE /D_UNICODE /DUNICODE /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" /I. /FIcuda_runtime.h /c D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\ConvLayer.cu 
+       AddCudaCompileDeps:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /DWIN32 /D_DEBUG /D_CONSOLE /D_UNICODE /DUNICODE /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" /I. /FIcuda_runtime.h /c D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\FCLayer.cu 
+     1>Project "D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\ConvNet.vcxproj" (1) is building "D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\ConvNet.vcxproj" (1:2) on node 2 (CudaBuildCore target(s)).
+     1>CudaBuildCore:
+         Compiling CUDA source file ConvLayer.cu...
+     1>Project "D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\ConvNet.vcxproj" (1) is building "D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\ConvNet.vcxproj" (1:3) on node 1 (CudaBuildCore target(s)).
+     1>CudaBuildCore:
+         Compiling CUDA source file FCLayer.cu...
+     1>CudaBuildCore:
+         cmd.exe /C "C:\Users\monst\AppData\Local\Temp\tmpc9266763b9444955b7370dc00af86103.cmd"
+         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2015 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile -cudart static  -g   -DWIN32 -D_DEBUG -D_CONSOLE -D_UNICODE -DUNICODE -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -o Debug\ConvLayer.cu.obj "D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\ConvLayer.cu"
+         
+         D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2015 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile -cudart static  -g   -DWIN32 -D_DEBUG -D_CONSOLE -D_UNICODE -DUNICODE -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -o Debug\ConvLayer.cu.obj "D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\ConvLayer.cu" 
+     1>CudaBuildCore:
+         cmd.exe /C "C:\Users\monst\AppData\Local\Temp\tmp4cde9bc395e545b7b8aca3ac3f17c1e8.cmd"
+         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2015 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile -cudart static  -g   -DWIN32 -D_DEBUG -D_CONSOLE -D_UNICODE -DUNICODE -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -o Debug\FCLayer.cu.obj "D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\FCLayer.cu"
+         
+         D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2015 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile -cudart static  -g   -DWIN32 -D_DEBUG -D_CONSOLE -D_UNICODE -DUNICODE -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -o Debug\FCLayer.cu.obj "D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\FCLayer.cu" 
+     1>CUDACOMPILE : nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+         ConvLayer.cu
+     1>CUDACOMPILE : nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+         FCLayer.cu
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/ConvLayer.cu(8): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/ConvLayer.cu(22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>Done Building Project "D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\ConvNet.vcxproj" (CudaBuildCore target(s)).
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(43): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(251): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(252): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(257): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(258): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(325): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(326): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(331): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(332): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(359): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(366): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(374): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(382): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(390): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(398): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(406): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(419): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(433): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(449): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(461): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>D:/Users/monst/Desktop/SHM-Learn/local_machine_workspace/single_node_cifar10/ConvNet/FCLayer.cu(473): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+     1>Done Building Project "D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\ConvNet.vcxproj" (CudaBuildCore target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt ConvLayer.cpp main.cpp FCLayer.cpp
+         FCLayer.cpp
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\fclayer.cpp(115): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\fclayer.cpp(150): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\fclayer.cpp(525): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\fclayer.cpp(525): warning C4305: 'initializing': truncation from 'double' to 'float'
+         main.cpp
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(115): warning C4101: 'start_idx': unreferenced local variable
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(139): warning C4101: 'start_idx': unreferenced local variable
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(200): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(244): warning C4129: 'c': unrecognized character escape sequence
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(244): warning C4129: 'd': unrecognized character escape sequence
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(245): warning C4129: 'c': unrecognized character escape sequence
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(244): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(245): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(283): warning C4101: 'dur1_sft': unreferenced local variable
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(283): warning C4101: 'dur0': unreferenced local variable
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(206): warning C4101: 'cudnnStatus_stat': unreferenced local variable
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(283): warning C4101: 'dur1_lyr': unreferenced local variable
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(205): warning C4101: 'curandStatus_stat': unreferenced local variable
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(283): warning C4101: 'dur2': unreferenced local variable
+     1>d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\main.cpp(277): warning C4101: 'batch_verify': unreferenced local variable
+         ConvLayer.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\Debug\ConvNet.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64" /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\Win32" cudart.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\Debug\ConvNet.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\Debug\ConvNet.lib" /MACHINE:X86 Debug\ConvLayer.cu.obj
+         Debug\FCLayer.cu.obj
+         Debug\ConvLayer.obj
+         Debug\main.obj
+         Debug\FCLayer.obj
+         LINK : D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\Debug\ConvNet.exe not found or not built by the last incremental link; performing full link
+     1>ConvLayer.cu.obj : error LNK2019: unresolved external symbol _cudaConfigureCall@32 referenced in function "void __cdecl WeightMatrixRegularizeElemWiseConv(float *,float,int)" (?WeightMatrixRegularizeElemWiseConv@@YAXPAMMH@Z)
+     1>FCLayer.cu.obj : error LNK2001: unresolved external symbol _cudaConfigureCall@32
+     1>ConvLayer.cu.obj : error LNK2019: unresolved external symbol _cudaSetupArgument@12 referenced in function "void __cdecl __device_stub__Z44WeightMatrixRegularizeElemWiseConv_GPUKernelPffi(float *,float,int)" (?__device_stub__Z44WeightMatrixRegularizeElemWiseConv_GPUKernelPffi@@YAXPAMMH@Z)
+     1>FCLayer.cu.obj : error LNK2001: unresolved external symbol _cudaSetupArgument@12
+     1>ConvLayer.cu.obj : error LNK2019: unresolved external symbol _cudaLaunch@4 referenced in function "enum cudaError __cdecl cudaLaunch<char>(char *)" (??$cudaLaunch@D@@YA?AW4cudaError@@PAD@Z)
+     1>FCLayer.cu.obj : error LNK2001: unresolved external symbol _cudaLaunch@4
+     1>ConvLayer.cu.obj : error LNK2019: unresolved external symbol ___cudaRegisterFatBinary@4 referenced in function "void __cdecl __nv_cudaEntityRegisterCallback(void * *)" (?__nv_cudaEntityRegisterCallback@@YAXPAPAX@Z)
+     1>FCLayer.cu.obj : error LNK2001: unresolved external symbol ___cudaRegisterFatBinary@4
+     1>ConvLayer.cu.obj : error LNK2019: unresolved external symbol ___cudaUnregisterFatBinary@4 referenced in function "void __cdecl __cudaUnregisterBinaryUtil(void)" (?__cudaUnregisterBinaryUtil@@YAXXZ)
+     1>FCLayer.cu.obj : error LNK2001: unresolved external symbol ___cudaUnregisterFatBinary@4
+     1>ConvLayer.cu.obj : error LNK2019: unresolved external symbol ___cudaRegisterFunction@40 referenced in function "void __cdecl __nv_cudaEntityRegisterCallback(void * *)" (?__nv_cudaEntityRegisterCallback@@YAXPAPAX@Z)
+     1>FCLayer.cu.obj : error LNK2001: unresolved external symbol ___cudaRegisterFunction@40
+     1>FCLayer.cu.obj : error LNK2019: unresolved external symbol _cudaMemcpy@16 referenced in function "void __cdecl ReAlignMemory_ShiftLeft_CPU(float *,int,int)" (?ReAlignMemory_ShiftLeft_CPU@@YAXPAMHH@Z)
+     1>ConvLayer.obj : error LNK2001: unresolved external symbol _cudaMemcpy@16
+     1>main.obj : error LNK2001: unresolved external symbol _cudaMemcpy@16
+     1>FCLayer.obj : error LNK2001: unresolved external symbol _cudaMemcpy@16
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudaMalloc@8 referenced in function "private: void __thiscall ConvLayer::AllocateGPUMemory(void)" (?AllocateGPUMemory@ConvLayer@@AAEXXZ)
+     1>FCLayer.obj : error LNK2001: unresolved external symbol _cudaMalloc@8
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudaFree@4 referenced in function "public: __thiscall ConvLayer::~ConvLayer(void)" (??1ConvLayer@@QAE@XZ)
+     1>FCLayer.obj : error LNK2001: unresolved external symbol _cudaFree@4
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudaMemset@12 referenced in function "private: void __thiscall ConvLayer::InitializeBiases(void)" (?InitializeBiases@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnCreateTensorDescriptor@4 referenced in function "public: __thiscall ConvLayer::ConvLayer(struct cudnnContext * const &,struct cublasContext * const &,int,int,int,int,int,int,int,int,int,int,int,float,float,float,enum regularizer_type_Conv,float,float)" (??0ConvLayer@@QAE@ABQAUcudnnContext@@ABQAUcublasContext@@HHHHHHHHHHHMMMW4regularizer_type_Conv@@MM@Z)
+     1>FCLayer.obj : error LNK2001: unresolved external symbol _cudnnCreateTensorDescriptor@4
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnSetTensor4dDescriptor@28 referenced in function "public: __thiscall ConvLayer::ConvLayer(struct cudnnContext * const &,struct cublasContext * const &,int,int,int,int,int,int,int,int,int,int,int,float,float,float,enum regularizer_type_Conv,float,float)" (??0ConvLayer@@QAE@ABQAUcudnnContext@@ABQAUcublasContext@@HHHHHHHHHHHMMMW4regularizer_type_Conv@@MM@Z)
+     1>FCLayer.obj : error LNK2001: unresolved external symbol _cudnnSetTensor4dDescriptor@28
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnAddTensor@28 referenced in function "private: void __thiscall ConvLayer::Convolve_worker(void)" (?Convolve_worker@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnCreateFilterDescriptor@4 referenced in function "public: __thiscall ConvLayer::ConvLayer(struct cudnnContext * const &,struct cublasContext * const &,int,int,int,int,int,int,int,int,int,int,int,float,float,float,enum regularizer_type_Conv,float,float)" (??0ConvLayer@@QAE@ABQAUcudnnContext@@ABQAUcublasContext@@HHHHHHHHHHHMMMW4regularizer_type_Conv@@MM@Z)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnSetFilter4dDescriptor@28 referenced in function "private: void __thiscall ConvLayer::AllocateGPUMemory(void)" (?AllocateGPUMemory@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnCreateConvolutionDescriptor@4 referenced in function "public: __thiscall ConvLayer::ConvLayer(struct cudnnContext * const &,struct cublasContext * const &,int,int,int,int,int,int,int,int,int,int,int,float,float,float,enum regularizer_type_Conv,float,float)" (??0ConvLayer@@QAE@ABQAUcudnnContext@@ABQAUcublasContext@@HHHHHHHHHHHMMMW4regularizer_type_Conv@@MM@Z)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnSetConvolution2dDescriptor@32 referenced in function "private: void __thiscall ConvLayer::AllocateGPUMemory(void)" (?AllocateGPUMemory@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnGetConvolution2dForwardOutputDim@28 referenced in function "private: void __thiscall ConvLayer::AllocateGPUMemory(void)" (?AllocateGPUMemory@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnGetConvolutionForwardAlgorithm@32 referenced in function "private: void __thiscall ConvLayer::AllocateGPUMemory(void)" (?AllocateGPUMemory@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnGetConvolutionForwardWorkspaceSize@28 referenced in function "private: void __thiscall ConvLayer::AllocateGPUMemory(void)" (?AllocateGPUMemory@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnConvolutionForward@52 referenced in function "private: void __thiscall ConvLayer::Convolve_worker(void)" (?Convolve_worker@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnConvolutionBackwardBias@28 referenced in function "public: void __thiscall ConvLayer::ComputeLayerGradients(float *)" (?ComputeLayerGradients@ConvLayer@@QAEXPAM@Z)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnGetConvolutionBackwardFilterAlgorithm@32 referenced in function "private: void __thiscall ConvLayer::InitBackpropVars(void)" (?InitBackpropVars@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnGetConvolutionBackwardFilterWorkspaceSize@28 referenced in function "private: void __thiscall ConvLayer::InitBackpropVars(void)" (?InitBackpropVars@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnConvolutionBackwardFilter@52 referenced in function "public: void __thiscall ConvLayer::ComputeLayerGradients(float *)" (?ComputeLayerGradients@ConvLayer@@QAEXPAM@Z)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnGetConvolutionBackwardDataAlgorithm@32 referenced in function "private: void __thiscall ConvLayer::InitBackpropVars(void)" (?InitBackpropVars@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnGetConvolutionBackwardDataWorkspaceSize@28 referenced in function "private: void __thiscall ConvLayer::InitBackpropVars(void)" (?InitBackpropVars@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnConvolutionBackwardData@52 referenced in function "public: void __thiscall ConvLayer::ComputeLayerGradients(float *)" (?ComputeLayerGradients@ConvLayer@@QAEXPAM@Z)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnCreatePoolingDescriptor@4 referenced in function "public: void __thiscall ConvLayer::SetPoolingParams(enum cudnnPoolingMode_t,int,int,int,int,int,int)" (?SetPoolingParams@ConvLayer@@QAEXW4cudnnPoolingMode_t@@HHHHHH@Z)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnSetPooling2dDescriptor@36 referenced in function "public: void __thiscall ConvLayer::SetPoolingParams(enum cudnnPoolingMode_t,int,int,int,int,int,int)" (?SetPoolingParams@ConvLayer@@QAEXW4cudnnPoolingMode_t@@HHHHHH@Z)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnGetPooling2dForwardOutputDim@24 referenced in function "public: void __thiscall ConvLayer::SetPoolingParams(enum cudnnPoolingMode_t,int,int,int,int,int,int)" (?SetPoolingParams@ConvLayer@@QAEXW4cudnnPoolingMode_t@@HHHHHH@Z)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnPoolingForward@32 referenced in function "private: void __thiscall ConvLayer::Convolve_worker(void)" (?Convolve_worker@ConvLayer@@AAEXXZ)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnPoolingBackward@48 referenced in function "public: void __thiscall ConvLayer::ComputeLayerGradients(float *)" (?ComputeLayerGradients@ConvLayer@@QAEXPAM@Z)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnCreateActivationDescriptor@4 referenced in function "public: void __thiscall ConvLayer::SetActivationFunc(enum cudnnActivationMode_t,double)" (?SetActivationFunc@ConvLayer@@QAEXW4cudnnActivationMode_t@@N@Z)
+     1>FCLayer.obj : error LNK2001: unresolved external symbol _cudnnCreateActivationDescriptor@4
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnSetActivationDescriptor@20 referenced in function "public: void __thiscall ConvLayer::SetActivationFunc(enum cudnnActivationMode_t,double)" (?SetActivationFunc@ConvLayer@@QAEXW4cudnnActivationMode_t@@N@Z)
+     1>FCLayer.obj : error LNK2001: unresolved external symbol _cudnnSetActivationDescriptor@20
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnActivationForward@32 referenced in function "private: void __thiscall ConvLayer::Convolve_worker(void)" (?Convolve_worker@ConvLayer@@AAEXXZ)
+     1>FCLayer.obj : error LNK2001: unresolved external symbol _cudnnActivationForward@32
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cudnnActivationBackward@48 referenced in function "public: void __thiscall ConvLayer::ComputeLayerGradients(float *)" (?ComputeLayerGradients@ConvLayer@@QAEXPAM@Z)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _cublasSgeam@52 referenced in function "public: void __thiscall ConvLayer::UpdateWeights(float *,float *)" (?UpdateWeights@ConvLayer@@QAEXPAM0@Z)
+     1>FCLayer.obj : error LNK2001: unresolved external symbol _cublasSgeam@52
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _curandCreateGenerator@8 referenced in function "private: void __thiscall ConvLayer::InitializeFilters(float,float)" (?InitializeFilters@ConvLayer@@AAEXMM@Z)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _curandDestroyGenerator@4 referenced in function "private: void __thiscall ConvLayer::InitializeFilters(float,float)" (?InitializeFilters@ConvLayer@@AAEXMM@Z)
+     1>ConvLayer.obj : error LNK2019: unresolved external symbol _curandGenerateNormal@20 referenced in function "private: void __thiscall ConvLayer::InitializeFilters(float,float)" (?InitializeFilters@ConvLayer@@AAEXMM@Z)
+     1>main.obj : error LNK2019: unresolved external symbol _cudaDeviceReset@0 referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _cudaGetDeviceCount@4 referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _cudaGetDeviceProperties@8 referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _cudaSetDevice@4 referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _cudaMallocHost@8 referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol "void __cdecl cv::fastFree(void *)" (?fastFree@cv@@YAXPAX@Z) referenced in function "public: __thiscall cv::Mat::~Mat(void)" (??1Mat@cv@@QAE@XZ)
+     1>main.obj : error LNK2019: unresolved external symbol "private: char * __thiscall cv::String::allocate(unsigned int)" (?allocate@String@cv@@AAEPADI@Z) referenced in function "public: __thiscall cv::String::String(char const *)" (??0String@cv@@QAE@PBD@Z)
+     1>main.obj : error LNK2019: unresolved external symbol "private: void __thiscall cv::String::deallocate(void)" (?deallocate@String@cv@@AAEXXZ) referenced in function "public: __thiscall cv::String::~String(void)" (??1String@cv@@QAE@XZ)
+     1>main.obj : error LNK2019: unresolved external symbol "public: void __thiscall cv::Mat::deallocate(void)" (?deallocate@Mat@cv@@QAEXXZ) referenced in function "public: void __thiscall cv::Mat::release(void)" (?release@Mat@cv@@QAEXXZ)
+     1>main.obj : error LNK2019: unresolved external symbol "class cv::Mat __cdecl cv::imread(class cv::String const &,int)" (?imread@cv@@YA?AVMat@1@ABVString@1@H@Z) referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol "void __cdecl cv::namedWindow(class cv::String const &,int)" (?namedWindow@cv@@YAXABVString@1@H@Z) referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol "int __cdecl cv::waitKey(int)" (?waitKey@cv@@YAHH@Z) referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol "void __cdecl cv::imshow(class cv::String const &,class cv::_InputArray const &)" (?imshow@cv@@YAXABVString@1@ABV_InputArray@1@@Z) referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _cudnnCreate@4 referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _cudnnDestroy@4 referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _cublasCreate_v2@4 referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _cublasDestroy_v2@4 referenced in function _main
+     1>FCLayer.obj : error LNK2019: unresolved external symbol _cudnnSoftmaxForward@36 referenced in function "public: void __thiscall FCLayer::SoftmaxOut(void)" (?SoftmaxOut@FCLayer@@QAEXXZ)
+     1>FCLayer.obj : error LNK2019: unresolved external symbol _cublasSgemv_v2@48 referenced in function "private: void __thiscall FCLayer::SumColumns(float *,float *,int,int)" (?SumColumns@FCLayer@@AAEXPAM0HH@Z)
+     1>FCLayer.obj : error LNK2019: unresolved external symbol _cublasSgemm_v2@56 referenced in function "public: void __thiscall FCLayer::ComputeLayerGradients(float *)" (?ComputeLayerGradients@FCLayer@@QAEXPAM@Z)
+     1>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\lib\x64\cudart.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'X86'
+     1>D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\Debug\ConvNet.exe : fatal error LNK1120: 61 unresolved externals
+     1>Done Building Project "D:\Users\monst\Desktop\SHM-Learn\local_machine_workspace\single_node_cifar10\ConvNet\ConvNet.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:16.41
