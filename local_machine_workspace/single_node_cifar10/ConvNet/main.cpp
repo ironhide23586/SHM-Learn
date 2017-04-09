@@ -30,7 +30,7 @@
 #define DATA_SIDE 32 //Throws GPU setup error if above 257
 #define CHANNELS 3
 
-#define BATCH_SIZE 128
+#define BATCH_SIZE 5
 #define LABELS 10
 
 #define EPOCHS 10
@@ -216,7 +216,8 @@ cv::Mat lin2mat(float *img_lin) {
   for (int r = 0; r < DATA_SIDE; r++) {
     for (int c = 0; c < DATA_SIDE; c++) {
       for (int chan = 0; chan < CHANNELS; chan++) {
-        ans.data[chan + c * CHANNELS + r * DATA_SIDE * CHANNELS] = img_lin[c + r * DATA_SIDE + chan * DATA_SIDE * DATA_SIDE];
+        ans.data[chan + c * CHANNELS + r * DATA_SIDE * CHANNELS] 
+          = img_lin[c + r * DATA_SIDE + chan * DATA_SIDE * DATA_SIDE];
       }
     }
   }
@@ -244,7 +245,7 @@ int main() {
 
 
   int batch_size = BATCH_SIZE;
-  float my_loss, loss, wt_sum, fcl0_wt_sum, fcl2_wt_sum, dur, avg_dur;
+  float my_loss, loss, wt_sum, cl0_wt_sum, fcl0_wt_sum, fcl2_wt_sum, dur, avg_dur;
   cublasHandle_t cublasHandle;
   cublasStatus_stat = cublasCreate_v2(&cublasHandle);
   std::cout << "cublas handle create -->" << cublasStatus_stat << std::endl;
@@ -255,11 +256,14 @@ int main() {
   std::cout << "cuDNN initialization -->" << cudnn_status << std::endl;
 
   float *x, *y;
+  float *h_out;
 
-  cudaMallocHost((void **)&x, sizeof(float) * BATCH_SIZE * CHANNELS * DATA_SIDE * DATA_SIDE);
+  cudaMallocHost((void **)&x, sizeof(float) * BATCH_SIZE * CHANNELS 
+                 * DATA_SIDE * DATA_SIDE);
   cudaMallocHost((void **)&y, sizeof(float) * BATCH_SIZE * LABELS);
 
-  float *x_test = (float *)malloc(sizeof(float) * BATCH_SIZE * CHANNELS * DATA_SIDE * DATA_SIDE);
+  float *x_test = (float *)malloc(sizeof(float) * BATCH_SIZE * CHANNELS 
+                                  * DATA_SIDE * DATA_SIDE);
   float *y_test = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
 
   FILE *fp_data_train = fopen("data_batch_1.bin", "r");
@@ -299,32 +303,45 @@ int main() {
   read_imgs = 0;
   
 
-  float base_lr = 0.05f, gamma = 0.4f, power = 0;
+  float base_lr = 0.001f, gamma = 0.4f, power = 0;
   float lr = base_lr * powf(1 + gamma, -power);
-  float reg = 0.01f;
-  float mom = 0.0f;
+  float reg = 0.004f;
+  float mom = 0.9f;
 
 
-  //ConvLayer cl0(cudnnHandle, cublasHandle, BATCH_SIZE, CHANNELS, DATA_SIDE, DATA_SIDE,
-  //              2, 2, 1, 1, 3, 3, 32);
-  //cl0.SetPoolingParams(CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING, 3, 3, 2, 2, 0, 0);
-  //cl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
-  //cl0.is_input_layer = true;
+  ConvLayer cl0(cudnnHandle, cublasHandle, BATCH_SIZE, CHANNELS, DATA_SIDE, DATA_SIDE,
+                2, 2, 1, 1, 5, 5, 32, lr, mom, reg);
+  cl0.SetPoolingParams(CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING, 3, 3, 2, 2, 0, 0);
+  cl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
+  cl0.is_input_layer = true;
 
+  ConvLayer cl1(cudnnHandle, cublasHandle, cl0.output_n, cl0.output_c,
+                cl0.output_h, cl0.output_w, 2, 2, 1, 1, 5, 5, 32, lr, mom, reg);
+  cl1.SetPoolingParams(CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING, 3, 3, 2, 2, 0, 0);
+  cl1.SetActivationFunc(CUDNN_ACTIVATION_RELU);
 
-  FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, BATCH_SIZE, CHANNELS * DATA_SIDE
-               * DATA_SIDE,
+  ConvLayer cl2(cudnnHandle, cublasHandle, cl1.output_n, cl1.output_c,
+                cl1.output_h, cl1.output_w, 2, 2, 1, 1, 5, 5, 64, lr, mom, reg);
+  cl2.SetPoolingParams(CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING, 3, 3, 2, 2, 0, 0);
+  cl2.SetActivationFunc(CUDNN_ACTIVATION_RELU);
+
+  FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, cl0.output_n,
+               cl0.output_c * cl0.output_h * cl0.output_w,
                64, false, lr, mom, reg);
   fcl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
-  fcl0.is_input_layer = true;
 
-  FCLayer fcl2(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
-               fcl0.output_neurons, LABELS, true, lr, mom, reg);
-  fcl2.InitBackpropVars();
+  FCLayer fcl1(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
+               fcl0.output_neurons, 32, false, lr, mom, reg);
+  fcl1.SetActivationFunc(CUDNN_ACTIVATION_RELU);
+
+  FCLayer fcl2(cudnnHandle, cublasHandle, cudaProp, fcl1.input_batch_size,
+               fcl1.output_neurons, LABELS, true, lr, mom, reg);
 
   auto st = std::chrono::system_clock::now();
 
-  float *h_out = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
+  //float *h_out = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
+  cudaMallocHost((void **)&h_out, sizeof(float) * BATCH_SIZE * LABELS);
+
   int batch = 1;
   int lim = my_floorf_division(EPOCH_SIZE, BATCH_SIZE);
   int epoch = 1, prog = 1;
@@ -336,52 +353,103 @@ int main() {
 
   auto train_start = std::chrono::high_resolution_clock::now();
   auto train_end = std::chrono::high_resolution_clock::now();
+
+  auto t0 = std::chrono::high_resolution_clock::now();
+  auto t1 = std::chrono::high_resolution_clock::now();
+
   float dur0, dur1_sft, dur1_lyr, dur2;
 
   while (epoch <= EPOCHS) {
+    t0 = std::chrono::high_resolution_clock::now();
     readBatch_cifar10_lim_v2(fp_data_train, x, y);
+    t1 = std::chrono::high_resolution_clock::now();
+    dur0 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(t1
+                                                                      - t0)
+      .count() * 1e-9f;
     if (prog == 1) {
       prev_read_imgs = read_imgs;
     }
 
+    cl0.learning_rate = lr;
+    cl1.learning_rate = lr;
+    cl2.learning_rate = lr;
     fcl0.learning_rate = lr;
+    fcl1.learning_rate = lr;
     fcl2.learning_rate = lr;
 
     // Forward Pass
     train_start = std::chrono::high_resolution_clock::now();
-    fcl0.LoadData(x, false);
+    cl0.LoadData(x, false);
+    cl0.Convolve();
+    cl1.LoadData(cl0.d_out, true);
+    cl1.Convolve();
+    cl2.LoadData(cl1.d_out, true);
+    cl2.Convolve();
+    fcl0.LoadData(cl2.d_out, true);
     fcl0.ForwardProp();
-    fcl2.LoadData(fcl0.d_out, true);
+    fcl1.LoadData(fcl0.d_out, true);
+    fcl1.ForwardProp();
+    fcl2.LoadData(fcl1.d_out, true);
     fcl2.ForwardProp();
 
     // Back-propagation
     fcl2.ComputeSoftmaxGradients(y);
-    fcl0.ComputeLayerGradients(fcl2.d_prev_layer_derivatives);
+    fcl1.ComputeLayerGradients(fcl2.d_prev_layer_derivatives);
+    fcl0.ComputeLayerGradients(fcl1.d_prev_layer_derivatives);
+    cl2.ComputeLayerGradients(fcl0.d_prev_layer_derivatives);
+    cl1.ComputeLayerGradients(cl2.d_prev_layer_derivatives);
+    cl0.ComputeLayerGradients(cl1.d_prev_layer_derivatives);
+
     fcl2.UpdateWeights(fcl2.d_gradients);
+    fcl1.UpdateWeights(fcl1.d_gradients);
     fcl0.UpdateWeights(fcl0.d_gradients);
+    cl2.UpdateWeights(cl2.d_filter_gradients, cl2.d_bias_gradients);
+    cl1.UpdateWeights(cl1.d_filter_gradients, cl1.d_bias_gradients);
+    cl0.UpdateWeights(cl0.d_filter_gradients, cl0.d_bias_gradients);
 
     train_end = std::chrono::high_resolution_clock::now();
 
-    fcl0.ForwardProp();
-    fcl2.LoadData(fcl0.d_out, true);
-    fcl2.ForwardProp();
-    cudaMemcpy(h_out, fcl2.d_out, sizeof(float) * BATCH_SIZE * LABELS, cudaMemcpyDeviceToHost);
+    //print_d_var3(fcl2.d_weight_matrix, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
+    print_d_var3(cl0.d_filt, cl0.feature_maps, cl1.input_c * cl1.kernel_h * cl1.kernel_w);
 
+    
+    //cl0.Convolve();
+    //fcl0.LoadData(cl0.d_out, true);
+    //fcl0.ForwardProp();
+    //fcl2.LoadData(fcl0.d_out, true);
+    //fcl2.ForwardProp();
+    
+    t0 = std::chrono::high_resolution_clock::now();
+    cudaMemcpy(h_out, fcl2.d_out, sizeof(float) * BATCH_SIZE * LABELS, //CAUSING DELAY
+               cudaMemcpyDeviceToHost);
+    t1 = std::chrono::high_resolution_clock::now();
+    dur2 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(t1
+                                                                       - t0)
+      .count() * 1e-9f;
     my_loss = 0.0f;
+    
     for (int i = 0; i < BATCH_SIZE; i++) {
       for (int j = 0; j < LABELS; j++) {
         my_loss -= ((y[j + i * LABELS] * log(h_out[j + i * LABELS])));
       }
     }
     my_loss /= BATCH_SIZE;
-    wt_sum = 0.0f;
-    fcl0_wt_sum = matrix_square_sum(fcl0.d_weight_matrix, fcl0.weight_matrix_size, fcl0.weight_matrix_cols);
-    fcl2_wt_sum = matrix_square_sum(fcl2.d_weight_matrix, fcl2.weight_matrix_size, fcl2.weight_matrix_cols);
-    wt_sum = fcl0_wt_sum + fcl2_wt_sum;
-    float wt_loss = (reg * 0.5f) * wt_sum;
-    loss = my_loss + wt_loss;
-
-    dur = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(train_end - train_start).count() * 1e-9f;
+    //wt_sum = 0.0f;
+    //
+    //fcl0_wt_sum = matrix_square_sum(fcl0.d_weight_matrix, fcl0.weight_matrix_size, 
+    //                                fcl0.weight_matrix_cols);
+    //fcl2_wt_sum = matrix_square_sum(fcl2.d_weight_matrix, fcl2.weight_matrix_size, 
+    //                                fcl2.weight_matrix_cols);
+    //
+    //wt_sum = fcl0_wt_sum + fcl2_wt_sum;
+    //float wt_loss = (reg * 0.5f) * wt_sum;
+    
+    loss = my_loss;// + wt_loss;
+    
+      
+    dur = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(train_end 
+                                                                      - train_start)
+      .count() * 1e-9f;
     ts += dur;
     if (cnt == 253) {
       int k = 0;
@@ -393,7 +461,8 @@ int main() {
       avg_dur /= 2;
     }
     std::cout << "Batch " << batch
-      << " Epoch = " << epoch << " Loss = " << my_loss << " C++_CUDA_GPU Avg iter time = " << avg_dur;
+      << " Epoch = " << epoch << " Loss = " << my_loss 
+      << " C++_CUDA_GPU Avg iter time = " << avg_dur;
 
     batch++;
     prog++;
@@ -408,6 +477,7 @@ int main() {
 
     std::cout << std::endl;
     cnt++;
+    
   }
   results_file << "Avg iter time = " << avg_dur << " seconds\n";
   results_file.close();

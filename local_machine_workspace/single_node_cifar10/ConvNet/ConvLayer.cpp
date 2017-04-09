@@ -43,12 +43,14 @@ ConvLayer::ConvLayer(const cudnnHandle_t &cudnn_handle_arg,
   weight_init_mean(weight_init_mean_arg),
   weight_init_stddev(weight_init_stddev_arg) {
   cudnnCreateTensorDescriptor(&dataTensor);
-  cudnnSetTensor4dDescriptor(dataTensor, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
+  cudnnStatus_stat = cudnnSetTensor4dDescriptor(dataTensor, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
                              input_n, input_c, input_h, input_w);
-  cudnnCreateConvolutionDescriptor(&convDesc);
+  cudnnStatus_stat = cudnnCreateConvolutionDescriptor(&convDesc);
   cudnnCreateFilterDescriptor(&filterDesc);
   cudnnCreateTensorDescriptor(&convTensor);
   cudnnCreateTensorDescriptor(&biasTensor);
+  x_upscale = 1;
+  y_upscale = 1;
   AllocateGPUMemory();
   InitializeFilters(weight_init_mean, weight_init_stddev);
   InitializeBiases();
@@ -59,8 +61,7 @@ ConvLayer::ConvLayer(const cudnnHandle_t &cudnn_handle_arg,
   is_input_layer = false;
   pooling_params_initialized = false;
   neg_one_scalar = -1.0f;
-  x_upscale = 1;
-  y_upscale = 1;
+  
   alpha = 1.0f;
   beta = 0.0f;
 }
@@ -68,27 +69,32 @@ ConvLayer::ConvLayer(const cudnnHandle_t &cudnn_handle_arg,
 void ConvLayer::AllocateGPUMemory() {
   cudaMalloc((void **)&d_data,
              input_n * input_c * input_h * input_w * sizeof(float));
-  cudnnSetConvolution2dDescriptor(convDesc, pad_h, pad_w, vert_stride,
-                                  hor_stride, x_upscale, y_upscale,
-                                  CUDNN_CONVOLUTION);
-  //pad_h, pad_w, vert_filter_stride,
-  //hor_filt_stride, x-upscale, y_upscale
-
-  cudnnSetFilter4dDescriptor(filterDesc, CUDNN_DATA_FLOAT, CUDNN_TENSOR_NCHW,
-                             feature_maps, input_c, kernel_h, kernel_w);
+  cudnnStatus_stat = cudnnSetConvolution2dDescriptor(convDesc, pad_h, pad_w, vert_stride,
+                                                     hor_stride, x_upscale, y_upscale,
+                                                     CUDNN_CONVOLUTION);
+  cudnnStatus_stat = cudnnSetFilter4dDescriptor(filterDesc, CUDNN_DATA_FLOAT, CUDNN_TENSOR_NCHW,
+                                                feature_maps, input_c, kernel_h, kernel_w);
   //no_of_feature_maps, c, h, w; feaure_maps = out_channels
   filter_linear_size = input_c * kernel_h * kernel_w;
   filter_total_size = feature_maps * filter_linear_size;
   cudaMalloc((void **)&d_filt,
              sizeof(float) * feature_maps
              * input_c * kernel_h * kernel_w);
-  cudnnGetConvolution2dForwardOutputDim(convDesc, dataTensor, filterDesc,
-                                        &output_n, &output_c, &output_h,
-                                        &output_w);
+  cudnnStatus_stat = cudnnGetConvolution2dForwardOutputDim(convDesc, dataTensor, filterDesc,
+                                                           &output_n, &output_c, &output_h,
+                                                           &output_w);
+  
+
+  //output_n = input_n;
+  //output_c = feature_maps;
+  //output_h = 1 + (input_h + 2 * pad_h - kernel_h) / hor_stride;
+  //output_w = 1 + (input_w + 2 * pad_w - kernel_w) / vert_stride;
+
   conv_output_n = output_n;
   conv_output_c = output_c;
   conv_output_h = output_h;
   conv_output_w = output_w;
+
   cudnnSetTensor4dDescriptor(convTensor, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
                              output_n, output_c, output_h, output_w);
   cudaMalloc((void **)&d_conv, sizeof(float) * output_n
@@ -153,16 +159,40 @@ void ConvLayer::SetPoolingParams(cudnnPoolingMode_t pool_mode_arg,
 
 void ConvLayer::InitializeFilters(float mean, float stddev) {
   curandGenerator_t rng;
-  curandCreateGenerator(&rng, CURAND_RNG_PSEUDO_XORWOW);
-  curandGenerateNormal(rng, d_filt, sizeof(float) * feature_maps
+  curandStatus_stat = curandCreateGenerator(&rng, CURAND_RNG_PSEUDO_XORWOW);
+  //print_d_var2(d_filt, feature_maps, input_c * input_h * input_w);
+  curandStatus_stat = curandGenerateNormal(rng, d_filt, sizeof(float) * feature_maps
                        * input_c * kernel_h * kernel_w, mean, stddev);
-  curandDestroyGenerator(rng);
+
+  //MODIFY THIS
+
+  print_d_var2(d_filt, feature_maps, input_c * input_h * input_w);
+  curandStatus_stat = curandDestroyGenerator(rng);
   //cudaMemset(d_filt, 1, sizeof(float) * feature_maps * input_c
   //           * kernel_h * kernel_w);
 }
 
 void ConvLayer::InitializeBiases() {
   cudaMemset(d_bias, 0, sizeof(float) * output_c);
+}
+
+void ConvLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
+                                      float bias_wt_val) {
+  float *h_tmp_wt_mat = (float *)malloc(sizeof(float) * wt_mat_sz);
+  float wt_avg = 0.0;
+  for (long int i = 0; i < wt_mat_sz; i++) {
+    h_tmp_wt_mat[i] = GetRandomNum();
+    wt_avg += h_tmp_wt_mat[i];
+  }
+  wt_avg /= wt_mat_sz;
+  SubtractElemwise_Conv(d_wt_mat, wt_avg, wt_mat_sz);
+  free(h_tmp_wt_mat);
+}
+
+float ConvLayer::GetRandomNum() {
+  static std::default_random_engine re;
+  static std::uniform_real_distribution<float> dist(-0.05f, 0.05f);
+  return dist(re);
 }
 
 void ConvLayer::Convolve() {

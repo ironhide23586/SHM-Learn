@@ -183,12 +183,12 @@ void FCLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
     grads_initialized = true;
   }
 
-  if (!is_softmax_layer) {
-    //ReAlignMemory_ShiftLeft_CPU(d_out_xw_act, input_batch_size, output_neurons + 1);
-    ReAlignMemory_ShiftLeft(d_out_xw_act, d_shift_helper,
-                            input_batch_size, output_neurons + 1,
-                            cuda_device_prop.maxThreadsPerBlock);
-  }
+  //if (!is_softmax_layer) {
+  //  //ReAlignMemory_ShiftLeft_CPU(d_out_xw_act, input_batch_size, output_neurons + 1);
+  //  ReAlignMemory_ShiftLeft(d_out_xw_act, d_shift_helper,
+  //                          input_batch_size, output_neurons + 1,
+  //                          cuda_device_prop.maxThreadsPerBlock);
+  //}
   if (activation_set) {
     //print_d_var(d_backprop_derivatives, input_batch_size, output_neurons);
     //print_d_var(d_out_xw_act, input_batch_size, output_neurons);
@@ -388,9 +388,6 @@ float FCLayer::GetRandomNum() {
   static std::default_random_engine re;
   static std::uniform_real_distribution<float> dist(-0.05f, 0.05f);
   return dist(re);
-  //if (is_softmax_layer)
-  //  return 0.0f;
-  //return 1.0f;
 }
 
 void FCLayer::SumColumns(float *d_mat, float *d_out, int rows, int cols) {

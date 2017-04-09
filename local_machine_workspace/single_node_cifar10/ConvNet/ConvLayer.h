@@ -2,14 +2,18 @@
 #include <cudnn.h>
 #include <cublas.h>
 #include <curand.h>
+//#include <curand_kernel.h>
 #include <vector>
 
 #include <iostream>
+#include <random>
 //#include "GlobalInclude.h"
 
 // Computes W - lambda * W^2
 void WeightMatrixRegularizeElemWiseConv(float *d_mat_in,
                                         float reg_inp_scalar, int d_mat_size);
+
+void SubtractElemwise_Conv(float *d_mat, float delta, int mat_size);
 
 enum regularizer_type_Conv { L1_Conv, L2_Conv };
 
@@ -99,8 +103,11 @@ public:
 private:
   void AllocateGPUMemory(void);
   void InitializeFilters(float mean, float stddev); //Temporary
+  float GetRandomNum();
   void InitializeBiases(void); //Temporary
   void InitBackpropVars(void);
+  void CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
+                               float bias_wt_val);
   void Convolve_worker(void);
 
   float alpha, beta;
