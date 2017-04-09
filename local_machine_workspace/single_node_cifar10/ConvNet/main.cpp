@@ -30,11 +30,11 @@
 #define DATA_SIDE 32 //Throws GPU setup error if above 257
 #define CHANNELS 3
 
-#define BATCH_SIZE 6
+#define BATCH_SIZE 128
 #define LABELS 10
 
 #define EPOCHS 10
-#define EPOCH_SIZE 20
+#define EPOCH_SIZE 10000
 
 using namespace std;
 using namespace cv;
@@ -134,43 +134,6 @@ void readBatch_mnist(FILE *fp_x, FILE *fp_y, float *h_imgs, float *h_lbls) {
   }
 }
 
-void readBatch_mnist_lim(FILE *fp_x, FILE *fp_y, float *h_imgs, float *h_lbls) {
-  int row_size_x = (CHANNELS * DATA_SIDE * DATA_SIDE);
-  int batch_bytes_x = BATCH_SIZE * row_size_x;
-  int start_idx;
-  unsigned char *buff_x = (unsigned char *)malloc(sizeof(unsigned char)
-                                                  * row_size_x);
-  unsigned char buff_y;
-
-  float mean_pixel = 0.0f;
-
-  memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
-  memset(h_imgs, 0, sizeof(float) * batch_bytes_x);
-
-  int read_examples = 0, curr_example = 0;
-  while (read_examples < BATCH_SIZE) {
-    fread(buff_x, sizeof(unsigned char), row_size_x, fp_x);
-    fread(&buff_y, sizeof(unsigned char), 1, fp_y);
-    if (buff_y < LABELS) {
-      h_lbls[buff_y + read_examples * LABELS] = 1.0f;
-      for (int j = 0; j < row_size_x; j++) {
-        h_imgs[j + read_examples * row_size_x]
-          = (float)buff_x[j] / 255.0f;
-      }
-      read_examples++;
-    }
-    curr_example++;
-    if ((read_imgs + curr_example) >= EPOCH_SIZE) {
-      fseek(fp_x, 16, 0);
-      fseek(fp_y, 8, 0);
-      read_imgs = 0;
-      curr_example = 0;
-    }
-  }
-  free(buff_x);
-  read_imgs += curr_example;
-}
-
 void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls) {
   int row_size = (CHANNELS * DATA_SIDE * DATA_SIDE) + 1;
   int row_size_x = row_size - 1;
@@ -197,8 +160,8 @@ void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls) {
     h_lbls[lbl + i * LABELS] = 1.0f;
     int col = 0;
     for (int j = start_idx + 1; j < start_idx + row_size; j++) {
-      h_imgs[col + i * (row_size - 1)] = (float)buff[j];
-      //h_imgs[col + i * (row_size - 1)] /= 255.0f;
+      h_imgs[col + i * row_size_x] = (float)buff[j];
+      h_imgs[col + i * row_size_x] /= 255.0f;
       col++;
     }
   }
@@ -223,7 +186,7 @@ void readBatch_cifar10_lim(FILE *fp, float *h_imgs, float *h_lbls) {
     int col = 0;
     for (int j = start_idx + 1; j < start_idx + row_size; j++) {
       h_imgs[col + i * (row_size - 1)] = (float)buff[j];
-      //h_imgs[col + i * (row_size - 1)] /= 255.0f;
+      h_imgs[col + i * (row_size - 1)] /= 255.0f;
       col++;
     }
   }
@@ -320,17 +283,17 @@ int main() {
   };
 
 
-  while (true) {
-    readBatch_cifar10_lim_v2(fp_data_test, x_test, y_test);
-    for (int i = 0; i < BATCH_SIZE; i++) {
-      for (int k = 0; k < LABELS; k++) {
-        if (y_test[k + i * LABELS] > 0)
-          std::cout << labels[k] << std::endl;
-      }
-      show_img(lin2mat(&x_test[i * 3072]));
-    }
-    std::cout << "----------" << std::endl;
-  }
+  //while (true) {
+  //  readBatch_cifar10_lim_v2(fp_data_train, x, y);
+  //  for (int i = 0; i < BATCH_SIZE; i++) {
+  //    for (int k = 0; k < LABELS; k++) {
+  //      if (y[k + i * LABELS] > 0)
+  //        std::cout << labels[k] << std::endl;
+  //    }
+  //    show_img(lin2mat(&x[i * 3072]));
+  //  }
+  //  std::cout << "----------" << std::endl;
+  //}
   
   
   read_imgs = 0;
@@ -341,9 +304,18 @@ int main() {
   float reg = 0.01f;
   float mom = 0.0f;
 
-  FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, BATCH_SIZE, CHANNELS * DATA_SIDE * DATA_SIDE,
+
+  //ConvLayer cl0(cudnnHandle, cublasHandle, BATCH_SIZE, CHANNELS, DATA_SIDE, DATA_SIDE,
+  //              2, 2, 1, 1, 3, 3, 32);
+  //cl0.SetPoolingParams(CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING, 3, 3, 2, 2, 0, 0);
+  //cl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
+  //cl0.is_input_layer = true;
+
+
+  FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, BATCH_SIZE, CHANNELS * DATA_SIDE
+               * DATA_SIDE,
                64, false, lr, mom, reg);
-  fcl0.SetActivationFunc(CUDNN_ACTIVATION_SIGMOID);
+  fcl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
   fcl0.is_input_layer = true;
 
   FCLayer fcl2(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
@@ -367,7 +339,7 @@ int main() {
   float dur0, dur1_sft, dur1_lyr, dur2;
 
   while (epoch <= EPOCHS) {
-    readBatch_cifar10_lim(fp_data_train, x, y);
+    readBatch_cifar10_lim_v2(fp_data_train, x, y);
     if (prog == 1) {
       prev_read_imgs = read_imgs;
     }
