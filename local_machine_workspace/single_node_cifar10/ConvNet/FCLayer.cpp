@@ -164,6 +164,7 @@ void FCLayer::ComputeSoftmaxGradients(float *h_pinned_labels) {
   }
   d_labels = h_pinned_labels;
   //print_d_var(d_labels, input_batch_size, output_neurons);
+  //print_d_var(d_out, input_batch_size, output_neurons);
   cublasStatus_stat = cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
                                   output_neurons, input_batch_size,
                                   &softmax_grad_coeff, d_out, output_neurons,
@@ -183,12 +184,12 @@ void FCLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
     grads_initialized = true;
   }
 
-  //if (!is_softmax_layer) {
-  //  //ReAlignMemory_ShiftLeft_CPU(d_out_xw_act, input_batch_size, output_neurons + 1);
-  //  ReAlignMemory_ShiftLeft(d_out_xw_act, d_shift_helper,
-  //                          input_batch_size, output_neurons + 1,
-  //                          cuda_device_prop.maxThreadsPerBlock);
-  //}
+  if (!is_softmax_layer) {
+    //ReAlignMemory_ShiftLeft_CPU(d_out_xw_act, input_batch_size, output_neurons + 1);
+    ReAlignMemory_ShiftLeft(d_out_xw_act, d_shift_helper,
+                            input_batch_size, output_neurons + 1,
+                            cuda_device_prop.maxThreadsPerBlock);
+  }
   if (activation_set) {
     //print_d_var(d_backprop_derivatives, input_batch_size, output_neurons);
     //print_d_var(d_out_xw_act, input_batch_size, output_neurons);

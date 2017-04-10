@@ -106,8 +106,7 @@ private:
   float GetRandomNum();
   void InitializeBiases(void); //Temporary
   void InitBackpropVars(void);
-  void CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
-                               float bias_wt_val);
+  void CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz);
   void Convolve_worker(void);
 
   float alpha, beta;

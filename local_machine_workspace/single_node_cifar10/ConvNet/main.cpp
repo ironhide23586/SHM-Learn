@@ -30,7 +30,7 @@
 #define DATA_SIDE 32 //Throws GPU setup error if above 257
 #define CHANNELS 3
 
-#define BATCH_SIZE 5
+#define BATCH_SIZE 128
 #define LABELS 10
 
 #define EPOCHS 10
@@ -381,24 +381,44 @@ int main() {
     train_start = std::chrono::high_resolution_clock::now();
     cl0.LoadData(x, false);
     cl0.Convolve();
+
+    //print_d_var3(cl0.d_out, BATCH_SIZE, cl0.output_c * cl0.output_h * cl0.output_w);
+
     cl1.LoadData(cl0.d_out, true);
     cl1.Convolve();
+
+    //print_d_var3(cl1.d_out, BATCH_SIZE, cl1.output_c * cl1.output_h * cl1.output_w);
+
     cl2.LoadData(cl1.d_out, true);
     cl2.Convolve();
+
+    //print_d_var3(cl2.d_out, BATCH_SIZE, cl2.output_c * cl2.output_h * cl2.output_w);
+    
     fcl0.LoadData(cl2.d_out, true);
     fcl0.ForwardProp();
+
+    //print_d_var3(fcl0.d_out, BATCH_SIZE, fcl0.output_neurons);
+
     fcl1.LoadData(fcl0.d_out, true);
     fcl1.ForwardProp();
+
+    //print_d_var3(fcl1.d_out, BATCH_SIZE, fcl1.output_neurons);
+    
     fcl2.LoadData(fcl1.d_out, true);
     fcl2.ForwardProp();
 
+    //print_d_var3(fcl2.d_out, BATCH_SIZE, fcl2.output_neurons);
+
     // Back-propagation
     fcl2.ComputeSoftmaxGradients(y);
+    //print_d_var3(fcl2.d_gradients, fcl2.input_neurons + 1, fcl2.output_neurons);
     fcl1.ComputeLayerGradients(fcl2.d_prev_layer_derivatives);
     fcl0.ComputeLayerGradients(fcl1.d_prev_layer_derivatives);
     cl2.ComputeLayerGradients(fcl0.d_prev_layer_derivatives);
     cl1.ComputeLayerGradients(cl2.d_prev_layer_derivatives);
     cl0.ComputeLayerGradients(cl1.d_prev_layer_derivatives);
+
+    
 
     fcl2.UpdateWeights(fcl2.d_gradients);
     fcl1.UpdateWeights(fcl1.d_gradients);
@@ -407,10 +427,15 @@ int main() {
     cl1.UpdateWeights(cl1.d_filter_gradients, cl1.d_bias_gradients);
     cl0.UpdateWeights(cl0.d_filter_gradients, cl0.d_bias_gradients);
 
+    //print_d_var3(cl0.d_out, BATCH_SIZE, cl0.output_c * cl0.output_h * cl0.output_w);
+    //print_d_var3(cl0.d_filt, cl0.feature_maps, cl0.input_c * cl0.kernel_h * cl0.kernel_w);
+    //print_d_var3(cl0.d_filter_gradients, cl0.feature_maps, cl0.input_c * cl0.kernel_h
+                 //* cl0.kernel_w);
+
     train_end = std::chrono::high_resolution_clock::now();
 
     //print_d_var3(fcl2.d_weight_matrix, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
-    print_d_var3(cl0.d_filt, cl0.feature_maps, cl1.input_c * cl1.kernel_h * cl1.kernel_w);
+    
 
     
     //cl0.Convolve();

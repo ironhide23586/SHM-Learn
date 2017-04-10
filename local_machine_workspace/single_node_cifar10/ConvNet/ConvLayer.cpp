@@ -158,16 +158,14 @@ void ConvLayer::SetPoolingParams(cudnnPoolingMode_t pool_mode_arg,
 }
 
 void ConvLayer::InitializeFilters(float mean, float stddev) {
-  curandGenerator_t rng;
-  curandStatus_stat = curandCreateGenerator(&rng, CURAND_RNG_PSEUDO_XORWOW);
-  //print_d_var2(d_filt, feature_maps, input_c * input_h * input_w);
-  curandStatus_stat = curandGenerateNormal(rng, d_filt, sizeof(float) * feature_maps
-                       * input_c * kernel_h * kernel_w, mean, stddev);
-
-  //MODIFY THIS
-
-  print_d_var2(d_filt, feature_maps, input_c * input_h * input_w);
-  curandStatus_stat = curandDestroyGenerator(rng);
+  //curandGenerator_t rng;
+  //curandStatus_stat = curandCreateGenerator(&rng, CURAND_RNG_PSEUDO_XORWOW);
+  ////print_d_var2(d_filt, feature_maps, input_c * input_h * input_w);
+  //curandStatus_stat = curandGenerateNormal(rng, d_filt, sizeof(float) * feature_maps
+  //                                         * input_c * kernel_h * kernel_w, mean, stddev);
+  ////print_d_var2(d_filt, feature_maps, input_c * kernel_h * kernel_w);
+  //curandStatus_stat = curandDestroyGenerator(rng);
+  CustomWeightInitializer(d_filt, feature_maps * input_c * kernel_h * kernel_w);
   //cudaMemset(d_filt, 1, sizeof(float) * feature_maps * input_c
   //           * kernel_h * kernel_w);
 }
@@ -176,8 +174,7 @@ void ConvLayer::InitializeBiases() {
   cudaMemset(d_bias, 0, sizeof(float) * output_c);
 }
 
-void ConvLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
-                                      float bias_wt_val) {
+void ConvLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz) {
   float *h_tmp_wt_mat = (float *)malloc(sizeof(float) * wt_mat_sz);
   float wt_avg = 0.0;
   for (long int i = 0; i < wt_mat_sz; i++) {
@@ -185,6 +182,9 @@ void ConvLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
     wt_avg += h_tmp_wt_mat[i];
   }
   wt_avg /= wt_mat_sz;
+  cudaError_stat = cudaMemcpy(d_wt_mat, h_tmp_wt_mat,
+                              sizeof(float) * wt_mat_sz,
+                              cudaMemcpyHostToDevice);
   SubtractElemwise_Conv(d_wt_mat, wt_avg, wt_mat_sz);
   free(h_tmp_wt_mat);
 }
