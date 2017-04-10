@@ -24,22 +24,30 @@
 #include <fstream>
 #include <string.h>
 
-//#define DATA_SIDE 32 //Throws GPU setup error if above 257
-//#define CHANNELS 3
+inline std::string separator() {
+#ifdef _WIN32
+  return "\\";
+#else
+  return "/";
+#endif
+}
 
 #define DATA_SIDE 32 //Throws GPU setup error if above 257
 #define CHANNELS 3
 
-#define BATCH_SIZE 128
+#define BATCH_SIZE 4
 #define LABELS 10
 
 #define EPOCHS 10
-#define EPOCH_SIZE 10000
+
+#define EPOCH_COMPONENT_SIZE 6
+#define EPOCH_SIZE 30
 
 using namespace std;
 using namespace cv;
 
-int read_imgs;
+int read_imgs_local, read_imgs_global;
+int data_file_idx;
 
 void print_d_var3(float *d_v, int r, int c, bool print_elem = true) {
   std::cout << "*****************************" << std::endl;
@@ -145,9 +153,18 @@ void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls) {
   int lbl;
   memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
 
-  if ((read_imgs + BATCH_SIZE) > EPOCH_SIZE) {
-    fseek(fp, 0, 0);
-    read_imgs = 0;
+  if ((read_imgs_local + BATCH_SIZE) > EPOCH_COMPONENT_SIZE) {
+    fclose(fp);
+    data_file_idx = (data_file_idx % 5) + 1;
+    if (data_file_idx == 1) {
+      read_imgs_global = 0;
+    }
+    std::string train_file = "cifar-10-binary" + separator() + "cifar-10-batches-bin" + separator()
+      + "data_batch_"
+      + std::to_string(data_file_idx) + ".bin";
+    fp = fopen(train_file.c_str(), "r");
+
+    read_imgs_local = 0;
     curr_example = 0;
   }
 
@@ -161,37 +178,14 @@ void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls) {
     int col = 0;
     for (int j = start_idx + 1; j < start_idx + row_size; j++) {
       h_imgs[col + i * row_size_x] = (float)buff[j];
-      h_imgs[col + i * row_size_x] /= 255.0f;
+      //h_imgs[col + i * row_size_x] /= 255.0f;
       col++;
     }
   }
   free(buff);
-  read_imgs += BATCH_SIZE;
-  fseek(fp, read_imgs * row_size, 0);
-}
-
-
-void readBatch_cifar10_lim(FILE *fp, float *h_imgs, float *h_lbls) {
-  int row_size = (CHANNELS * DATA_SIDE * DATA_SIDE) + 1;
-  int batch_bytes = BATCH_SIZE * row_size;
-  int start_idx;
-  unsigned char *buff = (unsigned char *)malloc(sizeof(unsigned char) * BATCH_SIZE
-                                                * ((CHANNELS * DATA_SIDE * DATA_SIDE)
-                                                   + 1));
-  fread(buff, sizeof(unsigned char), batch_bytes, fp);
-  memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
-  for (int i = 0; i < BATCH_SIZE; i++) {
-    start_idx = i * row_size;
-    h_lbls[((int)buff[start_idx]) + i * LABELS] = 1.0f;
-    int col = 0;
-    for (int j = start_idx + 1; j < start_idx + row_size; j++) {
-      h_imgs[col + i * (row_size - 1)] = (float)buff[j];
-      h_imgs[col + i * (row_size - 1)] /= 255.0f;
-      col++;
-    }
-  }
-
-  free(buff);
+  read_imgs_local += BATCH_SIZE;
+  read_imgs_global += BATCH_SIZE;
+  fseek(fp, read_imgs_local * row_size, 0);
 }
 
 void move_to_gpu_stage(float *x, float *y, float *gpu_stage, int x_len, int y_len) {
@@ -222,6 +216,13 @@ cv::Mat lin2mat(float *img_lin) {
     }
   }
   return ans;
+}
+
+const char* get_train_file_path(int data_file_idx) {
+  std::string train_file = "cifar-10-binary" + separator() + "cifar-10-batches-bin" + separator()
+    + "data_batch_"
+    + std::to_string(data_file_idx) + ".bin";
+  return train_file.c_str();
 }
 
 int main() {
@@ -266,8 +267,15 @@ int main() {
                                   * DATA_SIDE * DATA_SIDE);
   float *y_test = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
 
-  FILE *fp_data_train = fopen("data_batch_1.bin", "r");
-  FILE *fp_data_test = fopen("test_batch.bin", "r");  
+  data_file_idx = 1;
+  std::string train_file = "cifar-10-binary" + separator() + "cifar-10-batches-bin" + separator()
+    + "data_batch_"
+    + std::to_string(data_file_idx) + ".bin";
+  FILE *fp_data_train = fopen(train_file.c_str(), "r");
+
+  std::string test_file = "cifar-10-binary" + separator() + "cifar-10-batches-bin" + separator()
+    + "test_batch.bin";
+  FILE *fp_data_test = fopen(test_file.c_str(), "r");  
 
   ofstream results_file;
   results_file.open("shmlearn_results.txt");
@@ -279,7 +287,7 @@ int main() {
     "bird",
     "cat",
     "deer",
-    "dog",
+    "doggo",
     "frog",
     "horse",
     "ship",
@@ -287,21 +295,21 @@ int main() {
   };
 
 
-  //while (true) {
-  //  readBatch_cifar10_lim_v2(fp_data_train, x, y);
-  //  for (int i = 0; i < BATCH_SIZE; i++) {
-  //    for (int k = 0; k < LABELS; k++) {
-  //      if (y[k + i * LABELS] > 0)
-  //        std::cout << labels[k] << std::endl;
-  //    }
-  //    show_img(lin2mat(&x[i * 3072]));
-  //  }
-  //  std::cout << "----------" << std::endl;
-  //}
+  while (true) {
+    readBatch_cifar10_lim_v2(fp_data_train, x, y);
+    for (int i = 0; i < BATCH_SIZE; i++) {
+      for (int k = 0; k < LABELS; k++) {
+        if (y[k + i * LABELS] > 0)
+          std::cout << labels[k] << std::endl;
+      }
+      show_img(lin2mat(&x[i * 3072]));
+    }
+    std::cout << "----------" << std::endl;
+  }
   
   
-  read_imgs = 0;
-  
+  read_imgs_local = 0;
+  read_imgs_global = 0;
 
   float base_lr = 0.001f, gamma = 0.4f, power = 0;
   float lr = base_lr * powf(1 + gamma, -power);
@@ -367,7 +375,7 @@ int main() {
                                                                       - t0)
       .count() * 1e-9f;
     if (prog == 1) {
-      prev_read_imgs = read_imgs;
+      prev_read_imgs = read_imgs_global;
     }
 
     cl0.learning_rate = lr;
@@ -492,11 +500,11 @@ int main() {
     batch++;
     prog++;
 
-    if (read_imgs < prev_read_imgs) {
+    if (read_imgs_global < prev_read_imgs) {
       batch = 1;
       epoch++;
     }
-    prev_read_imgs = read_imgs;
+    prev_read_imgs = read_imgs_global;
 
     results_file << ts << " " << my_loss << "\n";
 
