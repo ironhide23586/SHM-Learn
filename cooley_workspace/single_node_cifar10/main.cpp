@@ -19,6 +19,7 @@
 #include <random>
 #include <chrono>
 #include <cmath>
+#include <cstring>
 //#include <math.h>
 
 #include <fstream>
