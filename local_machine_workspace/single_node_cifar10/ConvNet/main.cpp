@@ -23,6 +23,7 @@
 
 #include <fstream>
 #include <string>
+#include <cstring>
 
 inline std::string separator() {
 #ifdef _WIN32
