@@ -2,14 +2,18 @@
 #include <cudnn.h>
 #include <cublas.h>
 #include <curand.h>
+//#include <curand_kernel.h>
 #include <vector>
 
 #include <iostream>
+#include <random>
 //#include "GlobalInclude.h"
 
 // Computes W - lambda * W^2
 void WeightMatrixRegularizeElemWiseConv(float *d_mat_in,
                                         float reg_inp_scalar, int d_mat_size);
+
+void SubtractElemwise_Conv(float *d_mat, float delta, int mat_size);
 
 enum regularizer_type_Conv { L1_Conv, L2_Conv };
 
@@ -41,12 +45,12 @@ public:
                          double relu_clip = 1.0f);
   void ComputeLayerGradients(float *d_backprop_derivatives);
   void UpdateWeights(float *d_filter_gradients, float *d_bias_gradients);
-  
+
 
   int kernel_h, kernel_w;
-	int vert_stride, hor_stride;
+  int vert_stride, hor_stride;
   int pad_h, pad_w;
-	int feature_maps;
+  int feature_maps;
 
   int input_n, input_c;
   int input_h, input_w;
@@ -99,12 +103,14 @@ public:
 private:
   void AllocateGPUMemory(void);
   void InitializeFilters(float mean, float stddev); //Temporary
+  float GetRandomNum();
   void InitializeBiases(void); //Temporary
   void InitBackpropVars(void);
+  void CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz);
   void Convolve_worker(void);
 
   float alpha, beta;
-  
+
   float *grad_swap_tmp;
   float reg_inp_scalar;
   float neg_one_scalar;
@@ -136,4 +142,3 @@ private:
   cudnnStatus_t cudnnStatus_stat;
   cublasStatus_t cublasStatus_stat;
 };
-

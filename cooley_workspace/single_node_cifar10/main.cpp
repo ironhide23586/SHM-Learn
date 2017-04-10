@@ -5,8 +5,9 @@
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
-//#include "sample.h"
-//#include "GlobalInclude.h"
+//#include <opencv2/core/core.hpp>
+//#include <opencv2/opencv.hpp>
+//#include <opencv2/highgui/highgui.hpp>
 
 #include <cudnn.h>
 
@@ -21,23 +22,32 @@
 //#include <math.h>
 
 #include <fstream>
-#include <string.h>
+#include <string>
 
-//#define DATA_SIDE 32 //Throws GPU setup error if above 257
-//#define CHANNELS 3
+inline std::string separator() {
+#ifdef _WIN32
+  return "\\";
+#else
+  return "/";
+#endif
+}
 
-#define DATA_SIDE 28 //Throws GPU setup error if above 257
-#define CHANNELS 1
+#define DATA_SIDE 32 //Throws GPU setup error if above 257
+#define CHANNELS 3
 
-#define BATCH_SIZE 64
+#define BATCH_SIZE 128
 #define LABELS 10
 
 #define EPOCHS 10
-#define EPOCH_SIZE 60000
+
+#define EPOCH_COMPONENT_SIZE 10000
+#define EPOCH_SIZE 50000
 
 using namespace std;
+//using namespace cv;
 
-int read_imgs;
+int read_imgs_local, read_imgs_global;
+int data_file_idx;
 
 void print_d_var3(float *d_v, int r, int c, bool print_elem = true) {
   std::cout << "*****************************" << std::endl;
@@ -82,7 +92,7 @@ void print_h_var3(float *h_v, int r, int c) {
 }
 
 void sumCols(float *mat, int rows, int cols, float *sums) {
-//#pragma omp parallel
+  //#pragma omp parallel
   for (int j = 0; j < cols; j++) {
     sums[j] = 0.0f;
     for (int i = 0; i < rows; i++) {
@@ -91,7 +101,7 @@ void sumCols(float *mat, int rows, int cols, float *sums) {
   }
 }
 
-float matrix_square_sum(float *d_mat, int sz, int cols) {
+float matrix_square_sum_exclude_bias(float *d_mat, int sz, int cols) {
   float *tmp = (float *)malloc(sizeof(float) * sz);
   cudaMemcpy(tmp, d_mat, sizeof(float) * sz, cudaMemcpyDeviceToHost);
   float ans = 0.0;
@@ -102,31 +112,21 @@ float matrix_square_sum(float *d_mat, int sz, int cols) {
   return ans;
 }
 
+float matrix_square_sum(float *d_mat, int sz) {
+  float *tmp = (float *)malloc(sizeof(float) * sz);
+  cudaMemcpy(tmp, d_mat, sizeof(float) * sz, cudaMemcpyDeviceToHost);
+  float ans = 0.0;
+  for (int i = 0; i < sz; i++) {
+    ans += (tmp[i] * tmp[i]);
+  }
+  free(tmp);
+  return ans;
+}
+
 float my_rand() {
   static std::default_random_engine re;
   static std::uniform_real_distribution<float> dist(-0.5f, 0.5f);
   return dist(re);
-}
-
-void readBatch(FILE *fp, float *h_imgs, float *h_lbls) {
-  int row_size = (CHANNELS * DATA_SIDE * DATA_SIDE) + 1;
-  int batch_bytes = BATCH_SIZE * row_size;
-  int start_idx;
-  unsigned char *buff = (unsigned char *)malloc(sizeof(unsigned char) * BATCH_SIZE
-                                                * ((CHANNELS * DATA_SIDE * DATA_SIDE)
-                                                   + 1));
-  fread(buff, sizeof(unsigned char), batch_bytes, fp);
-  memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
-  for (int i = 0; i < BATCH_SIZE; i++) {
-    start_idx = i * row_size;
-    h_lbls[((int) buff[start_idx] - 1) + i * LABELS] = 1.0f;
-    int col = 0;
-    for (int j = start_idx + 1; j < start_idx + row_size; j++) {
-      h_imgs[col + i * (row_size - 1)] = (float)buff[j];
-      h_imgs[col + i * (row_size - 1)] /= 255.0f;
-      col++;
-    }
-  }
 }
 
 void readBatch_mnist(FILE *fp_x, FILE *fp_y, float *h_imgs, float *h_lbls) {
@@ -153,41 +153,50 @@ void readBatch_mnist(FILE *fp_x, FILE *fp_y, float *h_imgs, float *h_lbls) {
   }
 }
 
-void readBatch_mnist_lim(FILE *fp_x, FILE *fp_y, float *h_imgs, float *h_lbls) {
-  int row_size_x = (CHANNELS * DATA_SIDE * DATA_SIDE);
-  int batch_bytes_x = BATCH_SIZE * row_size_x;
+void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls) {
+  int row_size = (CHANNELS * DATA_SIDE * DATA_SIDE) + 1;
+  int row_size_x = row_size - 1;
+  int batch_bytes = BATCH_SIZE * row_size;
   int start_idx;
-  unsigned char *buff_x = (unsigned char *)malloc(sizeof(unsigned char)
-                                                  * row_size_x);
-  unsigned char buff_y;
+  unsigned char *buff = (unsigned char *)malloc(sizeof(unsigned char)
+                                                * batch_bytes);
+  int read_examples = 0, curr_example = 0;
+  int lbl;
+  memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
 
-  float mean_pixel = 0.0f;
+  if ((read_imgs_local + BATCH_SIZE) > EPOCH_COMPONENT_SIZE) {
+    fclose(fp);
+    data_file_idx = (data_file_idx % 5) + 1;
+    if (data_file_idx == 1) {
+      read_imgs_global = 0;
+    }
+    std::string train_file = "cifar-10-binary" + separator() + "cifar-10-batches-bin" + separator()
+      + "data_batch_"
+      + std::to_string(data_file_idx) + ".bin";
+    fp = fopen(train_file.c_str(), "r");
+
+    read_imgs_local = 0;
+    curr_example = 0;
+  }
+
+  fread(buff, sizeof(unsigned char), batch_bytes, fp);
 
   memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
-  memset(h_imgs, 0, sizeof(float) * batch_bytes_x);
-
-  int read_examples = 0, curr_example = 0;
-  while (read_examples < BATCH_SIZE) {
-    fread(buff_x, sizeof(unsigned char), row_size_x, fp_x);
-    fread(&buff_y, sizeof(unsigned char), 1, fp_y);
-    if (buff_y < LABELS) {
-      h_lbls[buff_y + read_examples * LABELS] = 1.0f;
-      for (int j = 0; j < row_size_x; j++) {
-        h_imgs[j + read_examples * row_size_x]
-          = (float)buff_x[j] / 255.0f;
-      }
-      read_examples++;
-    }
-    curr_example++;
-    if ((read_imgs + curr_example) >= EPOCH_SIZE) {
-      fseek(fp_x, 16, 0);
-      fseek(fp_y, 8, 0);
-      read_imgs = 0;
-      curr_example = 0;
+  for (int i = 0; i < BATCH_SIZE; i++) {
+    start_idx = i * row_size;
+    lbl = (int)buff[start_idx];
+    h_lbls[lbl + i * LABELS] = 1.0f;
+    int col = 0;
+    for (int j = start_idx + 1; j < start_idx + row_size; j++) {
+      h_imgs[col + i * row_size_x] = (float)buff[j];
+      h_imgs[col + i * row_size_x] /= 255.0f;
+      col++;
     }
   }
-  free(buff_x);
-  read_imgs += curr_example;
+  free(buff);
+  read_imgs_local += BATCH_SIZE;
+  read_imgs_global += BATCH_SIZE;
+  fseek(fp, read_imgs_local * row_size, 0);
 }
 
 void move_to_gpu_stage(float *x, float *y, float *gpu_stage, int x_len, int y_len) {
@@ -199,6 +208,34 @@ int my_floorf_division(float a, float b) {
   return ((a - 1) / b);
 }
 
+//void show_img(cv::Mat &img) {
+//  cv::Mat img_scaled = cv::Mat(600, 600, CV_8UC3);
+//  cv::resize(img, img_scaled, img_scaled.size());
+//  cv::namedWindow("image");
+//  cv::imshow("image", img_scaled);
+//  cv::waitKey();
+//}
+
+//cv::Mat lin2mat(float *img_lin) {
+//  cv::Mat ans = cv::Mat(DATA_SIDE, DATA_SIDE, CV_8UC3); 
+//  for (int r = 0; r < DATA_SIDE; r++) {
+//    for (int c = 0; c < DATA_SIDE; c++) {
+//      for (int chan = 0; chan < CHANNELS; chan++) {
+//        ans.data[chan + c * CHANNELS + r * DATA_SIDE * CHANNELS] 
+//          = img_lin[c + r * DATA_SIDE + chan * DATA_SIDE * DATA_SIDE];
+//      }
+//    }
+//  }
+//  return ans;
+//}
+//
+//const char* get_train_file_path(int data_file_idx) {
+//  std::string train_file = "cifar-10-binary" + separator() + "cifar-10-batches-bin" + separator()
+//    + "data_batch_"
+//    + std::to_string(data_file_idx) + ".bin";
+//  return train_file.c_str();
+//}
+
 int main() {
   cudaError_t cudaError_stat;
   curandStatus_t curandStatus_stat;
@@ -208,77 +245,123 @@ int main() {
   int numGPUs;
 
   cudaGetDeviceCount(&numGPUs);
-	cudaSetDevice(0);
+  cudaSetDevice(0);
   cudaDeviceProp cudaProp;
   cudaGetDeviceProperties(&cudaProp, 0);
   std::cout << "Using GPU Device -> " << cudaProp.name << std::endl;
   cudaError_stat = cudaDeviceReset();
   std::cout << "cuda dev reset -->" << cudaError_stat << std::endl;
 
+  //cv::Mat img = cv::imread("t0.jpg");
+  //show_img(img);
+
+
   int batch_size = BATCH_SIZE;
-  float my_loss, loss, wt_sum, fcl0_wt_sum, fcl2_wt_sum, dur, avg_dur;
-	cublasHandle_t cublasHandle;
+  float my_loss, loss, wt_sum, cl0_wt_sum, cl1_wt_sum, cl2_wt_sum, fcl0_wt_sum, fcl1_wt_sum,
+    fcl2_wt_sum, dur, avg_dur;
+  cublasHandle_t cublasHandle;
   cublasStatus_stat = cublasCreate_v2(&cublasHandle);
   std::cout << "cublas handle create -->" << cublasStatus_stat << std::endl;
 
-  float *x, *y;
-  //x = (float *)malloc(sizeof(float) * BATCH_SIZE * CHANNELS * DATA_SIDE * DATA_SIDE);
-  //y = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
-  cudaMallocHost((void **)&x, sizeof(float) * BATCH_SIZE * CHANNELS * DATA_SIDE * DATA_SIDE);
-  cudaMallocHost((void **)&y, sizeof(float) * BATCH_SIZE * LABELS);
-  //float *gpu_data_stage;
-  //cudaMallocHost((void **)&gpu_data_stage, sizeof(float) * ((BATCH_SIZE * CHANNELS * DATA_SIDE * DATA_SIDE)
-  //                                                          + (BATCH_SIZE * LABELS)));
-  //
-
-  float y_dist[LABELS];
-
-  float *x_test = (float *)malloc(sizeof(float) * BATCH_SIZE * CHANNELS * DATA_SIDE * DATA_SIDE);
-  float *y_test = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
-
-  FILE *fp_x = fopen("train-images.idx3-ubyte", "rb");
-  FILE *fp_y = fopen("train-labels.idx1-ubyte", "rb");
-
-  FILE *fp_x_test = fopen("t10k-images.idx3-ubyte", "rb");
-  FILE *fp_y_test = fopen("t10k-labels.idx1-ubyte", "rb");
-
-  ofstream results_file;
-  results_file.open("shmlearn_results.txt");
-
-  fseek(fp_x, 16, 0);
-  fseek(fp_y, 8, 0);
-
-  fseek(fp_x_test, 16, 0);
-  fseek(fp_y_test, 8, 0);
-
-  readBatch_mnist_lim(fp_x_test, fp_y_test, x_test, y_test);
-  read_imgs = 0;
-
-	cudnnHandle_t cudnnHandle;
-
+  cudnnHandle_t cudnnHandle;
   cudnnStatus_t cudnn_status;
   cudnn_status = cudnnCreate(&cudnnHandle);
   std::cout << "cuDNN initialization -->" << cudnn_status << std::endl;
 
-  float base_lr = 0.05f, gamma = 0.4f, power = 0;
+  float *x, *y;
+  float *h_out;
+
+  cudaMallocHost((void **)&x, sizeof(float) * BATCH_SIZE * CHANNELS 
+                 * DATA_SIDE * DATA_SIDE);
+  cudaMallocHost((void **)&y, sizeof(float) * BATCH_SIZE * LABELS);
+
+  float *x_test = (float *)malloc(sizeof(float) * BATCH_SIZE * CHANNELS 
+                                  * DATA_SIDE * DATA_SIDE);
+  float *y_test = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
+
+  data_file_idx = 1;
+  std::string train_file = "cifar-10-binary" + separator() + "cifar-10-batches-bin" + separator()
+    + "data_batch_"
+    + std::to_string(data_file_idx) + ".bin";
+  FILE *fp_data_train = fopen(train_file.c_str(), "r");
+
+  std::string test_file = "cifar-10-binary" + separator() + "cifar-10-batches-bin" + separator()
+    + "test_batch.bin";
+  FILE *fp_data_test = fopen(test_file.c_str(), "r");  
+
+  ofstream results_file;
+  /*results_file.open("shmlearn_results.txt");*/
+
+  std::vector<std::string> labels =
+  {
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "doggo",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  };
+
+
+  //while (true) {
+  //  readBatch_cifar10_lim_v2(fp_data_train, x, y);
+  //  for (int i = 0; i < BATCH_SIZE; i++) {
+  //    for (int k = 0; k < LABELS; k++) {
+  //      if (y[k + i * LABELS] > 0)
+  //        std::cout << labels[k] << std::endl;
+  //    }
+  //    show_img(lin2mat(&x[i * 3072]));
+  //  }
+  //  std::cout << "----------" << std::endl;
+  //}
+  
+  
+  read_imgs_local = 0;
+  read_imgs_global = 0;
+
+  float base_lr = 0.001f, gamma = 0.4f, power = 0;
   float lr = base_lr * powf(1 + gamma, -power);
-  float reg = 0.01f;
-  float mom = 0.0f;
+  float reg = 0.004f;
+  float mom = 0.9f;
 
-  FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, BATCH_SIZE, CHANNELS * DATA_SIDE * DATA_SIDE,
+
+  ConvLayer cl0(cudnnHandle, cublasHandle, BATCH_SIZE, CHANNELS, DATA_SIDE, DATA_SIDE,
+                2, 2, 1, 1, 5, 5, 32, lr, mom, reg);
+  cl0.SetPoolingParams(CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING, 3, 3, 2, 2, 0, 0);
+  cl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
+  cl0.is_input_layer = true;
+
+  ConvLayer cl1(cudnnHandle, cublasHandle, cl0.output_n, cl0.output_c,
+                cl0.output_h, cl0.output_w, 2, 2, 1, 1, 5, 5, 32, lr, mom, reg);
+  cl1.SetPoolingParams(CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING, 3, 3, 2, 2, 0, 0);
+  cl1.SetActivationFunc(CUDNN_ACTIVATION_RELU);
+
+  ConvLayer cl2(cudnnHandle, cublasHandle, cl1.output_n, cl1.output_c,
+                cl1.output_h, cl1.output_w, 2, 2, 1, 1, 5, 5, 64, lr, mom, reg);
+  cl2.SetPoolingParams(CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING, 3, 3, 2, 2, 0, 0);
+  cl2.SetActivationFunc(CUDNN_ACTIVATION_RELU);
+
+  FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, cl0.output_n,
+               cl0.output_c * cl0.output_h * cl0.output_w,
                64, false, lr, mom, reg);
-  fcl0.SetActivationFunc(CUDNN_ACTIVATION_SIGMOID);
-  fcl0.is_input_layer = true;
+  fcl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
 
-  //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols, false);
+  FCLayer fcl1(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
+               fcl0.output_neurons, 32, false, lr, mom, reg);
+  fcl1.SetActivationFunc(CUDNN_ACTIVATION_RELU);
 
-  FCLayer fcl2(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
-               fcl0.output_neurons, LABELS, true, lr, mom, reg);
-  fcl2.InitBackpropVars();
+  FCLayer fcl2(cudnnHandle, cublasHandle, cudaProp, fcl1.input_batch_size,
+               fcl1.output_neurons, LABELS, true, lr, mom, reg);
 
   auto st = std::chrono::system_clock::now();
 
-  float *h_out = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
+  //float *h_out = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
+  cudaMallocHost((void **)&h_out, sizeof(float) * BATCH_SIZE * LABELS);
+
   int batch = 1;
   int lim = my_floorf_division(EPOCH_SIZE, BATCH_SIZE);
   int epoch = 1, prog = 1;
@@ -287,104 +370,140 @@ int main() {
   float batch_verify;
   float ts = 0.0f;
   int cnt = 1;
-  //while (batch <= lim && epoch <= EPOCHS) {
-  auto now0 = std::chrono::high_resolution_clock::now();
-  auto now1_sft = std::chrono::high_resolution_clock::now();
-  auto now1_lyr = std::chrono::high_resolution_clock::now();
-  auto now2 = std::chrono::high_resolution_clock::now();
 
   auto train_start = std::chrono::high_resolution_clock::now();
   auto train_end = std::chrono::high_resolution_clock::now();
+
+  auto t0 = std::chrono::high_resolution_clock::now();
+  auto t1 = std::chrono::high_resolution_clock::now();
+
   float dur0, dur1_sft, dur1_lyr, dur2;
 
-  //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols, false);
-  //print_d_var3(fcl2.d_weight_matrix, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
-
   while (epoch <= EPOCHS) {
-    readBatch_mnist_lim(fp_x, fp_y, x, y);
+    t0 = std::chrono::high_resolution_clock::now();
+    readBatch_cifar10_lim_v2(fp_data_train, x, y);
+    t1 = std::chrono::high_resolution_clock::now();
+    dur0 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(t1
+                                                                      - t0)
+      .count() * 1e-9f;
     if (prog == 1) {
-      prev_read_imgs = read_imgs;
+      prev_read_imgs = read_imgs_global;
     }
 
+    cl0.learning_rate = lr;
+    cl1.learning_rate = lr;
+    cl2.learning_rate = lr;
     fcl0.learning_rate = lr;
+    fcl1.learning_rate = lr;
     fcl2.learning_rate = lr;
 
-   //fcl0.LoadData(x, false);
+    // Forward Pass
     train_start = std::chrono::high_resolution_clock::now();
-    fcl0.LoadData(x, false);
-    now0 = std::chrono::high_resolution_clock::now();
+    cl0.LoadData(x, false);
+    cl0.Convolve();
+
+    //print_d_var3(cl0.d_out, BATCH_SIZE, cl0.output_c * cl0.output_h * cl0.output_w);
+
+    cl1.LoadData(cl0.d_out, true);
+    cl1.Convolve();
+
+    //print_d_var3(cl1.d_out, BATCH_SIZE, cl1.output_c * cl1.output_h * cl1.output_w);
+
+    cl2.LoadData(cl1.d_out, true);
+    cl2.Convolve();
+
+    //print_d_var3(cl2.d_out, BATCH_SIZE, cl2.output_c * cl2.output_h * cl2.output_w);
+    
+    fcl0.LoadData(cl2.d_out, true);
     fcl0.ForwardProp();
-    fcl2.LoadData(fcl0.d_out, true);
+
+    //print_d_var3(fcl0.d_out, BATCH_SIZE, fcl0.output_neurons);
+
+    fcl1.LoadData(fcl0.d_out, true);
+    fcl1.ForwardProp();
+
+    //print_d_var3(fcl1.d_out, BATCH_SIZE, fcl1.output_neurons);
+    
+    fcl2.LoadData(fcl1.d_out, true);
     fcl2.ForwardProp();
 
-    //print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons);
-    //print_d_var3(fcl0.d_out, fcl0.input_batch_size, fcl0.output_neurons, false);
-    //print_d_var3(fcl2.d_out_xw_act, fcl2.input_batch_size, fcl2.output_neurons);
-    //print_d_var3(fcl2.d_out, fcl2.input_batch_size, fcl2.output_neurons);
-    //return 0;
+    //print_d_var3(fcl2.d_out, BATCH_SIZE, fcl2.output_neurons);
 
-    //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols);
-    //print_d_var3(fcl0.d_data, BATCH_SIZE, fcl0.input_neurons + 1);
-
-    //print_d_var3(fcl0.d_out, BATCH_SIZE, fcl0.output_neurons + 1);
-
-    //dur0 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now0 - train_start).count() * 1e-9f;
-
+    // Back-propagation
     fcl2.ComputeSoftmaxGradients(y);
-    now1_sft = std::chrono::high_resolution_clock::now();
-    //dur1_sft = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now1_sft - now0).count() * 1e-9f;
-    fcl0.ComputeLayerGradients(fcl2.d_prev_layer_derivatives);
-    now1_lyr = std::chrono::high_resolution_clock::now();
-    //dur1_lyr = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now1_lyr - now1_sft).count() * 1e-9f;
+    //print_d_var3(fcl2.d_gradients, fcl2.input_neurons + 1, fcl2.output_neurons);
+    fcl1.ComputeLayerGradients(fcl2.d_prev_layer_derivatives);
+    fcl0.ComputeLayerGradients(fcl1.d_prev_layer_derivatives);
+    cl2.ComputeLayerGradients(fcl0.d_prev_layer_derivatives);
+    cl1.ComputeLayerGradients(cl2.d_prev_layer_derivatives);
+    cl0.ComputeLayerGradients(cl1.d_prev_layer_derivatives);
 
-    //print_d_var3(fcl2.d_gradients, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
+    
 
     fcl2.UpdateWeights(fcl2.d_gradients);
+    fcl1.UpdateWeights(fcl1.d_gradients);
     fcl0.UpdateWeights(fcl0.d_gradients);
-    now2 = std::chrono::high_resolution_clock::now();
+    cl2.UpdateWeights(cl2.d_filter_gradients, cl2.d_bias_gradients);
+    cl1.UpdateWeights(cl1.d_filter_gradients, cl1.d_bias_gradients);
+    cl0.UpdateWeights(cl0.d_filter_gradients, cl0.d_bias_gradients);
 
-    dur0 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now0 - train_start).count() * 1e-9f;
-    dur1_sft = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now1_sft - now0).count() * 1e-9f;
-    dur1_lyr = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now1_lyr - now1_sft).count() * 1e-9f;
-    dur2 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now2 - now1_lyr).count() * 1e-9f;
+    //print_d_var3(cl0.d_out, BATCH_SIZE, cl0.output_c * cl0.output_h * cl0.output_w);
+    //print_d_var3(cl0.d_filt, cl0.feature_maps, cl0.input_c * cl0.kernel_h * cl0.kernel_w);
+    //print_d_var3(cl0.d_filter_gradients, cl0.feature_maps, cl0.input_c * cl0.kernel_h
+                 //* cl0.kernel_w);
+
     train_end = std::chrono::high_resolution_clock::now();
-    //float dur = dur0 + dur1_sft + dur1_lyr + dur2;
 
-    //print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons);
-    //return 0;
-    fcl0.ForwardProp();
-    fcl2.LoadData(fcl0.d_out, true);
-    //print_d_var3(fcl2.d_data, fcl2.input_batch_size, fcl2.input_neurons, false);
-    fcl2.ForwardProp();
+    //print_d_var3(fcl2.d_weight_matrix, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
+    
 
-    //now0 = std::chrono::high_resolution_clock::now();
-    cudaMemcpy(h_out, fcl2.d_out, sizeof(float) * BATCH_SIZE * LABELS, cudaMemcpyDeviceToHost);
-    //h_out = fcl2.d_out;
-    //now2 = std::chrono::high_resolution_clock::now();
-    //dur0 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now2 - now0).count() * 1e-9f;
-
+    
+    //cl0.Convolve();
+    //fcl0.LoadData(cl0.d_out, true);
+    //fcl0.ForwardProp();
+    //fcl2.LoadData(fcl0.d_out, true);
+    //fcl2.ForwardProp();
+    
+    t0 = std::chrono::high_resolution_clock::now();
+    cudaMemcpy(h_out, fcl2.d_out, sizeof(float) * BATCH_SIZE * LABELS, //CAUSING DELAY
+               cudaMemcpyDeviceToHost);
+    t1 = std::chrono::high_resolution_clock::now();
+    dur2 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(t1
+                                                                       - t0)
+      .count() * 1e-9f;
     my_loss = 0.0f;
+    
     for (int i = 0; i < BATCH_SIZE; i++) {
       for (int j = 0; j < LABELS; j++) {
-        //std::cout << y[j + i * LABELS] << "," << h_out[j + i * LABELS] << "[" << j << "] ";
         my_loss -= ((y[j + i * LABELS] * log(h_out[j + i * LABELS])));
       }
-      //std::cout << std::endl;
-      //return 0;
     }
     my_loss /= BATCH_SIZE;
     wt_sum = 0.0f;
-    fcl0_wt_sum = matrix_square_sum(fcl0.d_weight_matrix, fcl0.weight_matrix_size, fcl0.weight_matrix_cols);
-    fcl2_wt_sum = matrix_square_sum(fcl2.d_weight_matrix, fcl2.weight_matrix_size, fcl2.weight_matrix_cols);
-    //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols, false);
-    //print_d_var3(fcl2.d_weight_matrix, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
-    wt_sum = fcl0_wt_sum + fcl2_wt_sum;
-    //print_d_var3(fcl2.d_weight_matrix, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
+    
+    cl0_wt_sum = matrix_square_sum(cl0.d_filt, cl0.input_c * cl0.feature_maps
+                                   * cl0.kernel_h * cl0.kernel_w);
+    cl1_wt_sum = matrix_square_sum(cl1.d_filt, cl1.input_c * cl1.feature_maps
+                                   * cl1.kernel_h * cl1.kernel_w);
+    cl2_wt_sum = matrix_square_sum(cl2.d_filt, cl2.input_c * cl2.feature_maps
+                                   * cl2.kernel_h * cl2.kernel_w);
+
+    fcl0_wt_sum = matrix_square_sum_exclude_bias(fcl0.d_weight_matrix, fcl0.weight_matrix_size,
+                                                 fcl0.weight_matrix_cols);
+    fcl1_wt_sum = matrix_square_sum_exclude_bias(fcl1.d_weight_matrix, fcl1.weight_matrix_size,
+                                                 fcl1.weight_matrix_cols);
+    fcl2_wt_sum = matrix_square_sum_exclude_bias(fcl2.d_weight_matrix, fcl2.weight_matrix_size,
+                                                 fcl2.weight_matrix_cols);
+    
+    wt_sum = cl0_wt_sum + cl1_wt_sum + cl2_wt_sum + fcl0_wt_sum + fcl1_wt_sum + fcl2_wt_sum;
     float wt_loss = (reg * 0.5f) * wt_sum;
-    //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols);
+    
     loss = my_loss + wt_loss;
-    //print_d_var3(fcl2.d_out, BATCH_SIZE, fcl2.output_neurons);
-    dur = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(train_end - train_start).count() * 1e-9f;
+    
+      
+    dur = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(train_end 
+                                                                      - train_start)
+      .count() * 1e-9f;
     ts += dur;
     if (cnt == 253) {
       int k = 0;
@@ -396,51 +515,34 @@ int main() {
       avg_dur /= 2;
     }
     std::cout << "Batch " << batch
-      << " Epoch = " << epoch << " Loss = " << my_loss << " C++_CUDA_GPU Avg iter time = " << avg_dur;
-    //std::cout << "Batch " << batch
-    //  << " Epoch = " << epoch << " C++_CUDA_GPU Avg iter time = " << avg_dur
-    //  << ", dur0 = " << dur0 << ", dur1_sft = " << dur1_sft << ", dur1_lyr = "
-    //  << dur1_lyr << ", dur2 = " << dur2;
+      << " Epoch = " << epoch << " Loss = " << loss 
+      << " C++_CUDA_GPU Avg iter time = " << avg_dur;
+
     batch++;
     prog++;
 
-    if (read_imgs < prev_read_imgs) {
+    if (read_imgs_global < prev_read_imgs) {
       batch = 1;
       epoch++;
-      fseek(fp_x, 16, 0);
-      fseek(fp_y, 8, 0);
-      //lr *= 0.98f;
-      //lr = base_lr * powf(1 + gamma * cnt, -power);
     }
-    prev_read_imgs = read_imgs;
-
-    now0 = std::chrono::high_resolution_clock::now();
-    results_file << ts << " " << my_loss << "\n";
-    now2 = std::chrono::high_resolution_clock::now();
-    dur0 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(now2 - now0).count() * 1e-9f;
-
+    prev_read_imgs = read_imgs_global;
+    results_file.open("shmlearn_results.txt", std::ofstream::out | std::ofstream::app);
+    results_file << ts << " " << loss << "\n";
+    results_file.close();
     std::cout << std::endl;
     cnt++;
+    
   }
+  results_file.open("shmlearn_results.txt", std::ofstream::out | std::ofstream::app);
   results_file << "Avg iter time = " << avg_dur << " seconds\n";
   results_file.close();
 
   auto et = std::chrono::system_clock::now();
   auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(et - st);
 
-	cudnnDestroy(cudnnHandle);
+  cudnnDestroy(cudnnHandle);
   cublasDestroy_v2(cublasHandle);
 
-  //print_d_var3(fcl1.d_out, fcl1.input_batch_size, fcl1.output_neurons);
-
-  //std::cout << "Elapsed time to train " << epoch - 1
-  //  << " Epochs (1 Epoch has " << EPOCH_SIZE / BATCH_SIZE << " batches) = "
-  //  << (float) elapsed.count() / 1000000 << " s" << std::endl;
-  //std::cout << "Time per batch of " << BATCH_SIZE << " images = "
-  //  << (float)elapsed.count() / ((epoch - 1) * EPOCH_SIZE / BATCH_SIZE) / 1000000
-  //  << " s";
-
-  //print_d_var3(fcl1.d_out, fcl1.input_batch_size, fcl1.output_neurons);
   int k = getchar();
-	return 0;
+  return 0;
 }

@@ -44,7 +44,7 @@ int my_ceilf_division_FCLayer(float a, float b) {
 }
 
 __global__ void FloatGPUMemset_GPUKernel(float *d_array,
-                                int array_size, float val) {
+                                         int array_size, float val) {
   int idx = blockDim.x * blockIdx.x + threadIdx.x;
   d_array[idx % array_size] = val;
 }
@@ -106,18 +106,18 @@ __global__ void ElemwiseGradCompute_GPUKernel(float *d_data,
                                               int input_neurons,
                                               int output_neurons) {
   int idx = (blockDim.x * blockIdx.x + threadIdx.x)
-            % (input_batch_size * (input_neurons + 1) * output_neurons);
+    % (input_batch_size * (input_neurons + 1) * output_neurons);
   int idx_y = idx / output_neurons;
   int d_data_idx_T_y = idx_y / input_batch_size;
   int d_data_idx_T_x = idx_y - (d_data_idx_T_y * input_batch_size);
-  d_elem_grads[idx] = d_data[d_data_idx_T_y 
-                             + d_data_idx_T_x * (input_neurons + 1)]
-                      * d_out_minus_labels[idx - d_data_idx_T_y 
-                                           * input_batch_size
-                                           * output_neurons];
+  d_elem_grads[idx] = d_data[d_data_idx_T_y
+    + d_data_idx_T_x * (input_neurons + 1)]
+    * d_out_minus_labels[idx - d_data_idx_T_y
+    * input_batch_size
+    * output_neurons];
 }
 
-__global__ void 
+__global__ void
 ComputeGradientsFromElemGrads_GPUKernel(float *d_elem_grads,
                                         float *d_softmax_gradients,
                                         float learning_rate,
@@ -126,7 +126,7 @@ ComputeGradientsFromElemGrads_GPUKernel(float *d_elem_grads,
                                         int input_neurons,
                                         int output_neurons) {
   int idx = (blockDim.x * blockIdx.x + threadIdx.x)
-            % ((input_neurons + 1) * output_neurons);
+    % ((input_neurons + 1) * output_neurons);
   int idx_y = idx / output_neurons;
   int idx_x = idx - idx_y * output_neurons;
   int idx_elem_grads_y = idx_y * input_batch_size;
@@ -135,16 +135,16 @@ ComputeGradientsFromElemGrads_GPUKernel(float *d_elem_grads,
     sum += d_elem_grads[idx_x + (idx_elem_grads_y + i) * output_neurons];
   }
   d_softmax_gradients[idx] = (learning_rate / input_batch_size) * sum
-                             - momentum * d_softmax_gradients[idx];
+    - momentum * d_softmax_gradients[idx];
 }
 
 __global__ void ComputeSoftmaxLoss_GPUKernel(float *d_out, float *d_labels,
                                              float *d_out_minus_labels,
                                              float coeff,
                                              int input_batch_size,
-                                             int output_neurons) { 
-  int idx = (blockDim.x * blockIdx.x + threadIdx.x) 
-            % (input_batch_size * output_neurons);
+                                             int output_neurons) {
+  int idx = (blockDim.x * blockIdx.x + threadIdx.x)
+    % (input_batch_size * output_neurons);
   //d_out_minus_labels[idx] = coeff * (d_out[idx] - d_labels[idx]);
   if (d_labels[idx] == 1)
     d_out_minus_labels[idx] = coeff * (1.0f - d_out[idx]);
@@ -163,13 +163,13 @@ __global__ void ReluBackprop_GPUKernel(float *d_backprop_derivatives,
 }
 
 __global__ void SigmoidBackprop_GPUKernel(float *d_backprop_derivatives,
-                                       float *d_out_xw_act,
-                                       float *d_fwd_layer_derivatives,
-                                       int derivative_matrix_size) {
+                                          float *d_out_xw_act,
+                                          float *d_fwd_layer_derivatives,
+                                          int derivative_matrix_size) {
   int idx = (blockDim.x * blockIdx.x + threadIdx.x) % derivative_matrix_size;
   d_fwd_layer_derivatives[idx] = d_out_xw_act[idx]
-                                 * (1.0f - d_out_xw_act[idx])
-                                 * d_backprop_derivatives[idx];
+    * (1.0f - d_out_xw_act[idx])
+    * d_backprop_derivatives[idx];
 }
 
 __global__ void ReplaceVal_GPUKernel(float *d_mat, int total_size,
@@ -186,8 +186,8 @@ __global__ void SubtractElemwise_GPUKernel(float *d_mat, float delta,
 }
 
 __global__ void Replace2Vals_GPUKernel(float *d_mat, int total_size,
-                                      float val0, float val1,
-                                      float replace_val0, float replace_val1) {
+                                       float val0, float val1,
+                                       float replace_val0, float replace_val1) {
   int idx = (blockDim.x * blockIdx.x + threadIdx.x) % total_size;
   if (d_mat[idx] < val0)
     d_mat[idx] = replace_val0;
@@ -200,7 +200,7 @@ __global__ void ShiftRight_PopulateHelper_GPUKernel(float *d_mat,
                                                     int total_size,
                                                     int rows, int cols) {
   int idx = (blockDim.x * blockIdx.x + threadIdx.x) % total_size;
-  int i = floor(0.5f * (sqrt((float) 1 + 8 * idx) - 1.0f)) + 1;
+  int i = floor(0.5f * (sqrt((float)1 + 8 * idx) - 1.0f)) + 1;
   int j = idx - i * (i - 1) / 2;
   int read_idx = j + i * cols;
   d_helper[idx] = d_mat[read_idx];
@@ -214,8 +214,8 @@ __global__ void ReAlignMemory_ShiftRight_GPUKernel(float *d_mat,
   extern __shared__ float read_vals[];
   int shared_mem_idx, read_idx, read_idx_row, write_idx;
   int row_linear_idx = blockIdx.x * cols;
-  int read_idx_base = row_linear_idx 
-                      + (threadIdx.x * thread_chunk_size) % cols;
+  int read_idx_base = row_linear_idx
+    + (threadIdx.x * thread_chunk_size) % cols;
   int row_last_linear_idx = row_linear_idx + cols;
   for (read_idx = read_idx_base; read_idx < row_last_linear_idx;
        read_idx++) {
@@ -226,13 +226,13 @@ __global__ void ReAlignMemory_ShiftRight_GPUKernel(float *d_mat,
     }
     else {
       read_vals[shared_mem_idx] = d_helper[read_idx - cols * read_idx_row
-                                           + (read_idx_row - 1) 
-                                           * read_idx_row / 2];
+        + (read_idx_row - 1)
+        * read_idx_row / 2];
     }
   }
   __syncthreads();
   for (read_idx = read_idx_base; read_idx < row_last_linear_idx;
-        read_idx++) {
+       read_idx++) {
     write_idx = (read_idx + ceil((float)read_idx / cols)) + !(read_idx % cols);
     d_mat[write_idx] = read_vals[read_idx - row_linear_idx];
     if ((write_idx - 1) % (cols + 1) == 0) {
@@ -250,19 +250,19 @@ void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
     threadblock_size = max_threadblock_size;
   int num_threadblocks = my_ceilf_division_FCLayer(reqd_threads, threadblock_size);
   int thread_chunk_size = my_ceilf_division_FCLayer(cols, max_threadblock_size);
-  ShiftRight_PopulateHelper_GPUKernel <<< num_threadblocks,
-                                          threadblock_size >>> 
-                                          (d_mat, d_helper, org_size,
-                                           rows, cols);
+  ShiftRight_PopulateHelper_GPUKernel << < num_threadblocks,
+    threadblock_size >> >
+    (d_mat, d_helper, org_size,
+     rows, cols);
   reqd_threads = my_ceilf_division_FCLayer(cols, thread_chunk_size);
   threadblock_size = my_ceilf_division_FCLayer(reqd_threads, GPU_WARP_SIZE)
-                     * GPU_WARP_SIZE;
-  ReAlignMemory_ShiftRight_GPUKernel <<< rows,
-                                         threadblock_size,
-                                         sizeof(float) * cols >>>
-                                         (d_mat, d_helper,
-                                          org_size, cols,
-                                          thread_chunk_size);
+    * GPU_WARP_SIZE;
+  ReAlignMemory_ShiftRight_GPUKernel << < rows,
+    threadblock_size,
+    sizeof(float) * cols >> >
+    (d_mat, d_helper,
+     org_size, cols,
+     thread_chunk_size);
 }
 
 __global__ void ShiftLeft_PopulateHelper_GPUKernel(float *d_mat,
@@ -299,7 +299,7 @@ __global__ void ReAlignMemory_ShiftLeft_GPUKernel(float *d_mat,
     }
     else {
       read_idx_lateral = row_linear_idx + cols - shared_mem_idx - 2;
-      read_vals[shared_mem_idx] = d_helper[read_idx_lateral 
+      read_vals[shared_mem_idx] = d_helper[read_idx_lateral
         - cols * read_idx_row
         + (read_idx_row - 1)
         * read_idx_row / 2 + read_idx_row];
@@ -316,7 +316,7 @@ __global__ void ReAlignMemory_ShiftLeft_GPUKernel(float *d_mat,
 }
 
 void ReAlignMemory_ShiftLeft(float *d_mat, float *d_helper,
-                              int rows, int cols, int max_threadblock_size) {
+                             int rows, int cols, int max_threadblock_size) {
   int org_size = rows * cols;
   int reqd_threads = rows * (rows - 1) / 2;
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
@@ -324,19 +324,19 @@ void ReAlignMemory_ShiftLeft(float *d_mat, float *d_helper,
     threadblock_size = max_threadblock_size;
   int num_threadblocks = my_ceilf_division_FCLayer(reqd_threads, threadblock_size);
   int thread_chunk_size = my_ceilf_division_FCLayer((cols - 1), max_threadblock_size);
-  ShiftLeft_PopulateHelper_GPUKernel <<< num_threadblocks,
-                                          threadblock_size >>> 
-                                          (d_mat, d_helper, org_size,
-                                           rows, cols);
+  ShiftLeft_PopulateHelper_GPUKernel << < num_threadblocks,
+    threadblock_size >> >
+    (d_mat, d_helper, org_size,
+     rows, cols);
   reqd_threads = my_ceilf_division_FCLayer((cols - 1), thread_chunk_size);
   threadblock_size = my_ceilf_division_FCLayer(reqd_threads, GPU_WARP_SIZE)
-                     * GPU_WARP_SIZE;
-  ReAlignMemory_ShiftLeft_GPUKernel <<< rows,
-                                        threadblock_size,
-                                        sizeof(float) * (cols - 1) >>>
-                                        (d_mat, d_helper,
-                                         org_size, cols,
-                                         thread_chunk_size);
+    * GPU_WARP_SIZE;
+  ReAlignMemory_ShiftLeft_GPUKernel << < rows,
+    threadblock_size,
+    sizeof(float) * (cols - 1) >> >
+    (d_mat, d_helper,
+     org_size, cols,
+     thread_chunk_size);
 }
 
 void ReAlignMemory_ShiftLeft_CPU(float *d_mat, int rows, int cols) {
@@ -357,70 +357,70 @@ void ReAlignMemory_ShiftLeft_CPU(float *d_mat, int rows, int cols) {
 void SubtractElemwise(float *d_mat, float delta, int mat_size) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division_FCLayer(mat_size, threadblock_size);
-  SubtractElemwise_GPUKernel <<< num_threadblocks, threadblock_size >>>
-                                 (d_mat, delta, mat_size);
+  SubtractElemwise_GPUKernel << < num_threadblocks, threadblock_size >> >
+    (d_mat, delta, mat_size);
 }
 
 void FloatGPUMemset(float *d_array, int array_size, float val) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division_FCLayer(array_size, threadblock_size);
-  FloatGPUMemset_GPUKernel <<< num_threadblocks,
-                               threadblock_size >>>
-                               (d_array, array_size, val);
+  FloatGPUMemset_GPUKernel << < num_threadblocks,
+    threadblock_size >> >
+    (d_array, array_size, val);
 }
 
 void ReplaceVal(float *d_mat, int total_size, float val, float replace_val) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division_FCLayer(total_size, threadblock_size);
-  ReplaceVal_GPUKernel <<< num_threadblocks, threadblock_size >>>
-                           (d_mat, total_size, val, replace_val);
+  ReplaceVal_GPUKernel << < num_threadblocks, threadblock_size >> >
+    (d_mat, total_size, val, replace_val);
 }
 
 void Replace2Vals(float *d_mat, int total_size, float val0, float val1,
                   float replace_val0, float replace_val1) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division_FCLayer(total_size, threadblock_size);
-  Replace2Vals_GPUKernel <<< num_threadblocks, threadblock_size >>>
-                            (d_mat, total_size, val0, val1,
-                             replace_val0, replace_val1);
+  Replace2Vals_GPUKernel << < num_threadblocks, threadblock_size >> >
+    (d_mat, total_size, val0, val1,
+     replace_val0, replace_val1);
 }
 
 void FillOnes(float *d_data, int batch_size, int elem_size) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division_FCLayer(batch_size, threadblock_size);
-  FillOnes_GPUKernel <<< num_threadblocks, 
-                         threadblock_size >>> (d_data, elem_size + 1, 
-                                               batch_size);
+  FillOnes_GPUKernel << < num_threadblocks,
+    threadblock_size >> > (d_data, elem_size + 1,
+                           batch_size);
 }
 
 void InitIdentityMatrix(float *d_mat, int side) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division_FCLayer((side * side), threadblock_size);
-  InitIdentityMatrix_GPUKernel <<< num_threadblocks,
-                                   threadblock_size >>> (d_mat, side);
+  InitIdentityMatrix_GPUKernel << < num_threadblocks,
+    threadblock_size >> > (d_mat, side);
 }
 
 void WeightMatrixRegularizeElemWise(float *d_mat_in, int d_mat_cols,
                                     float reg_inp_scalar, int d_mat_size) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division_FCLayer(d_mat_size, threadblock_size);
-  WeightMatrixRegularizeElemWise_GPUKernel <<< num_threadblocks,
-                                               threadblock_size >>>
-                                               (d_mat_in, d_mat_cols,
-                                                reg_inp_scalar, d_mat_size);
+  WeightMatrixRegularizeElemWise_GPUKernel << < num_threadblocks,
+    threadblock_size >> >
+    (d_mat_in, d_mat_cols,
+     reg_inp_scalar, d_mat_size);
 }
 
 void ElemwiseGradCompute(float *d_data, float *d_out_minus_labels,
                          float *d_elem_grads, int input_batch_size,
                          int input_neurons, int output_neurons) {
   int reqd_threads = (input_batch_size * (input_neurons + 1))
-                     * output_neurons;
+    * output_neurons;
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division_FCLayer(reqd_threads, threadblock_size);
-  ElemwiseGradCompute_GPUKernel <<< num_threadblocks, threadblock_size >>>
-                                    (d_data, d_out_minus_labels, d_elem_grads,
-                                     input_batch_size, input_neurons,
-                                     output_neurons);
+  ElemwiseGradCompute_GPUKernel << < num_threadblocks, threadblock_size >> >
+    (d_data, d_out_minus_labels, d_elem_grads,
+     input_batch_size, input_neurons,
+     output_neurons);
 }
 
 void ComputeGradientsFromElemGrads(float *d_elem_grads,
@@ -431,14 +431,14 @@ void ComputeGradientsFromElemGrads(float *d_elem_grads,
   int reqd_threads = (input_neurons + 1) * output_neurons;
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division_FCLayer(reqd_threads, threadblock_size);
-  
-  ComputeGradientsFromElemGrads_GPUKernel <<< num_threadblocks,
-                                              threadblock_size >>>
-                                              (d_elem_grads,
-                                               d_softmax_gradients,
-                                               learning_rate, momentum,
-                                               input_batch_size, input_neurons,
-                                               output_neurons);
+
+  ComputeGradientsFromElemGrads_GPUKernel << < num_threadblocks,
+    threadblock_size >> >
+    (d_elem_grads,
+     d_softmax_gradients,
+     learning_rate, momentum,
+     input_batch_size, input_neurons,
+     output_neurons);
 }
 
 void ComputeSoftmaxLoss(float *d_out, float *d_labels,
@@ -447,22 +447,22 @@ void ComputeSoftmaxLoss(float *d_out, float *d_labels,
   int reqd_threads = input_batch_size * output_neurons;
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division_FCLayer(reqd_threads, threadblock_size);
-  ComputeSoftmaxLoss_GPUKernel <<< num_threadblocks, threadblock_size >>>
-                                  (d_out, d_labels,
-                                   d_out_minus_labels, coeff,
-                                   input_batch_size, output_neurons);
+  ComputeSoftmaxLoss_GPUKernel << < num_threadblocks, threadblock_size >> >
+    (d_out, d_labels,
+     d_out_minus_labels, coeff,
+     input_batch_size, output_neurons);
 }
 
 void ReluBackprop(float *d_backprop_derivatives, float *d_out_xw_act,
                   float *d_fwd_layer_derivatives, float relu_clip,
-                  int derivative_matrix_size) { 
+                  int derivative_matrix_size) {
   int reqd_threads = derivative_matrix_size;
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division_FCLayer(reqd_threads, threadblock_size);
-  ReluBackprop_GPUKernel <<< num_threadblocks, threadblock_size >>>
-                             (d_backprop_derivatives, d_out_xw_act,
-                              d_fwd_layer_derivatives, relu_clip, 
-                              derivative_matrix_size);
+  ReluBackprop_GPUKernel << < num_threadblocks, threadblock_size >> >
+    (d_backprop_derivatives, d_out_xw_act,
+     d_fwd_layer_derivatives, relu_clip,
+     derivative_matrix_size);
 }
 
 void SigmoidBackprop(float *d_backprop_derivatives, float *d_out_xw_act,
@@ -471,10 +471,10 @@ void SigmoidBackprop(float *d_backprop_derivatives, float *d_out_xw_act,
   int reqd_threads = derivative_matrix_size;
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division_FCLayer(reqd_threads, threadblock_size);
-  SigmoidBackprop_GPUKernel <<< num_threadblocks, threadblock_size >>>
-                                (d_backprop_derivatives, d_out_xw_act,
-                                 d_fwd_layer_derivatives,
-                                 derivative_matrix_size);
+  SigmoidBackprop_GPUKernel << < num_threadblocks, threadblock_size >> >
+    (d_backprop_derivatives, d_out_xw_act,
+     d_fwd_layer_derivatives,
+     derivative_matrix_size);
 }
 
 //void ComputePrevLayerDerivsFromElemGrads_efficient(float *d_elem_grads,

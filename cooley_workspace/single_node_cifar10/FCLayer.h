@@ -30,7 +30,7 @@ void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
 
 void ReAlignMemory_ShiftLeft_CPU(float *d_data, int rows, int cols);
 void ReAlignMemory_ShiftLeft(float *d_mat, float *d_helper,
-                              int rows, int cols, int max_threadblock_size);
+                             int rows, int cols, int max_threadblock_size);
 
 void FillOnes(float *d_data, int elem_size, int batch_size);
 
@@ -114,7 +114,7 @@ public:
   int threadBlockSize;
   int max_img_side_dim_3_channel;
   int output_neurons, input_neurons; //output_neurons->#Neurons,
-                         //input_neurons->#Neurons in previous layer
+                                     //input_neurons->#Neurons in previous layer
   int input_batch_size, input_data_matrix_size;
   int weight_matrix_size, weight_matrix_rows, weight_matrix_cols;
   float *input_data, *h_out;
@@ -154,7 +154,7 @@ private:
   void CustomWeightInitializer(float *d_wt_mat, int len, float val);
   float GetRandomNum();
   void SumColumns(float *d_mat, float *d_out, int rows, int cols);
-  
+
 
   // Input -> (input_batch_size * output_neurons)
   void ComputePrevLayerDerivatives(float *d_fwd_derivatives);
@@ -162,12 +162,12 @@ private:
   void reinit_vars(); //REMOVE THIS LATER; used to set specific vars to check for 
                       //correct results by hand
 
-  // Returns the transpose of (scale_coeff*A.T*B + prior_coeff*C); 
-  // Python equivalent: C = (scale_coeff*np.dot(A.T, B) + prior_coeff*C).T
+                      // Returns the transpose of (scale_coeff*A.T*B + prior_coeff*C); 
+                      // Python equivalent: C = (scale_coeff*np.dot(A.T, B) + prior_coeff*C).T
   cublasStatus_t MatMulT(float *d_A, float *d_B, float *d_C,
-                        int rows_A, int cols_A, 
-                        int rows_B, int cols_B, float scale_coeff = 1.0f,
-                        float prior_coeff = 0.0f);
+                         int rows_A, int cols_A,
+                         int rows_B, int cols_B, float scale_coeff = 1.0f,
+                         float prior_coeff = 0.0f);
 
   float alpha, beta;
   float *d_shift_helper;
@@ -176,7 +176,7 @@ private:
   float *d_out_minus_labels; //contains d_out - d_labels elem-wise
   float *d_elem_grads; //contains weight gradients for each example in batch
                        //It's columns are summed to get gradients
-  //float *d_weight_matrix_squared;
+                       //float *d_weight_matrix_squared;
   float neg_one_scalar; // contains -1
   float neg_learning_rate;
   float *d_onevect;
