@@ -1,0 +1,26 @@
+Jobid: 1078573
+qsub -n 4 -t 60 -A EnergyFEC_2 -q debug -I
+Tue Apr 18 23:08:07 2017 +0000 (UTC) submitted with cwd set to: /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/rough
+jobid 1078573 submitted from terminal /dev/pts/7
+Tue Apr 18 23:08:20 2017 +0000 (UTC) 
+Tue Apr 18 23:08:20 2017 +0000 (UTC) Command: '/usr/bin/ssh' 'cc013.cooley' '/usr/bin/cobalt-launcher.py' '--nf' '/var/tmp/cobalt.1078573' '--jobid' '1078573' '--cwd' '/gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/rough' '--env' 'COBALT_JOBID=1078573' '/bin/sleep' '3600'
+Tue Apr 18 23:08:20 2017 +0000 (UTC) 
+Tue Apr 18 23:08:20 2017 +0000 (UTC) Environment:
+Tue Apr 18 23:08:20 2017 +0000 (UTC) SHELL=/bin/bash
+Tue Apr 18 23:08:20 2017 +0000 (UTC) COBALT_NODEFILE=/tmp/tmpX5RE2O
+Tue Apr 18 23:08:20 2017 +0000 (UTC) COBALT_PARTNAME=cc013.cooley
+Tue Apr 18 23:08:20 2017 +0000 (UTC) COBALT_JOBID=1078573
+Tue Apr 18 23:08:20 2017 +0000 (UTC) COBALT_STARTTIME=1492556888
+Tue Apr 18 23:08:20 2017 +0000 (UTC) LOGNAME=souham
+Tue Apr 18 23:08:20 2017 +0000 (UTC) USER=souham
+Tue Apr 18 23:08:20 2017 +0000 (UTC) COBALT_ENDTIME=1492560488
+Tue Apr 18 23:08:20 2017 +0000 (UTC) COBALT_PARTSIZE=4
+Tue Apr 18 23:08:20 2017 +0000 (UTC) HOME=/home/souham
+Tue Apr 18 23:08:20 2017 +0000 (UTC) COBALT_JOBSIZE=4
+Tue Apr 18 23:08:20 2017 +0000 (UTC) 
+Tue Apr 18 23:08:20 2017 +0000 (UTC) Info: stdin received from /dev/null
+Tue Apr 18 23:08:20 2017 +0000 (UTC) Info: stdout sent to /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/rough/1078573.output
+Tue Apr 18 23:08:20 2017 +0000 (UTC) Info: stderr sent to /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/rough/1078573.error
+Tue Apr 18 23:08:20 2017 +0000 (UTC) 
+Wed Apr 19 00:08:10 2017 +0000 (UTC) Info: maximum execution time exceeded; initiating job termination
+Wed Apr 19 00:08:26 2017 +0000 (UTC) Info: job is in the process of exiting; user delete request ignored
