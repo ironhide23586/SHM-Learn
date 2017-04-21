@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <mpi.h>
 
+#include "cuda.h"
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
@@ -54,10 +55,10 @@ void print_d_var3(float *d_v, int r, int c, bool print_elem = true) {
   free(h_v);
 }
 
-__global__ void init_GPU_mat(float *d_mat, int sz) {
-  int idx = blockDim.x * blockIdx.x + threadIdx.x;
-  d_mat[idx] = idx * 0.1f;
-}
+// __global__ void init_GPU_mat(float *d_mat, int sz) {
+//   int idx = blockDim.x * blockIdx.x + threadIdx.x;
+//   d_mat[idx] = idx * 0.1f;
+// }
 
 int main() {
   MPI_Init(NULL, NULL);
@@ -66,9 +67,10 @@ int main() {
   // float *gathered_data;
   // float *gather_part = (float *)malloc(GATHER_CHUNK * sizeof(float));
 
-  float *d_data, *d_gathered_data, *h_gather_part, *d_gather_part;
+  float *h_data, *d_data, *d_gathered_data, *h_gather_part, *d_gather_part;
   cudaMalloc((void **)&d_data, BCAST_SIZE * sizeof(float));
-  cudaMalloc((void **)&d_gather_part, GATHER_CHUNK * sizeof(float))
+  h_data = (float *)malloc(BCAST_SIZE * sizeof(float));
+  cudaMalloc((void **)&d_gather_part, GATHER_CHUNK * sizeof(float));
   h_gather_part = (float *)malloc(GATHER_CHUNK * sizeof(float));
 
   int world_size;
@@ -88,10 +90,11 @@ int main() {
   MPI_Barrier(MPI_COMM_WORLD);
 
   if (my_rank == 0) {
-    init_GPU_mat <<< 1, BCAST_SIZE >>> (d_data, BCAST_SIZE);
-    // for (int i = 0; i < BCAST_SIZE; i++) {
-    //   data[i] = i * 0.1f;
-    // }
+    //init_GPU_mat<<<1, BCAST_SIZE>>>(d_data, BCAST_SIZE);
+    for (int i = 0; i < BCAST_SIZE; i++) {
+      h_data[i] = i * 0.1f;
+    }
+    cudaMemcpy(d_data, h_data, BCAST_SIZE * sizeof(float), cudaMemcpyHostToDevice);
     std::cout << "Data broadcasted -" << std::endl;
     print_d_var3(d_data, 1, BCAST_SIZE);
     //print_h_var3(data, 1, BCAST_SIZE);
@@ -117,7 +120,15 @@ int main() {
     MPI_Barrier(MPI_COMM_WORLD);
   }
 
+  MPI_Barrier(MPI_COMM_WORLD);
+  if (my_rank == 0)
+    std::cout << "Broadcasting..." << std::endl;
+  MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(d_data, BCAST_SIZE, MPI_FLOAT, 0, MPI_COMM_WORLD);
+
+  MPI_Barrier(MPI_COMM_WORLD);
+  if (my_rank == 0)
+    std::cout << "Broadcast complete" << std::endl;
 
   MPI_Barrier(MPI_COMM_WORLD);
   for (int i = 0; i < world_size; i++) {
