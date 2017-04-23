@@ -37,7 +37,7 @@ inline std::string separator() {
 #define DATA_SIDE 32 //Throws GPU setup error if above 257
 #define CHANNELS 3
 
-#define BATCH_SIZE 128
+#define BATCH_SIZE 10
 #define LABELS 10
 
 #define EPOCHS 10
@@ -79,18 +79,37 @@ void print_d_var3(float *d_v, int r, int c, bool print_elem = true) {
   std::cout << "Minimum at index " << mini_idx << " = " << mini << std::endl;
   std::cout << "Maximum at index " << maxi_idx << " = " << maxi << std::endl;
   std::cout << "Average of all elements = " << sum / (r * c) << std::endl;
+  // std::cout << std::endl;
   free(h_v);
 }
 
-void print_h_var3(float *h_v, int r, int c) {
-  std::cout << "\n-------------------------" << std::endl;
+void print_h_var3(float *h_v, int r, int c, bool print_elem = true) {
+  std::cout << "-------------------------" << std::endl;
+  float mini = h_v[0], maxi = h_v[0];
+  float sum = 0.0f;
+  int mini_idx = 0, maxi_idx = 0;
   for (int i = 0; i < r; i++) {
     for (int j = 0; j < c; j++) {
-      std::cout << h_v[j + i * c] << "\t";
-      //printf("%f\t", h_v_local[j + i * c]);
+      if (print_elem)
+        std::cout << h_v[j + i * c] << "\t";
+      if (h_v[j + i * c] < mini) {
+        mini = h_v[j + i * c];
+        mini_idx = j + i * c;
+      }
+      if (h_v[j + i * c] > maxi) {
+        maxi = h_v[j + i * c];
+        maxi_idx = j + i * c;
+      }
+      sum += h_v[j + i * c];
     }
-    std::cout << std::endl;
+    if (print_elem)
+      std::cout << std::endl;
   }
+  std::cout << "Shape = (" << r << ", " << c << ")" << std::endl;
+  std::cout << "Minimum at index " << mini_idx << " = " << mini << std::endl;
+  std::cout << "Maximum at index " << maxi_idx << " = " << maxi << std::endl;
+  std::cout << "Average of all elements = " << sum / (r * c) << std::endl;
+  // std::cout << std::endl;
 }
 
 void sumCols(float *mat, int rows, int cols, float *sums) {
@@ -155,13 +174,13 @@ void readBatch_mnist(FILE *fp_x, FILE *fp_y, float *h_imgs, float *h_lbls) {
   }
 }
 
-void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls, bool batch_norm=false) {
+void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls, unsigned char *buff) {
   int row_size = (CHANNELS * DATA_SIDE * DATA_SIDE) + 1;
   int row_size_x = row_size - 1;
   int batch_bytes = BATCH_SIZE * row_size;
   int start_idx;
-  unsigned char *buff = (unsigned char *)malloc(sizeof(unsigned char)
-                                                * batch_bytes);
+  // unsigned char *buff = (unsigned char *)malloc(sizeof(unsigned char)
+  //                                               * batch_bytes);
   int read_examples = 0, curr_example = 0;
   int lbl;
   memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
@@ -185,8 +204,8 @@ void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls, bool batch
 
 
   memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
-  float batch_mean = 0.0f, batch_var = 0.0;
-  int cnt = 0;
+  //float batch_mean = 0.0f, batch_var = 0.0;
+  //int cnt = 0;
 
   for (int i = 0; i < BATCH_SIZE; i++) {
     start_idx = i * row_size;
@@ -196,27 +215,13 @@ void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls, bool batch
     for (int j = start_idx + 1; j < start_idx + row_size; j++) {
       h_imgs[col + i * row_size_x] = (float)buff[j];
       h_imgs[col + i * row_size_x] /= 255.0f;
-      batch_mean += h_imgs[col + i * row_size_x];
+      //batch_mean += h_imgs[col + i * row_size_x];
       col++;
-      cnt++;
+      //cnt++;
     }
   }
 
-  batch_mean /= (float) cnt;
-  cnt = 0;
-
-  for (int i = 0; i < BATCH_SIZE; i++) { //Batch norm pending
-    start_idx = i * row_size;
-    int col = 0;
-    for (int j = start_idx + 1; j < start_idx + row_size; j++) {
-      batch_var += std::powf((h_imgs[col + i * row_size_x] - batch_mean), 2);
-      col++;
-      cnt++;
-    }
-  }
-
-
-  free(buff);
+  // free(buff);
   read_imgs_local += BATCH_SIZE;
   read_imgs_global += BATCH_SIZE;
   fseek(fp, read_imgs_local * row_size, 0);
@@ -294,9 +299,13 @@ int main() {
   float *x, *y;
   float *h_out;
 
-  cudaMallocHost((void **)&x, sizeof(float) * BATCH_SIZE * CHANNELS 
-                 * DATA_SIDE * DATA_SIDE);
-  cudaMallocHost((void **)&y, sizeof(float) * BATCH_SIZE * LABELS);
+  // cudaMallocHost((void **)&x, sizeof(float) * BATCH_SIZE * CHANNELS 
+  //                * DATA_SIDE * DATA_SIDE);
+  // cudaMallocHost((void **)&y, sizeof(float) * BATCH_SIZE * LABELS);
+
+  x = (float *)malloc(sizeof(float) * BATCH_SIZE * CHANNELS 
+                                  * DATA_SIDE * DATA_SIDE);
+  y = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
 
   float *x_test = (float *)malloc(sizeof(float) * BATCH_SIZE * CHANNELS 
                                   * DATA_SIDE * DATA_SIDE);
@@ -401,10 +410,13 @@ int main() {
   auto t1 = std::chrono::high_resolution_clock::now();
 
   float dur0, dur1_sft, dur1_lyr, dur2;
-
+  int row_size = (CHANNELS * DATA_SIDE * DATA_SIDE) + 1;
+  int batch_bytes = BATCH_SIZE * row_size;
+  unsigned char *buff = (unsigned char *)malloc(sizeof(unsigned char)
+                                                * batch_bytes);
   while (epoch <= EPOCHS) {
     t0 = std::chrono::high_resolution_clock::now();
-    readBatch_cifar10_lim_v2(fp_data_train, x, y);
+    readBatch_cifar10_lim_v2(fp_data_train, x, y, buff);
     t1 = std::chrono::high_resolution_clock::now();
     dur0 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(t1
                                                                       - t0)
@@ -422,7 +434,15 @@ int main() {
 
     // Forward Pass
     train_start = std::chrono::high_resolution_clock::now();
+
     cl0.LoadData(x, false);
+
+    std::cout << "cuda mem copy to GPU ---> " << cl0.cudaError_stat << std::endl;
+    print_h_var3(x, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
+    print_d_var3(cl0.d_data, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
+
+    if (batch == 5)
+      return 0;
     cl0.Convolve();
 
     //print_d_var3(cl0.d_out, BATCH_SIZE, cl0.output_c * cl0.output_h * cl0.output_w, false);
@@ -542,9 +562,9 @@ int main() {
       avg_dur += dur;
       avg_dur /= 2;
     }
-    std::cout << "Batch " << batch
+    std::cout << "\nBatch " << batch
       << " Epoch = " << epoch << " Loss = " << loss 
-      << " C++_CUDA_GPU Avg iter time = " << avg_dur;
+      << " C++_CUDA_GPU Avg iter time = " << avg_dur << std::endl;
     //return 0;
     batch++;
     prog++;

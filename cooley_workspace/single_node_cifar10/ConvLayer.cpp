@@ -115,10 +115,13 @@ void ConvLayer::AllocateGPUMemory() {
 void ConvLayer::LoadData(float *input_data_arg, bool input_data_on_gpu_arg) {
   input_data = input_data_arg;
   input_data_on_gpu = input_data_on_gpu_arg;
-  if (!input_data_on_gpu)
-    cudaMemcpy(d_data, input_data,
-               sizeof(float) * input_n * input_c * input_h * input_w,
-               cudaMemcpyHostToDevice);
+  if (!input_data_on_gpu) {
+    cudaError_stat = cudaMemcpy(d_data, input_data,
+                                sizeof(float) * input_n * input_c
+                                * input_h * input_w,
+                                cudaMemcpyHostToDevice);
+    std::cout << "Internal cuda mem copy to GPU ---> " << cudaError_stat << std::endl;
+  }
   else
     d_data = input_data;
 }

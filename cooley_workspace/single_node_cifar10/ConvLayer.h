@@ -98,6 +98,11 @@ public:
   cudnnHandle_t cudnn_handle;
   cublasHandle_t cublas_handle;
 
+  cudaError_t cudaError_stat;
+  curandStatus_t curandStatus_stat;
+  cudnnStatus_t cudnnStatus_stat;
+  cublasStatus_t cublasStatus_stat;
+
   ~ConvLayer();
 
 private:
@@ -136,9 +141,4 @@ private:
   cudnnPoolingDescriptor_t poolDesc;
   cudnnPoolingMode_t pool_mode;
   cudnnActivationDescriptor_t cudnn_activation_desc;
-
-  cudaError_t cudaError_stat;
-  curandStatus_t curandStatus_stat;
-  cudnnStatus_t cudnnStatus_stat;
-  cublasStatus_t cublasStatus_stat;
 };
