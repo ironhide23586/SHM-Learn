@@ -155,7 +155,7 @@ void readBatch_mnist(FILE *fp_x, FILE *fp_y, float *h_imgs, float *h_lbls) {
   }
 }
 
-void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls) {
+void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls, bool batch_norm=false) {
   int row_size = (CHANNELS * DATA_SIDE * DATA_SIDE) + 1;
   int row_size_x = row_size - 1;
   int batch_bytes = BATCH_SIZE * row_size;
@@ -183,7 +183,11 @@ void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls) {
 
   fread(buff, sizeof(unsigned char), batch_bytes, fp);
 
+
   memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
+  float batch_mean = 0.0f, batch_var = 0.0;
+  int cnt = 0;
+
   for (int i = 0; i < BATCH_SIZE; i++) {
     start_idx = i * row_size;
     lbl = (int)buff[start_idx];
@@ -192,9 +196,26 @@ void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls) {
     for (int j = start_idx + 1; j < start_idx + row_size; j++) {
       h_imgs[col + i * row_size_x] = (float)buff[j];
       h_imgs[col + i * row_size_x] /= 255.0f;
+      batch_mean += h_imgs[col + i * row_size_x];
       col++;
+      cnt++;
     }
   }
+
+  batch_mean /= (float) cnt;
+  cnt = 0;
+
+  for (int i = 0; i < BATCH_SIZE; i++) { //Batch norm pending
+    start_idx = i * row_size;
+    int col = 0;
+    for (int j = start_idx + 1; j < start_idx + row_size; j++) {
+      batch_var += std::powf((h_imgs[col + i * row_size_x] - batch_mean), 2);
+      col++;
+      cnt++;
+    }
+  }
+
+
   free(buff);
   read_imgs_local += BATCH_SIZE;
   read_imgs_global += BATCH_SIZE;
