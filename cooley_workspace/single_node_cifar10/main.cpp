@@ -33,6 +33,7 @@ inline std::string separator() {
 #endif
 }
 
+
 #define DATA_SIDE 32 //Throws GPU setup error if above 257
 #define CHANNELS 3
 
@@ -327,7 +328,7 @@ int main() {
   float base_lr = 0.001f, gamma = 0.4f, power = 0;
   float lr = base_lr * powf(1 + gamma, -power);
   float reg = 0.004f;
-  float mom = 0.9f;
+  float mom = 0.0f;
 
 
   ConvLayer cl0(cudnnHandle, cublasHandle, BATCH_SIZE, CHANNELS, DATA_SIDE, DATA_SIDE,
@@ -346,8 +347,8 @@ int main() {
   cl2.SetPoolingParams(CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING, 3, 3, 2, 2, 0, 0);
   cl2.SetActivationFunc(CUDNN_ACTIVATION_RELU);
 
-  FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, cl0.output_n,
-               cl0.output_c * cl0.output_h * cl0.output_w,
+  FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, cl2.output_n,
+               cl2.output_c * cl2.output_h * cl2.output_w,
                64, false, lr, mom, reg);
   fcl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
 
@@ -403,27 +404,30 @@ int main() {
     cl0.LoadData(x, false);
     cl0.Convolve();
 
-    //print_d_var3(cl0.d_out, BATCH_SIZE, cl0.output_c * cl0.output_h * cl0.output_w);
+    //print_d_var3(cl0.d_out, BATCH_SIZE, cl0.output_c * cl0.output_h * cl0.output_w, false);
 
     cl1.LoadData(cl0.d_out, true);
     cl1.Convolve();
 
-    //print_d_var3(cl1.d_out, BATCH_SIZE, cl1.output_c * cl1.output_h * cl1.output_w);
+    //print_d_var3(cl1.d_out, BATCH_SIZE, cl1.output_c * cl1.output_h * cl1.output_w, false);
 
     cl2.LoadData(cl1.d_out, true);
     cl2.Convolve();
 
-    //print_d_var3(cl2.d_out, BATCH_SIZE, cl2.output_c * cl2.output_h * cl2.output_w);
+    //print_d_var3(cl2.d_out, BATCH_SIZE, cl2.output_c * cl2.output_h * cl2.output_w, false);
     
     fcl0.LoadData(cl2.d_out, true);
     fcl0.ForwardProp();
 
-    //print_d_var3(fcl0.d_out, BATCH_SIZE, fcl0.output_neurons);
+    //return 0;
+
+    //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols, false);
+    //print_d_var3(fcl0.d_out, BATCH_SIZE, fcl0.output_neurons, false);
 
     fcl1.LoadData(fcl0.d_out, true);
     fcl1.ForwardProp();
 
-    //print_d_var3(fcl1.d_out, BATCH_SIZE, fcl1.output_neurons);
+    //print_d_var3(fcl1.d_out, BATCH_SIZE, fcl1.output_neurons, false);
     
     fcl2.LoadData(fcl1.d_out, true);
     fcl2.ForwardProp();
@@ -432,7 +436,10 @@ int main() {
 
     // Back-propagation
     fcl2.ComputeSoftmaxGradients(y);
-    //print_d_var3(fcl2.d_gradients, fcl2.input_neurons + 1, fcl2.output_neurons);
+    //print_d_var3(fcl2.d_gradients, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
+    
+
+
     fcl1.ComputeLayerGradients(fcl2.d_prev_layer_derivatives);
     fcl0.ComputeLayerGradients(fcl1.d_prev_layer_derivatives);
     cl2.ComputeLayerGradients(fcl0.d_prev_layer_derivatives);
@@ -500,7 +507,6 @@ int main() {
     float wt_loss = (reg * 0.5f) * wt_sum;
     
     loss = my_loss + wt_loss;
-    
       
     dur = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(train_end 
                                                                       - train_start)
@@ -518,7 +524,7 @@ int main() {
     std::cout << "Batch " << batch
       << " Epoch = " << epoch << " Loss = " << loss 
       << " C++_CUDA_GPU Avg iter time = " << avg_dur;
-
+    //return 0;
     batch++;
     prog++;
 

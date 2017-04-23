@@ -116,6 +116,7 @@ FCLayer::FCLayer(const cudnnHandle_t &cudnn_handle_arg,
   neg_learning_rate = -learning_rate;
 }
 
+
 void FCLayer::LoadData(float *input_data_arg, bool input_data_on_gpu_arg) {
   input_data = input_data_arg;
   input_data_on_gpu = input_data_on_gpu_arg;
@@ -191,7 +192,7 @@ void FCLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
                             cuda_device_prop.maxThreadsPerBlock);
   }
   if (activation_set) {
-    //print_d_var(d_backprop_derivatives, input_batch_size, output_neurons);
+    //print_d_var(d_backprop_derivatives, input_batch_size, output_neurons, false);
     //print_d_var(d_out_xw_act, input_batch_size, output_neurons);
     //cudnnStatus_stat = cudnnActivationBackward(cudnn_handle,
     //                                           cudnn_activation_desc, &alpha,
@@ -216,6 +217,7 @@ void FCLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
     d_fwd_layer_derivatives = d_backprop_derivatives;
   }
   //print_d_var(d_fwd_layer_derivatives, input_batch_size, output_neurons);
+  //print_d_var(d_data, input_batch_size, input_neurons + 1);
   cublasStatus_stat = cublasSgemm_v2(cublas_handle, CUBLAS_OP_N,
                                      CUBLAS_OP_T, output_neurons,
                                      input_neurons + 1, input_batch_size,
@@ -225,6 +227,7 @@ void FCLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
                                      input_neurons + 1,
                                      &momentum, d_gradients,
                                      output_neurons);
+  //std::cout << "cuBLAS backprop ------> " << cublasStatus_stat << std::endl;
   //print_d_var(d_gradients, input_neurons + 1, output_neurons);
   if (!is_input_layer) {
     //print_d_var(d_gradients, input_neurons + 1, output_neurons);
@@ -332,6 +335,7 @@ void FCLayer::AddOneVector_CPU(float *d_mat, int rows, int cols) {
 }
 
 void FCLayer::ForwardProp() {
+  //print_d_var(d_data, input_batch_size, input_neurons + 1, false);
   cublasStatus_stat = cublasSgemm_v2(cublas_handle, CUBLAS_OP_N,
                                      CUBLAS_OP_N, output_neurons, input_batch_size,
                                      (input_neurons + 1), &alpha, d_weight_matrix,
@@ -349,6 +353,7 @@ void FCLayer::ForwardProp() {
     cudnnStatus_stat = cudnnActivationForward(cudnn_handle, cudnn_activation_desc, &alpha,
                                               d_out_tensor, d_out_xw, &beta, d_out_tensor,
                                               d_out_xw_act);
+    //print_d_var(d_out_xw_act, input_batch_size, output_neurons, false);
     //std::cout << "Activation Fwd ---->" << cudnnStatus_stat << std::endl;
   }
   else {

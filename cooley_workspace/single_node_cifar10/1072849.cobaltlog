@@ -1,5 +1,0 @@
-Jobid: 1072849
-qsub -n 1 -t 20 -I -A EnergyFEC_2
-Mon Apr 10 09:16:29 2017 +0000 (UTC) submitted with cwd set to: /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10
-jobid 1072849 submitted from terminal /dev/pts/14
-Mon Apr 10 09:16:37 2017 +0000 (UTC) Info: user delete requested; removing job from the queue
