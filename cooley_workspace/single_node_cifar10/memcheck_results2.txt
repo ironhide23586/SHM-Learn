@@ -1,0 +1,2949 @@
+Using GPU Device -> Tesla K80
+cuda dev reset -->0
+cublas handle create -->0
+cuDNN initialization -->0
+cuda mem copy to GPU ---> 4
+========= CUDA-MEMCHECK
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (95,0,0) in block (288,0,0)
+=========     Address 0x620558bd7c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (94,0,0) in block (288,0,0)
+=========     Address 0x620558bd78 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (93,0,0) in block (288,0,0)
+=========     Address 0x620558bd74 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (92,0,0) in block (288,0,0)
+=========     Address 0x620558bd70 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (91,0,0) in block (288,0,0)
+=========     Address 0x620558bd6c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (90,0,0) in block (288,0,0)
+=========     Address 0x620558bd68 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (89,0,0) in block (288,0,0)
+=========     Address 0x620558bd64 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (88,0,0) in block (288,0,0)
+=========     Address 0x620558bd60 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (87,0,0) in block (288,0,0)
+=========     Address 0x620558bd5c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (86,0,0) in block (288,0,0)
+=========     Address 0x620558bd58 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (85,0,0) in block (288,0,0)
+=========     Address 0x620558bd54 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (84,0,0) in block (288,0,0)
+=========     Address 0x620558bd50 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (83,0,0) in block (288,0,0)
+=========     Address 0x620558bd4c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (82,0,0) in block (288,0,0)
+=========     Address 0x620558bd48 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (81,0,0) in block (288,0,0)
+=========     Address 0x620558bd44 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (80,0,0) in block (288,0,0)
+=========     Address 0x620558bd40 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (79,0,0) in block (288,0,0)
+=========     Address 0x620558bd3c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (78,0,0) in block (288,0,0)
+=========     Address 0x620558bd38 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (77,0,0) in block (288,0,0)
+=========     Address 0x620558bd34 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (76,0,0) in block (288,0,0)
+=========     Address 0x620558bd30 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (75,0,0) in block (288,0,0)
+=========     Address 0x620558bd2c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (74,0,0) in block (288,0,0)
+=========     Address 0x620558bd28 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (73,0,0) in block (288,0,0)
+=========     Address 0x620558bd24 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (72,0,0) in block (288,0,0)
+=========     Address 0x620558bd20 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (71,0,0) in block (288,0,0)
+=========     Address 0x620558bd1c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (70,0,0) in block (288,0,0)
+=========     Address 0x620558bd18 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (69,0,0) in block (288,0,0)
+=========     Address 0x620558bd14 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (68,0,0) in block (288,0,0)
+=========     Address 0x620558bd10 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (67,0,0) in block (288,0,0)
+=========     Address 0x620558bd0c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (66,0,0) in block (288,0,0)
+=========     Address 0x620558bd08 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (65,0,0) in block (288,0,0)
+=========     Address 0x620558bd04 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (64,0,0) in block (288,0,0)
+=========     Address 0x620558bd00 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (127,0,0) in block (288,0,0)
+=========     Address 0x620558bdfc is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (126,0,0) in block (288,0,0)
+=========     Address 0x620558bdf8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (125,0,0) in block (288,0,0)
+=========     Address 0x620558bdf4 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (124,0,0) in block (288,0,0)
+=========     Address 0x620558bdf0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (123,0,0) in block (288,0,0)
+=========     Address 0x620558bdec is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (122,0,0) in block (288,0,0)
+=========     Address 0x620558bde8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (121,0,0) in block (288,0,0)
+=========     Address 0x620558bde4 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (120,0,0) in block (288,0,0)
+=========     Address 0x620558bde0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (119,0,0) in block (288,0,0)
+=========     Address 0x620558bddc is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (118,0,0) in block (288,0,0)
+=========     Address 0x620558bdd8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (117,0,0) in block (288,0,0)
+=========     Address 0x620558bdd4 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (116,0,0) in block (288,0,0)
+=========     Address 0x620558bdd0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (115,0,0) in block (288,0,0)
+=========     Address 0x620558bdcc is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (114,0,0) in block (288,0,0)
+=========     Address 0x620558bdc8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (113,0,0) in block (288,0,0)
+=========     Address 0x620558bdc4 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (112,0,0) in block (288,0,0)
+=========     Address 0x620558bdc0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (111,0,0) in block (288,0,0)
+=========     Address 0x620558bdbc is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (110,0,0) in block (288,0,0)
+=========     Address 0x620558bdb8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (109,0,0) in block (288,0,0)
+=========     Address 0x620558bdb4 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (108,0,0) in block (288,0,0)
+=========     Address 0x620558bdb0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (107,0,0) in block (288,0,0)
+=========     Address 0x620558bdac is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (106,0,0) in block (288,0,0)
+=========     Address 0x620558bda8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (105,0,0) in block (288,0,0)
+=========     Address 0x620558bda4 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (104,0,0) in block (288,0,0)
+=========     Address 0x620558bda0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (103,0,0) in block (288,0,0)
+=========     Address 0x620558bd9c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (102,0,0) in block (288,0,0)
+=========     Address 0x620558bd98 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (101,0,0) in block (288,0,0)
+=========     Address 0x620558bd94 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (100,0,0) in block (288,0,0)
+=========     Address 0x620558bd90 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (99,0,0) in block (288,0,0)
+=========     Address 0x620558bd8c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (98,0,0) in block (288,0,0)
+=========     Address 0x620558bd88 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (97,0,0) in block (288,0,0)
+=========     Address 0x620558bd84 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000050 in SubtractElemwise_GPUKernel(float*, float, int)
+=========     by thread (96,0,0) in block (288,0,0)
+=========     Address 0x620558bd80 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x51df]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMemcpy. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMemcpy + 0x1df) [0x35c8f]
+=========     Host Frame:convnet [0xb3b9]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x5263]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x5263]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xa66b]
+=========     Host Frame:convnet [0x527f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xad0e]
+=========     Host Frame:convnet [0xa436]
+=========     Host Frame:convnet [0x52e7]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xad56]
+=========     Host Frame:convnet [0xa436]
+=========     Host Frame:convnet [0x52e7]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xada2]
+=========     Host Frame:convnet [0xa436]
+=========     Host Frame:convnet [0x52e7]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xade2]
+=========     Host Frame:convnet [0xa436]
+=========     Host Frame:convnet [0x52e7]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMemcpy. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMemcpy + 0x1df) [0x35c8f]
+=========     Host Frame:convnet [0xb3b9]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x52e7]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x9030]
+=========     Host Frame:convnet [0x9067]
+=========     Host Frame:convnet [0x7cc0]
+=========     Host Frame:convnet [0xb3e8]
+=========     Host Frame:convnet [0xaedd]
+=========     Host Frame:convnet [0xa459]
+=========     Host Frame:convnet [0x52e7]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMallocHost. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMallocHost + 0x1a9) [0x3e429]
+=========     Host Frame:convnet [0x530e]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMemcpy. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMemcpy + 0x1df) [0x35c8f]
+=========     Host Frame:convnet [0xd2b9]
+=========     Host Frame:convnet [0x54e9]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaBindTexture. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4ee7cc]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0xd2b83]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0xa660e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 (cudnnConvolutionForward + 0x7a9) [0x3a4b9]
+=========     Host Frame:convnet [0xd7ea]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5536]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e690e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2ad0fd]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b2b49]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b701e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b47be]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 (cudnnAddTensor + 0x7dd) [0x2afffd]
+=========     Host Frame:convnet [0xd851]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5536]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e8a03]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b6e13]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b47be]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 (cudnnAddTensor + 0x7dd) [0x2afffd]
+=========     Host Frame:convnet [0xd851]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5536]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e690e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x259497]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x26afc1]
+=========     Host Frame:convnet [0xd8c9]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5536]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e8a03]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x26ad95]
+=========     Host Frame:convnet [0xd8c9]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5536]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xd93d]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5536]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e690e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2ad0fd]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b2b49]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b701e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b47be]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 (cudnnAddTensor + 0x7dd) [0x2afffd]
+=========     Host Frame:convnet [0xd851]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5563]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e8a03]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b6e13]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b47be]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 (cudnnAddTensor + 0x7dd) [0x2afffd]
+=========     Host Frame:convnet [0xd851]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5563]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e690e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x259497]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x26afc1]
+=========     Host Frame:convnet [0xd8c9]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5563]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e8a03]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x26ad95]
+=========     Host Frame:convnet [0xd8c9]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5563]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xd93d]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5563]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e690e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2ad0fd]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b2b49]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b701e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b47be]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 (cudnnAddTensor + 0x7dd) [0x2afffd]
+=========     Host Frame:convnet [0xd851]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5590]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e8a03]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b6e13]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x2b47be]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 (cudnnAddTensor + 0x7dd) [0x2afffd]
+=========     Host Frame:convnet [0xd851]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5590]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e690e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x259497]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x26afc1]
+=========     Host Frame:convnet [0xd8c9]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5590]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e8a03]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x26ad95]
+=========     Host Frame:convnet [0xd8c9]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5590]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xd93d]
+=========     Host Frame:convnet [0xd724]
+=========     Host Frame:convnet [0x5590]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x929c]
+=========     Host Frame:convnet [0x92e3]
+=========     Host Frame:convnet [0x7840]
+=========     Host Frame:convnet [0xaf20]
+=========     Host Frame:convnet [0xa5bb]
+=========     Host Frame:convnet [0x55ae]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x93b4]
+=========     Host Frame:convnet [0x93fb]
+=========     Host Frame:convnet [0x78f6]
+=========     Host Frame:convnet [0xaf20]
+=========     Host Frame:convnet [0xa5bb]
+=========     Host Frame:convnet [0x55ae]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25bf62]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x258884]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259d2e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xb12e]
+=========     Host Frame:convnet [0x55bd]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259bec]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xb12e]
+=========     Host Frame:convnet [0x55bd]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e690e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x277f21]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x27e27f]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x28b862]
+=========     Host Frame:convnet [0xb1df]
+=========     Host Frame:convnet [0x55bd]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x4e8a03]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudnn.so.5 [0x28b60d]
+=========     Host Frame:convnet [0xb1df]
+=========     Host Frame:convnet [0x55bd]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x929c]
+=========     Host Frame:convnet [0x92e3]
+=========     Host Frame:convnet [0x7840]
+=========     Host Frame:convnet [0xaf20]
+=========     Host Frame:convnet [0xa5bb]
+=========     Host Frame:convnet [0x55db]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x93b4]
+=========     Host Frame:convnet [0x93fb]
+=========     Host Frame:convnet [0x78f6]
+=========     Host Frame:convnet [0xaf20]
+=========     Host Frame:convnet [0xa5bb]
+=========     Host Frame:convnet [0x55db]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25bf62]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x258884]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259d2e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xb12e]
+=========     Host Frame:convnet [0x55ea]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259bec]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xb12e]
+=========     Host Frame:convnet [0x55ea]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x929c]
+=========     Host Frame:convnet [0x92e3]
+=========     Host Frame:convnet [0x7840]
+=========     Host Frame:convnet [0xaf20]
+=========     Host Frame:convnet [0xa5bb]
+=========     Host Frame:convnet [0x5608]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x93b4]
+=========     Host Frame:convnet [0x93fb]
+=========     Host Frame:convnet [0x78f6]
+=========     Host Frame:convnet [0xaf20]
+=========     Host Frame:convnet [0xa5bb]
+=========     Host Frame:convnet [0x5608]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25bf62]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x258884]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259d2e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xb12e]
+=========     Host Frame:convnet [0x5617]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259bec]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xb12e]
+=========     Host Frame:convnet [0x5617]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xb68e]
+=========     Host Frame:convnet [0xa744]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xb6db]
+=========     Host Frame:convnet [0xa744]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xb71b]
+=========     Host Frame:convnet [0xa744]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xb75b]
+=========     Host Frame:convnet [0xa744]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xb837]
+=========     Host Frame:convnet [0xa744]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xa7e2]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2231cc]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xa7e2]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25bd92]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x258714]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a074]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xa9da]
+=========     Host Frame:convnet [0xa80c]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259bec]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xa9da]
+=========     Host Frame:convnet [0xa80c]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25bbc2]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2585a4]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259ae9]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xaab7]
+=========     Host Frame:convnet [0xaa0c]
+=========     Host Frame:convnet [0xa80c]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259bec]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xaab7]
+=========     Host Frame:convnet [0xaa0c]
+=========     Host Frame:convnet [0xa80c]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x94cc]
+=========     Host Frame:convnet [0x9513]
+=========     Host Frame:convnet [0x7a0f]
+=========     Host Frame:convnet [0xab03]
+=========     Host Frame:convnet [0xaa0c]
+=========     Host Frame:convnet [0xa80c]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x95e4]
+=========     Host Frame:convnet [0x962b]
+=========     Host Frame:convnet [0x7acd]
+=========     Host Frame:convnet [0xab03]
+=========     Host Frame:convnet [0xaa0c]
+=========     Host Frame:convnet [0xa80c]
+=========     Host Frame:convnet [0x562d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xb68e]
+=========     Host Frame:convnet [0xa846]
+=========     Host Frame:convnet [0x5646]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xb7f4]
+=========     Host Frame:convnet [0xa846]
+=========     Host Frame:convnet [0x5646]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xb837]
+=========     Host Frame:convnet [0xa846]
+=========     Host Frame:convnet [0x5646]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x94cc]
+=========     Host Frame:convnet [0x9513]
+=========     Host Frame:convnet [0x7a0f]
+=========     Host Frame:convnet [0xa896]
+=========     Host Frame:convnet [0x5646]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x95e4]
+=========     Host Frame:convnet [0x962b]
+=========     Host Frame:convnet [0x7acd]
+=========     Host Frame:convnet [0xa896]
+=========     Host Frame:convnet [0x5646]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x8d81]
+=========     Host Frame:convnet [0x8dcc]
+=========     Host Frame:convnet [0x8483]
+=========     Host Frame:convnet [0xa8f5]
+=========     Host Frame:convnet [0x5646]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25bd92]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x258714]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a074]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xa9da]
+=========     Host Frame:convnet [0x5646]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259bec]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xa9da]
+=========     Host Frame:convnet [0x5646]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25bbc2]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2585a4]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259ae9]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xaab7]
+=========     Host Frame:convnet [0xaa0c]
+=========     Host Frame:convnet [0x5646]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259bec]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xaab7]
+=========     Host Frame:convnet [0xaa0c]
+=========     Host Frame:convnet [0x5646]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x94cc]
+=========     Host Frame:convnet [0x9513]
+=========     Host Frame:convnet [0x7a0f]
+=========     Host Frame:convnet [0xab03]
+=========     Host Frame:convnet [0xaa0c]
+=========     Host Frame:convnet [0x5646]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x95e4]
+=========     Host Frame:convnet [0x962b]
+=========     Host Frame:convnet [0x7acd]
+=========     Host Frame:convnet [0xab03]
+=========     Host Frame:convnet [0xaa0c]
+=========     Host Frame:convnet [0x5646]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xb68e]
+=========     Host Frame:convnet [0xa846]
+=========     Host Frame:convnet [0x565f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xb7f4]
+=========     Host Frame:convnet [0xa846]
+=========     Host Frame:convnet [0x565f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xb837]
+=========     Host Frame:convnet [0xa846]
+=========     Host Frame:convnet [0x565f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x94cc]
+=========     Host Frame:convnet [0x9513]
+=========     Host Frame:convnet [0x7a0f]
+=========     Host Frame:convnet [0xa896]
+=========     Host Frame:convnet [0x565f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x95e4]
+=========     Host Frame:convnet [0x962b]
+=========     Host Frame:convnet [0x7acd]
+=========     Host Frame:convnet [0xa896]
+=========     Host Frame:convnet [0x565f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x8d81]
+=========     Host Frame:convnet [0x8dcc]
+=========     Host Frame:convnet [0x8483]
+=========     Host Frame:convnet [0xa8f5]
+=========     Host Frame:convnet [0x565f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25bd92]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x258714]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a074]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xa9da]
+=========     Host Frame:convnet [0x565f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259bec]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xa9da]
+=========     Host Frame:convnet [0x565f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25bbc2]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2585a4]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259ae9]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xaab7]
+=========     Host Frame:convnet [0xaa0c]
+=========     Host Frame:convnet [0x565f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x259bec]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x25a882]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x13eefe]
+=========     Host Frame:convnet [0xaab7]
+=========     Host Frame:convnet [0xaa0c]
+=========     Host Frame:convnet [0x565f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x94cc]
+=========     Host Frame:convnet [0x9513]
+=========     Host Frame:convnet [0x7a0f]
+=========     Host Frame:convnet [0xab03]
+=========     Host Frame:convnet [0xaa0c]
+=========     Host Frame:convnet [0x565f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x95e4]
+=========     Host Frame:convnet [0x962b]
+=========     Host Frame:convnet [0x7acd]
+=========     Host Frame:convnet [0xab03]
+=========     Host Frame:convnet [0xaa0c]
+=========     Host Frame:convnet [0x565f]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe630]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5678]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe696]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5678]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe7c6]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5678]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe809]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5678]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe84c]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5678]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe87e]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5678]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe8b0]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5678]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe8e2]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5678]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xea3b]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5678]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe630]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5691]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe696]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5691]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe7c6]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5691]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe809]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5691]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe84c]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5691]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe87e]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5691]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe8b0]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5691]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe8e2]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5691]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xea3b]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x5691]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe630]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x56aa]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe696]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x56aa]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe783]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x56aa]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe7c6]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x56aa]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe809]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x56aa]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe84c]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x56aa]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe87e]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x56aa]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe8b0]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x56aa]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMalloc. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMalloc + 0x1a9) [0x3e5e9]
+=========     Host Frame:convnet [0xe8e2]
+=========     Host Frame:convnet [0xdc03]
+=========     Host Frame:convnet [0x56aa]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x8849]
+=========     Host Frame:convnet [0x8889]
+=========     Host Frame:convnet [0x8129]
+=========     Host Frame:convnet [0xac3c]
+=========     Host Frame:convnet [0x56c3]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xacc5]
+=========     Host Frame:convnet [0x56c3]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2231cc]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xacc5]
+=========     Host Frame:convnet [0x56c3]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x8849]
+=========     Host Frame:convnet [0x8889]
+=========     Host Frame:convnet [0x8129]
+=========     Host Frame:convnet [0xac3c]
+=========     Host Frame:convnet [0x56dc]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xacc5]
+=========     Host Frame:convnet [0x56dc]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2231cc]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xacc5]
+=========     Host Frame:convnet [0x56dc]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0x99da]
+=========     Host Frame:convnet [0x8849]
+=========     Host Frame:convnet [0x8889]
+=========     Host Frame:convnet [0x8129]
+=========     Host Frame:convnet [0xac3c]
+=========     Host Frame:convnet [0x56f5]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xacc5]
+=========     Host Frame:convnet [0x56f5]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2231cc]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xacc5]
+=========     Host Frame:convnet [0x56f5]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x226a83]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227f2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227490]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x223834]
+=========     Host Frame:convnet [0xe1e9]
+=========     Host Frame:convnet [0x5715]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227d77]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227490]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x223834]
+=========     Host Frame:convnet [0xe1e9]
+=========     Host Frame:convnet [0x5715]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x226a83]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227f2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227490]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x223834]
+=========     Host Frame:convnet [0xe27a]
+=========     Host Frame:convnet [0x5715]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227d77]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227490]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x223834]
+=========     Host Frame:convnet [0xe27a]
+=========     Host Frame:convnet [0x5715]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0xc47e]
+=========     Host Frame:convnet [0xc2a2]
+=========     Host Frame:convnet [0xc2d9]
+=========     Host Frame:convnet [0xc1bf]
+=========     Host Frame:convnet [0xe44d]
+=========     Host Frame:convnet [0x5715]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0xc47e]
+=========     Host Frame:convnet [0xc2a2]
+=========     Host Frame:convnet [0xc2d9]
+=========     Host Frame:convnet [0xc1bf]
+=========     Host Frame:convnet [0xe477]
+=========     Host Frame:convnet [0x5715]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xe513]
+=========     Host Frame:convnet [0x5715]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2231cc]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xe513]
+=========     Host Frame:convnet [0x5715]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xe5af]
+=========     Host Frame:convnet [0x5715]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2231cc]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xe5af]
+=========     Host Frame:convnet [0x5715]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x226a83]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227f2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227490]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x223834]
+=========     Host Frame:convnet [0xe1e9]
+=========     Host Frame:convnet [0x5735]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227d77]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227490]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x223834]
+=========     Host Frame:convnet [0xe1e9]
+=========     Host Frame:convnet [0x5735]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x226a83]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227f2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227490]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x223834]
+=========     Host Frame:convnet [0xe27a]
+=========     Host Frame:convnet [0x5735]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227d77]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227490]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x223834]
+=========     Host Frame:convnet [0xe27a]
+=========     Host Frame:convnet [0x5735]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0xc47e]
+=========     Host Frame:convnet [0xc2a2]
+=========     Host Frame:convnet [0xc2d9]
+=========     Host Frame:convnet [0xc1bf]
+=========     Host Frame:convnet [0xe44d]
+=========     Host Frame:convnet [0x5735]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0xc47e]
+=========     Host Frame:convnet [0xc2a2]
+=========     Host Frame:convnet [0xc2d9]
+=========     Host Frame:convnet [0xc1bf]
+=========     Host Frame:convnet [0xe477]
+=========     Host Frame:convnet [0x5735]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xe513]
+=========     Host Frame:convnet [0x5735]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2231cc]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xe513]
+=========     Host Frame:convnet [0x5735]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xe5af]
+=========     Host Frame:convnet [0x5735]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2231cc]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xe5af]
+=========     Host Frame:convnet [0x5735]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x226a83]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227f2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227490]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x223834]
+=========     Host Frame:convnet [0xe1e9]
+=========     Host Frame:convnet [0x5755]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227d77]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227490]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x223834]
+=========     Host Frame:convnet [0xe1e9]
+=========     Host Frame:convnet [0x5755]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x226a83]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227f2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227490]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x223834]
+=========     Host Frame:convnet [0xe27a]
+=========     Host Frame:convnet [0x5755]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227d77]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x227490]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x223834]
+=========     Host Frame:convnet [0xe27a]
+=========     Host Frame:convnet [0x5755]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0xc47e]
+=========     Host Frame:convnet [0xc2a2]
+=========     Host Frame:convnet [0xc2d9]
+=========     Host Frame:convnet [0xc1bf]
+=========     Host Frame:convnet [0xe44d]
+=========     Host Frame:convnet [0x5755]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x17e) [0x337be]
+=========     Host Frame:convnet [0xc47e]
+=========     Host Frame:convnet [0xc2a2]
+=========     Host Frame:convnet [0xc2d9]
+=========     Host Frame:convnet [0xc1bf]
+=========     Host Frame:convnet [0xe477]
+=========     Host Frame:convnet [0x5755]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xe513]
+=========     Host Frame:convnet [0x5755]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2231cc]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xe513]
+=========     Host Frame:convnet [0x5755]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a362e]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xe5af]
+=========     Host Frame:convnet [0x5755]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaGetLastError. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a0d53]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2231cc]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xe5af]
+=========     Host Frame:convnet [0x5755]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaMemcpy. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib64/libcuda.so.1 [0x2ef503]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaMemcpy + 0x1df) [0x35c8f]
+=========     Host Frame:convnet [0x578d]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3519]
+=========
+========= Error: process didn't terminate successfully
+=========        The application may have hit an error when dereferencing Unified Memory from the host. Please rerun the application under cuda-gdb or Nsight Eclipse Edition to catch host side errors.
+========= Internal error (20)
+========= No CUDA-MEMCHECK results found

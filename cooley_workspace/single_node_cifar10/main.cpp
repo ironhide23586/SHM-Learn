@@ -441,7 +441,7 @@ int main() {
     print_h_var3(x, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
     print_d_var3(cl0.d_data, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
 
-    if (batch == 5)
+    if (batch == 2)
       return 0;
     cl0.Convolve();
 
@@ -473,11 +473,11 @@ int main() {
     fcl2.LoadData(fcl1.d_out, true);
     fcl2.ForwardProp();
 
-    //print_d_var3(fcl2.d_out, BATCH_SIZE, fcl2.output_neurons);
+    print_d_var3(fcl2.d_out, BATCH_SIZE, fcl2.output_neurons);
 
     // Back-propagation
     fcl2.ComputeSoftmaxGradients(y);
-    //print_d_var3(fcl2.d_gradients, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
+    print_d_var3(fcl2.d_gradients, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
     
 
 
@@ -530,24 +530,24 @@ int main() {
     my_loss /= BATCH_SIZE;
     wt_sum = 0.0f;
     
-    cl0_wt_sum = matrix_square_sum(cl0.d_filt, cl0.input_c * cl0.feature_maps
-                                   * cl0.kernel_h * cl0.kernel_w);
-    cl1_wt_sum = matrix_square_sum(cl1.d_filt, cl1.input_c * cl1.feature_maps
-                                   * cl1.kernel_h * cl1.kernel_w);
-    cl2_wt_sum = matrix_square_sum(cl2.d_filt, cl2.input_c * cl2.feature_maps
-                                   * cl2.kernel_h * cl2.kernel_w);
+    // cl0_wt_sum = matrix_square_sum(cl0.d_filt, cl0.input_c * cl0.feature_maps
+    //                                * cl0.kernel_h * cl0.kernel_w);
+    // cl1_wt_sum = matrix_square_sum(cl1.d_filt, cl1.input_c * cl1.feature_maps
+    //                                * cl1.kernel_h * cl1.kernel_w);
+    // cl2_wt_sum = matrix_square_sum(cl2.d_filt, cl2.input_c * cl2.feature_maps
+    //                                * cl2.kernel_h * cl2.kernel_w);
 
-    fcl0_wt_sum = matrix_square_sum_exclude_bias(fcl0.d_weight_matrix, fcl0.weight_matrix_size,
-                                                 fcl0.weight_matrix_cols);
-    fcl1_wt_sum = matrix_square_sum_exclude_bias(fcl1.d_weight_matrix, fcl1.weight_matrix_size,
-                                                 fcl1.weight_matrix_cols);
-    fcl2_wt_sum = matrix_square_sum_exclude_bias(fcl2.d_weight_matrix, fcl2.weight_matrix_size,
-                                                 fcl2.weight_matrix_cols);
+    // fcl0_wt_sum = matrix_square_sum_exclude_bias(fcl0.d_weight_matrix, fcl0.weight_matrix_size,
+    //                                              fcl0.weight_matrix_cols);
+    // fcl1_wt_sum = matrix_square_sum_exclude_bias(fcl1.d_weight_matrix, fcl1.weight_matrix_size,
+    //                                              fcl1.weight_matrix_cols);
+    // fcl2_wt_sum = matrix_square_sum_exclude_bias(fcl2.d_weight_matrix, fcl2.weight_matrix_size,
+    //                                              fcl2.weight_matrix_cols);
     
-    wt_sum = cl0_wt_sum + cl1_wt_sum + cl2_wt_sum + fcl0_wt_sum + fcl1_wt_sum + fcl2_wt_sum;
-    float wt_loss = (reg * 0.5f) * wt_sum;
+    // wt_sum = cl0_wt_sum + cl1_wt_sum + cl2_wt_sum + fcl0_wt_sum + fcl1_wt_sum + fcl2_wt_sum;
+    // float wt_loss = (reg * 0.5f) * wt_sum;
     
-    loss = my_loss + wt_loss;
+    loss = my_loss;// + wt_loss;
       
     dur = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(train_end 
                                                                       - train_start)
@@ -574,9 +574,9 @@ int main() {
       epoch++;
     }
     prev_read_imgs = read_imgs_global;
-    results_file.open("shmlearn_results.txt", std::ofstream::out | std::ofstream::app);
-    results_file << ts << " " << loss << "\n";
-    results_file.close();
+    // results_file.open("shmlearn_results.txt", std::ofstream::out | std::ofstream::app);
+    // results_file << ts << " " << loss << "\n";
+    // results_file.close();
     std::cout << std::endl;
     cnt++;
     
