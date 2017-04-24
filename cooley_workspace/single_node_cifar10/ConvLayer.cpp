@@ -133,19 +133,24 @@ ConvLayer::ConvLayer(const cudnnHandle_t &cudnn_handle_arg,
 void ConvLayer::AllocateGPUMemory() {
   CudaSafeCall(cudaMalloc((void **)&d_data,
                input_n * input_c * input_h * input_w * sizeof(float)));
-  CudnnSafeCall(cudnnSetConvolution2dDescriptor(convDesc, pad_h, pad_w, vert_stride,
-                                                hor_stride, x_upscale, y_upscale,
+  CudnnSafeCall(cudnnSetConvolution2dDescriptor(convDesc, pad_h,
+                                                pad_w, vert_stride,
+                                                hor_stride, x_upscale,
+                                                y_upscale,
                                                 CUDNN_CONVOLUTION));
-  CudnnSafeCall(cudnnSetFilter4dDescriptor(filterDesc, CUDNN_DATA_FLOAT, CUDNN_TENSOR_NCHW,
-                                           feature_maps, input_c, kernel_h, kernel_w));
+  CudnnSafeCall(cudnnSetFilter4dDescriptor(filterDesc, CUDNN_DATA_FLOAT,
+                                           CUDNN_TENSOR_NCHW,
+                                           feature_maps, input_c,
+                                           kernel_h, kernel_w));
   //no_of_feature_maps, c, h, w; feaure_maps = out_channels
   filter_linear_size = input_c * kernel_h * kernel_w;
   filter_total_size = feature_maps * filter_linear_size;
   CudaSafeCall(cudaMalloc((void **)&d_filt,
                sizeof(float) * feature_maps
                * input_c * kernel_h * kernel_w));
-  CudnnSafeCall(cudnnGetConvolution2dForwardOutputDim(convDesc, dataTensor, filterDesc,
-                                                      &output_n, &output_c, &output_h,
+  CudnnSafeCall(cudnnGetConvolution2dForwardOutputDim(convDesc, dataTensor,
+                                                      filterDesc, &output_n,
+                                                      &output_c, &output_h,
                                                       &output_w));
 
   conv_output_n = output_n;
@@ -159,17 +164,20 @@ void ConvLayer::AllocateGPUMemory() {
                                            output_w));
   CudaSafeCall(cudaMalloc((void **)&d_conv, sizeof(float) * output_n
                * ((output_c * output_h * output_w) + 1))); //+1->future bias
-  CudnnSafeCall(cudnnGetConvolutionForwardAlgorithm(cudnn_handle, 
-                                                    dataTensor, filterDesc,
-                                                    convDesc, convTensor,
-                                                    CUDNN_CONVOLUTION_FWD_PREFER_FASTEST,
-                                                    0, &fwd_algo));
-  CudnnSafeCall(cudnnGetConvolutionForwardWorkspaceSize(cudnn_handle, dataTensor,
-                                                       filterDesc, convDesc,
-                                                       convTensor, fwd_algo,
-                                                       &fwd_workspace_size));
+  CudnnSafeCall(cudnnGetConvolutionForwardAlgorithm(
+                cudnn_handle, 
+                dataTensor, filterDesc,
+                convDesc, convTensor,
+                CUDNN_CONVOLUTION_FWD_PREFER_FASTEST,
+                0, &fwd_algo));
+  CudnnSafeCall(cudnnGetConvolutionForwardWorkspaceSize(cudnn_handle,
+                                                        dataTensor,
+                                                        filterDesc, convDesc,
+                                                        convTensor, fwd_algo,
+                                                        &fwd_workspace_size));
   CudaSafeCall(cudaMalloc(&d_fwd_workspace, fwd_workspace_size));
-  CudnnSafeCall(cudnnSetTensor4dDescriptor(biasTensor, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
+  CudnnSafeCall(cudnnSetTensor4dDescriptor(biasTensor, CUDNN_TENSOR_NCHW,
+                                           CUDNN_DATA_FLOAT,
                                            1, output_c, 1, 1));
   CudaSafeCall(cudaMalloc((void **)&d_bias, sizeof(float) * output_c));
 }
@@ -179,10 +187,10 @@ void ConvLayer::LoadData(float *input_data_arg, bool input_data_on_gpu_arg) {
   input_data_on_gpu = input_data_on_gpu_arg;
   if (!input_data_on_gpu) {
     //print_h_var2(input_data, input_n, input_c * input_h * input_w, false);
-    cudaError_stat = cudaMemcpy(d_data, input_data,
-                                sizeof(float) * input_n * input_c
-                                * input_h * input_w,
-                                cudaMemcpyHostToDevice);
+    CudaSafeCall(cudaMemcpy(d_data, input_data,
+                            sizeof(float) * input_n * input_c
+                            * input_h * input_w,
+                            cudaMemcpyHostToDevice));
     //std::cout << "Internal cuda mem copy to GPU ---> " << cudaError_stat << std::endl;
   }
   else
@@ -191,7 +199,8 @@ void ConvLayer::LoadData(float *input_data_arg, bool input_data_on_gpu_arg) {
 
 void ConvLayer::SetPoolingParams(cudnnPoolingMode_t pool_mode_arg,
                                  int pool_height_arg, int pool_width_arg,
-                                 int pool_vert_stride_arg, int pool_hor_stride_arg,
+                                 int pool_vert_stride_arg, 
+                                 int pool_hor_stride_arg,
                                  int pool_pad_h_arg, int pool_pad_w_arg) {
   pool_mode = pool_mode_arg;
   pool_vert_stride = pool_vert_stride_arg;
@@ -202,25 +211,29 @@ void ConvLayer::SetPoolingParams(cudnnPoolingMode_t pool_mode_arg,
   pool_pad_h = pool_pad_h_arg;
   pool_pad_w = pool_pad_w_arg;
 
-  cudnnCreatePoolingDescriptor(&poolDesc);
-  cudnnCreateTensorDescriptor(&poolTensor);
-  cudnnSetPooling2dDescriptor(poolDesc, pool_mode, CUDNN_PROPAGATE_NAN,
-                              pool_height, pool_width,
-                              pool_pad_h, pool_pad_w,
-                              pool_vert_stride, pool_hor_stride);
-  cudnnGetPooling2dForwardOutputDim(poolDesc, convTensor,
-                                    &output_n, &output_c,
-                                    &output_h, &output_w);
+  CudnnSafeCall(cudnnCreatePoolingDescriptor(&poolDesc));
+  CudnnSafeCall(cudnnCreateTensorDescriptor(&poolTensor));
+  CudnnSafeCall(cudnnSetPooling2dDescriptor(poolDesc, pool_mode,
+                                            CUDNN_PROPAGATE_NAN,
+                                            pool_height, pool_width,
+                                            pool_pad_h, pool_pad_w,
+                                            pool_vert_stride, 
+                                            pool_hor_stride));
+  CudnnSafeCall(cudnnGetPooling2dForwardOutputDim(poolDesc, convTensor,
+                                                  &output_n, &output_c,
+                                                  &output_h, &output_w));
   pool_output_n = output_n;
   pool_output_c = output_c;
   pool_output_h = output_h;
   pool_output_w = output_w;
-  cudnnSetTensor4dDescriptor(poolTensor, CUDNN_TENSOR_NCHW,
-                             CUDNN_DATA_FLOAT, output_n, output_c,
-                             output_h, output_w);
-  cudaMalloc((void **)&d_pool,
-             sizeof(float) * output_n * ((output_c * output_h * output_w)
-                                         + 1)); //+1 to accomodate bias in future
+  CudnnSafeCall(cudnnSetTensor4dDescriptor(poolTensor, CUDNN_TENSOR_NCHW,
+                                           CUDNN_DATA_FLOAT, output_n,
+                                           output_c,
+                                           output_h, output_w));
+  CudaSafeCall(cudaMalloc((void **)&d_pool,
+               sizeof(float) * output_n * ((output_c * output_h * output_w)
+                                           + 1)));
+                                           //+1 to accomodate bias in future
 }
 
 void ConvLayer::InitializeFilters(float mean, float stddev) {
@@ -231,13 +244,15 @@ void ConvLayer::InitializeFilters(float mean, float stddev) {
   //                                         * input_c * kernel_h * kernel_w, mean, stddev);
   ////print_d_var2(d_filt, feature_maps, input_c * kernel_h * kernel_w);
   //curandStatus_stat = curandDestroyGenerator(rng);
-  CustomWeightInitializer(d_filt, feature_maps * input_c * kernel_h * kernel_w);
+  CustomWeightInitializer(d_filt,
+                          feature_maps * input_c * kernel_h * kernel_w);
+  CudaCheckError();
   //cudaMemset(d_filt, 1, sizeof(float) * feature_maps * input_c
   //           * kernel_h * kernel_w);
 }
 
 void ConvLayer::InitializeBiases() {
-  cudaMemset(d_bias, 0, sizeof(float) * output_c);
+  CudaSafeCall(cudaMemset(d_bias, 0, sizeof(float) * output_c));
 }
 
 void ConvLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz) {
@@ -248,9 +263,9 @@ void ConvLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz) {
     //wt_avg += h_tmp_wt_mat[i];
   }
   //wt_avg /= wt_mat_sz;
-  cudaError_stat = cudaMemcpy(d_wt_mat, h_tmp_wt_mat,
-                              sizeof(float) * wt_mat_sz,
-                              cudaMemcpyHostToDevice);
+  CudaSafeCall(cudaMemcpy(d_wt_mat, h_tmp_wt_mat,
+                          sizeof(float) * wt_mat_sz,
+                          cudaMemcpyHostToDevice));
   //SubtractElemwise_Conv(d_wt_mat, wt_avg, wt_mat_sz);
   free(h_tmp_wt_mat);
 }
@@ -266,33 +281,38 @@ void ConvLayer::Convolve() {
 }
 
 void ConvLayer::Convolve_worker() {
-  cudnnStatus_stat = cudnnConvolutionForward(cudnn_handle, &alpha, dataTensor,
-                          d_data, filterDesc, d_filt,
-                          convDesc, fwd_algo, d_fwd_workspace,
-                          fwd_workspace_size, &beta, convTensor, d_conv);
+  CudnnSafeCall(cudnnConvolutionForward(cudnn_handle, &alpha, dataTensor,
+                                        d_data, filterDesc, d_filt,
+                                        convDesc, fwd_algo, d_fwd_workspace,
+                                        fwd_workspace_size, &beta,
+                                        convTensor, d_conv));
   std::cout << "cudnn fwd conv ---> " << cudnnStatus_stat << std::endl;
-  cudnnAddTensor(cudnn_handle, &alpha, biasTensor,
-                 d_bias, &alpha, convTensor, d_conv);
+  CudnnSafeCall(cudnnAddTensor(cudnn_handle, &alpha, biasTensor,
+                               d_bias, &alpha, convTensor, d_conv));
   //d_out = d_conv;
   if (pooling_enabled) {
-    cudnnStatus_t st = cudnnPoolingForward(cudnn_handle, poolDesc, &alpha,
-                                           convTensor, d_conv, &beta,
-                                           poolTensor, d_pool);
+    CudnnSafeCall(cudnnPoolingForward(cudnn_handle, poolDesc, &alpha,
+                                      convTensor, d_conv, &beta,
+                                      poolTensor, d_pool));
     //d_out = d_pool;
   }
   if (activation_set) {
     if (!d_out_allocated) {
-      cudaError_stat = cudaMalloc((void **)&d_out, sizeof(float) * output_n
-                                  * ((output_c * output_h * output_w) + 1));
+      CudaSafeCall(cudaMalloc((void **)&d_out, sizeof(float) * output_n
+                              * ((output_c * output_h * output_w) + 1)));
       d_out_allocated = true;
     }
     if (pooling_enabled) {
-      cudnnActivationForward(cudnn_handle, cudnn_activation_desc, &alpha,
-                             poolTensor, d_pool, &beta, poolTensor, d_out);
+      CudnnSafeCall(cudnnActivationForward(cudnn_handle,
+                                           cudnn_activation_desc, &alpha,
+                                           poolTensor, d_pool, &beta,
+                                           poolTensor, d_out));
     }
     else {
-      cudnnActivationForward(cudnn_handle, cudnn_activation_desc, &alpha,
-                             convTensor, d_conv, &beta, convTensor, d_out);
+      CudnnSafeCall(cudnnActivationForward(cudnn_handle,
+                                           cudnn_activation_desc, &alpha,
+                                           convTensor, d_conv, &beta,
+                                           convTensor, d_out));
     }
   }
   else {
@@ -308,18 +328,20 @@ float* ConvLayer::GetOutput() {
   h_output = (float *)malloc(sizeof(float) * output_n
                              * output_c * output_h * output_w);
   float *d_out = pooling_enabled ? d_pool : d_conv;
-  cudaMemcpy(h_output, d_out,
-             sizeof(float) * output_n * output_c * output_h * output_w,
-             cudaMemcpyDeviceToHost);
+  CudaSafeCall(cudaMemcpy(h_output, d_out,
+               sizeof(float) * output_n * output_c * output_h * output_w,
+               cudaMemcpyDeviceToHost));
   return h_output;
 }
 
 void ConvLayer::SetActivationFunc(cudnnActivationMode_t activation_mode,
                                   double relu_clip) {
   activation_set = true;
-  cudnnCreateActivationDescriptor(&cudnn_activation_desc);
-  cudnnSetActivationDescriptor(cudnn_activation_desc, activation_mode,
-                               CUDNN_PROPAGATE_NAN, relu_clip);
+  CudnnSafeCall(cudnnCreateActivationDescriptor(&cudnn_activation_desc));
+  CudnnSafeCall(cudnnSetActivationDescriptor(cudnn_activation_desc,
+                                             activation_mode,
+                                             CUDNN_PROPAGATE_NAN,
+                                             relu_clip));
 }
 
 void ConvLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
@@ -330,23 +352,23 @@ void ConvLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
   if (activation_set) {
     if (pooling_enabled) {
       //print_d_var2(d_activation_derivatives, input_n, output_c * output_h * output_w);
-      cudnnStatus_stat = cudnnActivationBackward(cudnn_handle,
-                                                 cudnn_activation_desc, &alpha,
-                                                 poolTensor, d_out, poolTensor,
-                                                 d_backprop_derivatives,
-                                                 poolTensor, d_pool, &beta,
-                                                 poolTensor,
-                                                 d_activation_derivatives);
+      CudnnSafeCall(cudnnActivationBackward(cudnn_handle,
+                                            cudnn_activation_desc, &alpha,
+                                            poolTensor, d_out, poolTensor,
+                                            d_backprop_derivatives,
+                                            poolTensor, d_pool, &beta,
+                                            poolTensor,
+                                            d_activation_derivatives));
       //print_d_var2(d_activation_derivatives, input_n, output_c * output_h * output_w);
     }
     else {
-      cudnnStatus_stat = cudnnActivationBackward(cudnn_handle,
-                                                 cudnn_activation_desc, &alpha,
-                                                 convTensor, d_out, convTensor,
-                                                 d_backprop_derivatives,
-                                                 convTensor, d_conv, &beta,
-                                                 convTensor,
-                                                 d_activation_derivatives);
+      CudnnSafeCall(cudnnActivationBackward(cudnn_handle,
+                                            cudnn_activation_desc, &alpha,
+                                            convTensor, d_out, convTensor,
+                                            d_backprop_derivatives,
+                                            convTensor, d_conv, &beta,
+                                            convTensor,
+                                            d_activation_derivatives));
     }
     d_fwd_derivatives_tmp = d_activation_derivatives;
   }
@@ -368,46 +390,36 @@ void ConvLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
   grad_swap_tmp = d_filter_gradients;
   d_filter_gradients = d_filter_gradients_prev;
   d_filter_gradients_prev = grad_swap_tmp;
-  // cudnnStatus_stat = cudnnConvolutionBackwardFilter(cudnn_handle, &alpha,
-  //                                                   dataTensor, d_data,
-  //                                                   convTensor,
-  //                                                   d_fwd_derivatives_tmp,
-  //                                                   convDesc, bwd_filter_algo,
-  //                                                   d_bwd_filter_workspace,
-  //                                                   bwd_filter_workspace_size,
-  //                                                   &beta, filterDesc,
-  //                                                   d_filter_gradients);
 
   CudnnSafeCall(cudnnConvolutionBackwardFilter(cudnn_handle, &alpha,
-                                              dataTensor, d_data,
-                                              convTensor,
-                                              d_fwd_derivatives_tmp,
-                                              convDesc, bwd_filter_algo,
-                                              d_bwd_filter_workspace,
-                                              bwd_filter_workspace_size,
-                                              &beta, filterDesc,
-                                              d_filter_gradients));
-  std::cout << "cudnn bckwd conv ---> " << cudnnStatus_stat << std::endl;
+                                               dataTensor, d_data,
+                                               convTensor,
+                                               d_fwd_derivatives_tmp,
+                                               convDesc, bwd_filter_algo,
+                                               d_bwd_filter_workspace,
+                                               bwd_filter_workspace_size,
+                                               &beta, filterDesc,
+                                               d_filter_gradients));
   grad_swap_tmp = d_bias_gradients;
   d_bias_gradients = d_bias_gradients_prev;
   d_bias_gradients_prev = grad_swap_tmp;
   //print_d_var2(d_fwd_derivatives_tmp, input_n, conv_output_c * conv_output_h * conv_output_w);
-  cudnnStatus_stat = cudnnConvolutionBackwardBias(cudnn_handle, &alpha,
-                                                  convTensor,
-                                                  d_fwd_derivatives_tmp,
-                                                  &beta, biasTensor,
-                                                  d_bias_gradients);
+  CudnnSafeCall(cudnnConvolutionBackwardBias(cudnn_handle, &alpha,
+                                             convTensor,
+                                             d_fwd_derivatives_tmp,
+                                             &beta, biasTensor,
+                                             d_bias_gradients));
   //print_d_var2(d_bias_gradients, feature_maps, 1);
   if (!is_input_layer) {
-    cudnnStatus_stat = cudnnConvolutionBackwardData(cudnn_handle, &alpha,
-                                                    filterDesc, d_filt,
-                                                    convTensor,
-                                                    d_fwd_derivatives_tmp,
-                                                    convDesc, bwd_data_algo,
-                                                    d_bwd_data_workspace,
-                                                    bwd_data_workspace_size,
-                                                    &beta, dataTensor,
-                                                    d_prev_layer_derivatives);
+    CudnnSafeCall(cudnnConvolutionBackwardData(cudnn_handle, &alpha,
+                                               filterDesc, d_filt,
+                                               convTensor,
+                                               d_fwd_derivatives_tmp,
+                                               convDesc, bwd_data_algo,
+                                               d_bwd_data_workspace,
+                                               bwd_data_workspace_size,
+                                               &beta, dataTensor,
+                                               d_prev_layer_derivatives));
   }
 }
 
@@ -415,73 +427,82 @@ void ConvLayer::UpdateWeights(float *d_filter_gradients,
                               float *d_bias_gradients) {
   //print_d_var2(d_filt, feature_maps, filter_linear_size);
   reg_inp_scalar = 1.0f - regularization_coeff;
-  cublasStatus_stat = cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
-                                  filter_linear_size, feature_maps,
-                                  &learning_rate, d_filter_gradients,
-                                  filter_linear_size, &momentum,
-                                  d_filter_gradients_prev, filter_linear_size,
-                                  d_filter_gradients_final, filter_linear_size);
-  cublasStatus_stat = cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
-                                  feature_maps, 1, &learning_rate,
-                                  d_bias_gradients, feature_maps, &momentum,
-                                  d_bias_gradients_prev, feature_maps,
-                                  d_bias_gradients_final, feature_maps);
+  CublasSafeCall(cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
+                             filter_linear_size, feature_maps,
+                             &learning_rate, d_filter_gradients,
+                             filter_linear_size, &momentum,
+                             d_filter_gradients_prev, filter_linear_size,
+                             d_filter_gradients_final, filter_linear_size));
+  CublasSafeCall(cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
+                             feature_maps, 1, &learning_rate,
+                             d_bias_gradients, feature_maps, &momentum,
+                             d_bias_gradients_prev, feature_maps,
+                             d_bias_gradients_final, feature_maps));
   if (regularizer == L1_Conv) {
-    cublasStatus_stat = cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
-                                    filter_linear_size, feature_maps,
-                                    &neg_one_scalar, d_filter_gradients_final,
-                                    filter_linear_size, &reg_inp_scalar,
-                                    d_filt, filter_linear_size,
-                                    d_filt, filter_linear_size);
-    cublasStatus_stat = cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
-                                    feature_maps, 1,
-                                    &neg_one_scalar, d_bias_gradients_final,
-                                    feature_maps, &reg_inp_scalar,
-                                    d_bias, feature_maps,
-                                    d_bias, feature_maps);
+    CublasSafeCall(cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
+                               filter_linear_size, feature_maps,
+                               &neg_one_scalar, d_filter_gradients_final,
+                               filter_linear_size, &reg_inp_scalar,
+                               d_filt, filter_linear_size,
+                               d_filt, filter_linear_size));
+    CublasSafeCall(cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
+                               feature_maps, 1,
+                               &neg_one_scalar, d_bias_gradients_final,
+                               feature_maps, &reg_inp_scalar,
+                               d_bias, feature_maps,
+                               d_bias, feature_maps));
   }
   else if (regularizer == L2_Conv) {
     reg_inp_scalar--;
     WeightMatrixRegularizeElemWiseConv(d_filt, reg_inp_scalar,
                                        filter_total_size);
+    CudaCheckError();
     WeightMatrixRegularizeElemWiseConv(d_bias, reg_inp_scalar,
                                        feature_maps);
-    cublasStatus_stat = cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
-                                    filter_linear_size, feature_maps,
-                                    &neg_one_scalar, d_filter_gradients_final,
-                                    filter_linear_size, &alpha,
-                                    d_filt, filter_linear_size,
-                                    d_filt, filter_linear_size);
-    cublasStatus_stat = cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
-                                    feature_maps, 1,
-                                    &neg_one_scalar, d_bias_gradients_final,
-                                    feature_maps, &alpha,
-                                    d_bias, feature_maps,
-                                    d_bias, feature_maps);
+    CudaCheckError();
+    CublasSafeCall(cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
+                               filter_linear_size, feature_maps,
+                               &neg_one_scalar, d_filter_gradients_final,
+                               filter_linear_size, &alpha,
+                               d_filt, filter_linear_size,
+                               d_filt, filter_linear_size));
+    CublasSafeCall(cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
+                               feature_maps, 1,
+                               &neg_one_scalar, d_bias_gradients_final,
+                               feature_maps, &alpha,
+                               d_bias, feature_maps,
+                               d_bias, feature_maps));
   }
   //print_d_var2(d_filt, feature_maps, filter_linear_size);
 }
 
 void ConvLayer::InitBackpropVars() {
   if (activation_set) {
-    cudaError_stat = cudaMalloc((void **)&d_activation_derivatives,
-                                sizeof(float) * output_n * output_c
-                                * output_w * output_h);
+    CudaSafeCall(cudaMalloc((void **)&d_activation_derivatives,
+                            sizeof(float) * output_n * output_c
+                            * output_w * output_h));
   }
   if (pooling_enabled) {
-    cudaError_stat = cudaMalloc((void **)&d_pooling_derivatives,
-                                sizeof(float) * conv_output_n * conv_output_c
-                                * conv_output_h * conv_output_w);
+    CudaSafeCall(cudaMalloc((void **)&d_pooling_derivatives,
+                            sizeof(float) * conv_output_n * conv_output_c
+                            * conv_output_h * conv_output_w));
   }
-  cudnnGetConvolutionBackwardFilterAlgorithm(cudnn_handle, dataTensor,
-                                             convTensor, convDesc,
-                                             filterDesc,
-                                             CUDNN_CONVOLUTION_BWD_FILTER_PREFER_FASTEST,
-                                             0, &bwd_filter_algo);
-  cudnnGetConvolutionBackwardFilterWorkspaceSize(cudnn_handle, dataTensor,
-                                                 convTensor, convDesc,
-                                                 filterDesc, bwd_filter_algo,
-                                                 &bwd_filter_workspace_size);
+  CudnnSafeCall(cudnnGetConvolutionBackwardFilterAlgorithm(
+                cudnn_handle,
+                dataTensor,
+                convTensor,
+                convDesc,
+                filterDesc,
+                CUDNN_CONVOLUTION_BWD_FILTER_PREFER_FASTEST,
+                0, &bwd_filter_algo));
+  CudnnSafeCall(cudnnGetConvolutionBackwardFilterWorkspaceSize(
+                cudnn_handle,
+                dataTensor,
+                convTensor,
+                convDesc,
+                filterDesc,
+                bwd_filter_algo,
+                &bwd_filter_workspace_size));
   cudaError_stat = cudaMalloc((void **)&d_bwd_filter_workspace,
                               bwd_filter_workspace_size);
 
