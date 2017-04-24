@@ -182,7 +182,8 @@ __global__ void ReplaceVal_GPUKernel(float *d_mat, int total_size,
 __global__ void SubtractElemwise_GPUKernel(float *d_mat, float delta,
                                            int total_size) {
   int idx = (blockDim.x * blockIdx.x + threadIdx.x);
-  d_mat[idx] -= (delta * (idx < total_size));
+  if (idx < total_size)
+    d_mat[idx] -= delta;
 }
 
 __global__ void Replace2Vals_GPUKernel(float *d_mat, int total_size,

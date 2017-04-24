@@ -37,7 +37,7 @@ inline std::string separator() {
 #define DATA_SIDE 32 //Throws GPU setup error if above 257
 #define CHANNELS 3
 
-#define BATCH_SIZE 10
+#define BATCH_SIZE 128
 #define LABELS 10
 
 #define EPOCHS 10
@@ -437,7 +437,7 @@ int main() {
 
     cl0.LoadData(x, false);
 
-    std::cout << "cuda mem copy to GPU ---> " << cl0.cudaError_stat << std::endl;
+    //std::cout << "cuda mem copy to GPU ---> " << cl0.cudaError_stat << std::endl;
     print_h_var3(x, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
     print_d_var3(cl0.d_data, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
 

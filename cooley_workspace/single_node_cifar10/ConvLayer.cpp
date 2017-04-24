@@ -286,7 +286,7 @@ void ConvLayer::Convolve_worker() {
                                         convDesc, fwd_algo, d_fwd_workspace,
                                         fwd_workspace_size, &beta,
                                         convTensor, d_conv));
-  std::cout << "cudnn fwd conv ---> " << cudnnStatus_stat << std::endl;
+  //std::cout << "cudnn fwd conv ---> " << cudnnStatus_stat << std::endl;
   CudnnSafeCall(cudnnAddTensor(cudnn_handle, &alpha, biasTensor,
                                d_bias, &alpha, convTensor, d_conv));
   //d_out = d_conv;
@@ -378,11 +378,11 @@ void ConvLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
 
   if (pooling_enabled) {
     //print_d_var2(d_pooling_derivatives, conv_output_n, conv_output_c * conv_output_h * conv_output_w);
-    cudnnStatus_stat = cudnnPoolingBackward(cudnn_handle, poolDesc, &alpha,
-                                            poolTensor, d_pool, poolTensor,
-                                            d_fwd_derivatives_tmp, convTensor,
-                                            d_conv, &beta, convTensor,
-                                            d_pooling_derivatives);
+    CudnnSafeCall(cudnnPoolingBackward(cudnn_handle, poolDesc, &alpha,
+                                       poolTensor, d_pool, poolTensor,
+                                       d_fwd_derivatives_tmp, convTensor,
+                                       d_conv, &beta, convTensor,
+                                       d_pooling_derivatives));
     //print_d_var2(d_pooling_derivatives, conv_output_n, conv_output_c * conv_output_h * conv_output_w);
     d_fwd_derivatives_tmp = d_pooling_derivatives;
   }
@@ -478,9 +478,10 @@ void ConvLayer::UpdateWeights(float *d_filter_gradients,
 
 void ConvLayer::InitBackpropVars() {
   if (activation_set) {
+    std::cout << output_n << ", " << output_c << ", " << output_h << ", " << output_w << std::endl;
     CudaSafeCall(cudaMalloc((void **)&d_activation_derivatives,
                             sizeof(float) * output_n * output_c
-                            * output_w * output_h));
+                            * output_h * output_w));
   }
   if (pooling_enabled) {
     CudaSafeCall(cudaMalloc((void **)&d_pooling_derivatives,
