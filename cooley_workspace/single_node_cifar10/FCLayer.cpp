@@ -164,6 +164,7 @@ void FCLayer::ComputeSoftmaxGradients(float *h_pinned_labels) {
     grads_initialized = true;
   }
   d_labels = h_pinned_labels;
+
   //print_d_var(d_labels, input_batch_size, output_neurons);
   //print_d_var(d_out, input_batch_size, output_neurons);
   cublasStatus_stat = cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,

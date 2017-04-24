@@ -30,7 +30,8 @@ void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
 
 void ReAlignMemory_ShiftLeft_CPU(float *d_data, int rows, int cols);
 void ReAlignMemory_ShiftLeft(float *d_mat, float *d_helper,
-                             int rows, int cols, int max_threadblock_size);
+                             int rows, int cols,
+                             int max_threadblock_size);
 
 void FillOnes(float *d_data, int elem_size, int batch_size);
 

@@ -503,48 +503,52 @@ void ConvLayer::InitBackpropVars() {
                 filterDesc,
                 bwd_filter_algo,
                 &bwd_filter_workspace_size));
-  cudaError_stat = cudaMalloc((void **)&d_bwd_filter_workspace,
-                              bwd_filter_workspace_size);
+  CudaSafeCall(cudaMalloc((void **)&d_bwd_filter_workspace,
+                           bwd_filter_workspace_size));
 
-  cudaError_stat = cudaMalloc((void **)&d_filter_gradients,
-                              sizeof(float) * feature_maps
-                              * filter_linear_size);
-  cudaError_stat = cudaMalloc((void **)&d_filter_gradients_prev,
-                              sizeof(float) * feature_maps
-                              * filter_linear_size);
-  cudaError_stat = cudaMalloc((void **)&d_filter_gradients_final,
-                              sizeof(float) * feature_maps
-                              * filter_linear_size);
+  CudaSafeCall(cudaMalloc((void **)&d_filter_gradients,
+                          sizeof(float) * feature_maps
+                          * filter_linear_size));
+  CudaSafeCall(cudaMalloc((void **)&d_filter_gradients_prev,
+                          sizeof(float) * feature_maps
+                          * filter_linear_size));
+  CudaSafeCall(cudaMalloc((void **)&d_filter_gradients_final,
+                          sizeof(float) * feature_maps
+                          * filter_linear_size));
 
-  cudaError_stat = cudaMalloc((void **)&d_bias_gradients,
-                              sizeof(float) * feature_maps);
-  cudaError_stat = cudaMalloc((void **)&d_bias_gradients_prev,
-                              sizeof(float) * feature_maps);
-  cudaError_stat = cudaMalloc((void **)&d_bias_gradients_final,
-                              sizeof(float) * feature_maps);
+  CudaSafeCall(cudaMalloc((void **)&d_bias_gradients,
+                          sizeof(float) * feature_maps));
+  CudaSafeCall(cudaMalloc((void **)&d_bias_gradients_prev,
+                          sizeof(float) * feature_maps));
+  CudaSafeCall(cudaMalloc((void **)&d_bias_gradients_final,
+                          sizeof(float) * feature_maps));
 
-  cudnnGetConvolutionBackwardDataAlgorithm(cudnn_handle, filterDesc,
-                                           convTensor, convDesc, dataTensor,
-                                           CUDNN_CONVOLUTION_BWD_DATA_PREFER_FASTEST,
-                                           0, &bwd_data_algo);
-  cudnnGetConvolutionBackwardDataWorkspaceSize(cudnn_handle, filterDesc,
-                                               convTensor, convDesc,
-                                               dataTensor, bwd_data_algo,
-                                               &bwd_data_workspace_size);
-  cudaError_stat = cudaMalloc((void **)&d_bwd_data_workspace,
-                              bwd_data_workspace_size);
+  CudnnSafeCall(cudnnGetConvolutionBackwardDataAlgorithm(
+                cudnn_handle,
+                filterDesc,
+                convTensor, convDesc,
+                dataTensor,
+                CUDNN_CONVOLUTION_BWD_DATA_PREFER_FASTEST,
+                0, &bwd_data_algo));
+  CudnnSafeCall(cudnnGetConvolutionBackwardDataWorkspaceSize(
+                cudnn_handle, filterDesc,
+                convTensor, convDesc,
+                dataTensor, bwd_data_algo,
+                &bwd_data_workspace_size));
+  CudaSafeCall(cudaMalloc((void **)&d_bwd_data_workspace,
+                          bwd_data_workspace_size));
   if (!is_input_layer) {
-    cudaError_stat = cudaMalloc((void **)&d_prev_layer_derivatives,
-                                sizeof(float) * input_n * input_c
-                                * input_h * input_w);
+    CudaSafeCall(cudaMalloc((void **)&d_prev_layer_derivatives,
+                            sizeof(float) * input_n * input_c
+                            * input_h * input_w));
   }
 }
 
 ConvLayer::~ConvLayer() {
-  cudaFree(d_data);
-  cudaFree(d_conv);
-  cudaFree(d_filt);
-  cudaFree(d_fwd_workspace);
+  CudaSafeCall(cudaFree(d_data));
+  CudaSafeCall(cudaFree(d_conv));
+  CudaSafeCall(cudaFree(d_filt));
+  CudaSafeCall(cudaFree(d_fwd_workspace));
   if (!input_data_on_gpu)
     free(input_data);
   if (output_copied_to_host)
