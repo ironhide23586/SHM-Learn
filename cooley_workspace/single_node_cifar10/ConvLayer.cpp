@@ -104,13 +104,15 @@ ConvLayer::ConvLayer(const cudnnHandle_t &cudnn_handle_arg,
   regularizer(regularizer_arg),
   weight_init_mean(weight_init_mean_arg),
   weight_init_stddev(weight_init_stddev_arg) {
-  cudnnCreateTensorDescriptor(&dataTensor);
-  cudnnStatus_stat = cudnnSetTensor4dDescriptor(dataTensor, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
-                             input_n, input_c, input_h, input_w);
-  cudnnStatus_stat = cudnnCreateConvolutionDescriptor(&convDesc);
-  cudnnCreateFilterDescriptor(&filterDesc);
-  cudnnCreateTensorDescriptor(&convTensor);
-  cudnnCreateTensorDescriptor(&biasTensor);
+  CudnnSafeCall(cudnnCreateTensorDescriptor(&dataTensor));
+  CudnnSafeCall(cudnnSetTensor4dDescriptor(dataTensor, CUDNN_TENSOR_NCHW,
+                                           CUDNN_DATA_FLOAT,
+                                           input_n, input_c, input_h,
+                                           input_w));
+  CudnnSafeCall(cudnnCreateConvolutionDescriptor(&convDesc));
+  CudnnSafeCall(cudnnCreateFilterDescriptor(&filterDesc));
+  CudnnSafeCall(cudnnCreateTensorDescriptor(&convTensor));
+  CudnnSafeCall(cudnnCreateTensorDescriptor(&biasTensor));
   x_upscale = 1;
   y_upscale = 1;
   AllocateGPUMemory();
@@ -129,43 +131,47 @@ ConvLayer::ConvLayer(const cudnnHandle_t &cudnn_handle_arg,
 }
 
 void ConvLayer::AllocateGPUMemory() {
-  cudaMalloc((void **)&d_data,
-             input_n * input_c * input_h * input_w * sizeof(float));
-  cudnnStatus_stat = cudnnSetConvolution2dDescriptor(convDesc, pad_h, pad_w, vert_stride,
-                                                     hor_stride, x_upscale, y_upscale,
-                                                     CUDNN_CONVOLUTION);
-  cudnnStatus_stat = cudnnSetFilter4dDescriptor(filterDesc, CUDNN_DATA_FLOAT, CUDNN_TENSOR_NCHW,
-                                                feature_maps, input_c, kernel_h, kernel_w);
+  CudaSafeCall(cudaMalloc((void **)&d_data,
+               input_n * input_c * input_h * input_w * sizeof(float)));
+  CudnnSafeCall(cudnnSetConvolution2dDescriptor(convDesc, pad_h, pad_w, vert_stride,
+                                                hor_stride, x_upscale, y_upscale,
+                                                CUDNN_CONVOLUTION));
+  CudnnSafeCall(cudnnSetFilter4dDescriptor(filterDesc, CUDNN_DATA_FLOAT, CUDNN_TENSOR_NCHW,
+                                           feature_maps, input_c, kernel_h, kernel_w));
   //no_of_feature_maps, c, h, w; feaure_maps = out_channels
   filter_linear_size = input_c * kernel_h * kernel_w;
   filter_total_size = feature_maps * filter_linear_size;
-  cudaMalloc((void **)&d_filt,
-             sizeof(float) * feature_maps
-             * input_c * kernel_h * kernel_w);
-  cudnnStatus_stat = cudnnGetConvolution2dForwardOutputDim(convDesc, dataTensor, filterDesc,
-                                                           &output_n, &output_c, &output_h,
-                                                           &output_w);
+  CudaSafeCall(cudaMalloc((void **)&d_filt,
+               sizeof(float) * feature_maps
+               * input_c * kernel_h * kernel_w));
+  CudnnSafeCall(cudnnGetConvolution2dForwardOutputDim(convDesc, dataTensor, filterDesc,
+                                                      &output_n, &output_c, &output_h,
+                                                      &output_w));
 
   conv_output_n = output_n;
   conv_output_c = output_c;
   conv_output_h = output_h;
   conv_output_w = output_w;
 
-  cudnnSetTensor4dDescriptor(convTensor, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
-                             output_n, output_c, output_h, output_w);
-  cudaMalloc((void **)&d_conv, sizeof(float) * output_n
-             * ((output_c * output_h * output_w) + 1)); //+1->future bias
-  cudnnGetConvolutionForwardAlgorithm(cudnn_handle, dataTensor, filterDesc,
-                                      convDesc, convTensor,
-                                      CUDNN_CONVOLUTION_FWD_PREFER_FASTEST,
-                                      0, &fwd_algo);
-  cudnnGetConvolutionForwardWorkspaceSize(cudnn_handle, dataTensor,
-                                          filterDesc, convDesc,
-                                          convTensor, fwd_algo, &fwd_workspace_size);
-  cudaMalloc(&d_fwd_workspace, fwd_workspace_size);
-  cudnnSetTensor4dDescriptor(biasTensor, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
-                             1, output_c, 1, 1);
-  cudaMalloc((void **)&d_bias, sizeof(float) * output_c);
+  CudnnSafeCall(cudnnSetTensor4dDescriptor(convTensor, CUDNN_TENSOR_NCHW,
+                                           CUDNN_DATA_FLOAT,
+                                           output_n, output_c, output_h,
+                                           output_w));
+  CudaSafeCall(cudaMalloc((void **)&d_conv, sizeof(float) * output_n
+               * ((output_c * output_h * output_w) + 1))); //+1->future bias
+  CudnnSafeCall(cudnnGetConvolutionForwardAlgorithm(cudnn_handle, 
+                                                    dataTensor, filterDesc,
+                                                    convDesc, convTensor,
+                                                    CUDNN_CONVOLUTION_FWD_PREFER_FASTEST,
+                                                    0, &fwd_algo));
+  CudnnSafeCall(cudnnGetConvolutionForwardWorkspaceSize(cudnn_handle, dataTensor,
+                                                       filterDesc, convDesc,
+                                                       convTensor, fwd_algo,
+                                                       &fwd_workspace_size));
+  CudaSafeCall(cudaMalloc(&d_fwd_workspace, fwd_workspace_size));
+  CudnnSafeCall(cudnnSetTensor4dDescriptor(biasTensor, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT,
+                                           1, output_c, 1, 1));
+  CudaSafeCall(cudaMalloc((void **)&d_bias, sizeof(float) * output_c));
 }
 
 void ConvLayer::LoadData(float *input_data_arg, bool input_data_on_gpu_arg) {
@@ -362,15 +368,25 @@ void ConvLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
   grad_swap_tmp = d_filter_gradients;
   d_filter_gradients = d_filter_gradients_prev;
   d_filter_gradients_prev = grad_swap_tmp;
-  cudnnStatus_stat = cudnnConvolutionBackwardFilter(cudnn_handle, &alpha,
-                                                    dataTensor, d_data,
-                                                    convTensor,
-                                                    d_fwd_derivatives_tmp,
-                                                    convDesc, bwd_filter_algo,
-                                                    d_bwd_filter_workspace,
-                                                    bwd_filter_workspace_size,
-                                                    &beta, filterDesc,
-                                                    d_filter_gradients);
+  // cudnnStatus_stat = cudnnConvolutionBackwardFilter(cudnn_handle, &alpha,
+  //                                                   dataTensor, d_data,
+  //                                                   convTensor,
+  //                                                   d_fwd_derivatives_tmp,
+  //                                                   convDesc, bwd_filter_algo,
+  //                                                   d_bwd_filter_workspace,
+  //                                                   bwd_filter_workspace_size,
+  //                                                   &beta, filterDesc,
+  //                                                   d_filter_gradients);
+
+  CudnnSafeCall(cudnnConvolutionBackwardFilter(cudnn_handle, &alpha,
+                                              dataTensor, d_data,
+                                              convTensor,
+                                              d_fwd_derivatives_tmp,
+                                              convDesc, bwd_filter_algo,
+                                              d_bwd_filter_workspace,
+                                              bwd_filter_workspace_size,
+                                              &beta, filterDesc,
+                                              d_filter_gradients));
   std::cout << "cudnn bckwd conv ---> " << cudnnStatus_stat << std::endl;
   grad_swap_tmp = d_bias_gradients;
   d_bias_gradients = d_bias_gradients_prev;

@@ -473,11 +473,11 @@ int main() {
     fcl2.LoadData(fcl1.d_out, true);
     fcl2.ForwardProp();
 
-    print_d_var3(fcl2.d_out, BATCH_SIZE, fcl2.output_neurons);
+    print_d_var3(fcl2.d_out, BATCH_SIZE, fcl2.output_neurons, false);
 
     // Back-propagation
     fcl2.ComputeSoftmaxGradients(y);
-    print_d_var3(fcl2.d_gradients, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
+    print_d_var3(fcl2.d_gradients, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols, false);
     
 
 
