@@ -1,9 +1,6 @@
 #include "ConvLayer.h"
 #include "math_functions.h"
 
-#define GPU_WARP_DISPATCHERS 2
-#define GPU_WARP_SIZE 32
-
 int my_ceilf_division_ConvLayer(float a, float b) {
   return 1 + ((a - 1) / b);
 }

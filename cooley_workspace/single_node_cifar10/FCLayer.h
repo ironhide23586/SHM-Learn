@@ -5,72 +5,48 @@
 #include <cublas.h>
 #include <curand.h>
 
-#include <cmath>
-#include <random>
-
 #include <iostream>
+#include <random>
 #include <chrono>
 
-//#include "GlobalInclude.h"
-//#include "ErrorChecking_Debug.h"
+#define GPU_WARP_DISPATCHERS 2
+#define GPU_WARP_SIZE 32
+
+#define __cudaSafeCall __cudaSafeCall_FC
+#define __cudnnSafeCall __cudnnSafeCall_FC
+#define __cublasSafeCall __cublasSafeCall_FC
+#define __cudaCheckError __cudaCheckError_FC
+#define cublasGetErrorString cublasGetErrorString_FC
+
+#include "err_check.h"
 
 using namespace std;
 
-#define GPU_WARP_DISPATCHERS 2
-#define GPU_WARP_SIZE 32 //Set according to Fermi Architecture
-
 //All vectors assumed to be column vectors
-
-void FloatGPUMemset(float *d_array_arg,
-                    int array_size_arg, float val);
-
-//void ReAlignMemory_ShiftRight(float *d_data, int total_size,
-//                   int elem_size, int num_elems, int num_threads);
-void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
-                              int rows, int cols, int max_threadblock_size);
-
-void ReAlignMemory_ShiftLeft_CPU(float *d_data, int rows, int cols);
 void ReAlignMemory_ShiftLeft(float *d_mat, float *d_helper,
                              int rows, int cols,
                              int max_threadblock_size);
 
-void FillOnes(float *d_data, int elem_size, int batch_size);
+void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
+                            int rows, int cols, int max_threadblock_size);
 
-void InitIdentityMatrix(float *d_mat, int side);
+void ReluBackprop(float *d_backprop_derivatives, float *d_out_xw_act,
+                float *d_fwd_layer_derivatives, float relu_clip,
+                int derivative_matrix_size);
+
+void SigmoidBackprop(float *d_backprop_derivatives, float *d_out_xw_act,
+                   float *d_fwd_layer_derivatives,
+                   int derivative_matrix_size);
+
+void SubtractElemwise(float *d_mat, float delta, int mat_size);
 
 // Computes W - lambda * W^2
 // Computes (1 - lr * reg_coeff / batch_size) * W
 void WeightMatrixRegularizeElemWise(float *d_mat_in, int d_mat_cols,
                                     float reg_inp_scalar, int d_mat_size);
 
-void ElemwiseGradCompute(float *d_data, float *d_out_minus_labels,
-                         float *d_elem_grads, int input_batch_size,
-                         int input_neurons, int output_neurons);
-
-void ComputeGradientsFromElemGrads(float *d_elem_grads,
-                                   float *d_softmax_gradients,
-                                   float learning_rate, float momentum,
-                                   int input_batch_size, int input_neurons,
-                                   int output_neurons);
-
-void ComputeSoftmaxLoss(float *d_out, float *d_labels,
-                        float *d_out_minus_labels, float coeff,
-                        int input_batch_size, int output_neurons);
-
-void ReluBackprop(float *d_backprop_derivatives, float *d_out_xw_act,
-                  float *d_fwd_layer_derivatives, float relu_clip,
-                  int derivative_matrix_size);
-
-void SigmoidBackprop(float *d_backprop_derivatives, float *d_out_xw_act,
-                     float *d_fwd_layer_derivatives,
-                     int derivative_matrix_size);
-
-void SubtractElemwise(float *d_mat, float delta, int mat_size);
-
-void ReplaceVal(float *d_mat, int total_size, float val, float replace_val);
-
-void Replace2Vals(float *d_mat, int total_size, float val0, float val1,
-                  float replace_val0, float replace_val1);
+void FloatGPUMemset(float *d_array_arg,
+                  int array_size_arg, float val);
 
 enum regularizer_type_FC { L1, L2 };
 

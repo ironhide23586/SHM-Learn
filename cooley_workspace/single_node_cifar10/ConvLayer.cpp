@@ -1,16 +1,5 @@
 #include "ConvLayer.h"
-
-// void print_d_var2(float *d_v, int r, int c) {
-//   std::cout << "\n-------------------------" << std::endl;
-//   float *h_v = (float *)malloc(sizeof(float) * r * c);
-//   cudaMemcpy(h_v, d_v, sizeof(float) * r * c, cudaMemcpyDeviceToHost);
-//   for (int i = 0; i < r; i++) {
-//     for (int j = 0; j < c; j++) {4
-//       std::cout << h_v[j + i * c] << "\t";
-//     }
-//     std::cout << std::endl;
-//   }
-// }
+//#include "Layers.h"
 
 void print_d_var2(float *d_v, int r, int c) {
   bool print_elem = false;
@@ -230,9 +219,8 @@ void ConvLayer::SetPoolingParams(cudnnPoolingMode_t pool_mode_arg,
                                            CUDNN_DATA_FLOAT, output_n,
                                            output_c,
                                            output_h, output_w));
-  CudaSafeCall(cudaMalloc((void **)&d_pool,
-               sizeof(float) * output_n * ((output_c * output_h * output_w)
-                                           + 1)));
+  CudaSafeCall(cudaMalloc((void **)&d_pool, sizeof(float) * output_n
+                          * ((output_c * output_h * output_w) + 1)));
                                            //+1 to accomodate bias in future
 }
 

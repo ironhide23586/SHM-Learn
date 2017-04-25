@@ -440,9 +440,7 @@ int main() {
     //std::cout << "cuda mem copy to GPU ---> " << cl0.cudaError_stat << std::endl;
     print_h_var3(x, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
     print_d_var3(cl0.d_data, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
-
-    if (batch == 2)
-      return 0;
+    
     cl0.Convolve();
 
     //print_d_var3(cl0.d_out, BATCH_SIZE, cl0.output_c * cl0.output_h * cl0.output_w, false);
@@ -459,11 +457,12 @@ int main() {
     
     fcl0.LoadData(cl2.d_out, true);
     fcl0.ForwardProp();
-
+    std::cout << "/*/*/**/*/*/*/*/*/*/*/" << std::endl;
     //return 0;
 
     //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols, false);
     //print_d_var3(fcl0.d_out, BATCH_SIZE, fcl0.output_neurons, false);
+
 
     fcl1.LoadData(fcl0.d_out, true);
     fcl1.ForwardProp();
@@ -579,7 +578,7 @@ int main() {
     // results_file.close();
     std::cout << std::endl;
     cnt++;
-    
+    break;
   }
   results_file.open("shmlearn_results.txt", std::ofstream::out | std::ofstream::app);
   results_file << "Avg iter time = " << avg_dur << " seconds\n";

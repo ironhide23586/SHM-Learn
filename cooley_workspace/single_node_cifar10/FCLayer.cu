@@ -1,12 +1,5 @@
 #include "FCLayer.h"
-//#include <cuda.h>
-//#include "cuda_runtime.h"
-//#include "device_launch_parameters.h"
 #include "math_functions.h"
-#include <cmath>
-
-#define GPU_WARP_DISPATCHERS 2
-#define GPU_WARP_SIZE 32
 
 void print_d_var2(float *d_v, int r, int c, bool print_elem = true) {
   std::cout << "*****************************" << std::endl;
