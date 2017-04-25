@@ -244,6 +244,7 @@ void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
     threadblock_size = max_threadblock_size;
   int num_threadblocks = my_ceilf_division_FCLayer(reqd_threads, threadblock_size);
   int thread_chunk_size = my_ceilf_division_FCLayer(cols, max_threadblock_size);
+  std::cout << "###" << std::endl;
   ShiftRight_PopulateHelper_GPUKernel << < num_threadblocks,
     threadblock_size >> >
     (d_mat, d_helper, org_size,

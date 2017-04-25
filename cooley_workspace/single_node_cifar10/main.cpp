@@ -457,7 +457,7 @@ int main() {
     
     fcl0.LoadData(cl2.d_out, true);
     fcl0.ForwardProp();
-    std::cout << "/*/*/**/*/*/*/*/*/*/*/" << std::endl;
+    
     //return 0;
 
     //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols, false);

@@ -134,7 +134,7 @@ void FCLayer::LoadData(float *input_data_arg, bool input_data_on_gpu_arg) {
   }
   else
     d_data = input_data;
-  std::cout << "/*/*/**/*/*/*/*/*/*/*/" << std::endl;
+  
   AddOneVector_GPU(d_data, input_batch_size, input_neurons);
   CudaCheckError();
 }
@@ -309,6 +309,7 @@ void FCLayer::InitializeWeightMatrix(float mean, float stddev) { //Bias set to 0
 }
 
 void FCLayer::AddOneVector_GPU(float *d_mat, int rows, int cols) {
+  
   ReAlignMemory_ShiftRight(d_mat, d_shift_helper, rows, cols,
                            cuda_device_prop.maxThreadsPerBlock);
   CudaCheckError();
