@@ -1,19 +1,19 @@
+#include <stdlib.h>
+#include <iostream>
+#include <vector>
 
-//#include "cuda_runtime.h"
-//#include "device_launch_parameters.h"
+#include "cuda_runtime.h"
+#include "device_launch_parameters.h"
 
 //#include <opencv2/core/core.hpp>
 //#include <opencv2/opencv.hpp>
 //#include <opencv2/highgui/highgui.hpp>
 
-//#include <cudnn.h>
+#include <cudnn.h>
 
-
-
-//#include "SHMLearn.h"
-#include "Layers.h"
 #include "ConvLayer.h"
 #include "FCLayer.h"
+
 
 #include <limits>
 #include <random>
@@ -46,7 +46,6 @@ inline std::string separator() {
 #define EPOCH_SIZE 50000
 
 using namespace std;
-using namespace NeuralNet;
 //using namespace cv;
 
 int read_imgs_local, read_imgs_global;
