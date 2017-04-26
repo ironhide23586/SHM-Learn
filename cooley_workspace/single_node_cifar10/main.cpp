@@ -37,10 +37,10 @@ inline std::string separator() {
 #define DATA_SIDE 32 //Throws GPU setup error if above 257
 #define CHANNELS 3
 
-#define BATCH_SIZE 256
+#define BATCH_SIZE 128
 #define LABELS 10
 
-#define EPOCHS 10
+#define EPOCHS 100
 
 #define EPOCH_COMPONENT_SIZE 10000
 #define EPOCH_SIZE 50000
@@ -358,7 +358,7 @@ int main() {
   read_imgs_local = 0;
   read_imgs_global = 0;
 
-  float base_lr = 0.001f, gamma = 0.4f, power = 0;
+  float base_lr = 0.01f, gamma = 0.4f, power = 0;
   float lr = base_lr * powf(1 + gamma, -power);
   float reg = 0.004f;
   float mom = 0.0f;
@@ -455,62 +455,34 @@ int main() {
     fcl1.learning_rate = lr;
     fcl2.learning_rate = lr;
 
+//------------------------TRAINING LOOP-----------------------//
+
     // Forward Pass
     train_start = std::chrono::high_resolution_clock::now();
 
     cl0.LoadData(x, true);
-
-    //std::cout << "cuda mem copy to GPU ---> " << cl0.cudaError_stat << std::endl;
-    //print_h_var3(x, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
-    //print_d_var3(cl0.d_data, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
-    
     cl0.Convolve();
-
-    //print_d_var3(cl0.d_out, BATCH_SIZE, cl0.output_c * cl0.output_h * cl0.output_w, false);
-
     cl1.LoadData(cl0.d_out, true);
     cl1.Convolve();
-
-    //print_d_var3(cl1.d_out, BATCH_SIZE, cl1.output_c * cl1.output_h * cl1.output_w, false);
-
     cl2.LoadData(cl1.d_out, true);
     cl2.Convolve();
 
-    //print_d_var3(cl2.d_out, BATCH_SIZE, cl2.output_c * cl2.output_h * cl2.output_w, false);
     fcl0.LoadData(cl2.d_out, true);
-    //print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons + 1, false);
     fcl0.ForwardProp();
-    
-    //return 0;
-
-    //print_d_var3(fcl0.d_weight_matrix, fcl0.weight_matrix_rows, fcl0.weight_matrix_cols, false);
-    //print_d_var3(fcl0.d_out, BATCH_SIZE, fcl0.output_neurons, false);
-
-
     fcl1.LoadData(fcl0.d_out, true);
     fcl1.ForwardProp();
-
-    //print_d_var3(fcl1.d_out, BATCH_SIZE, fcl1.output_neurons, false);
-    
     fcl2.LoadData(fcl1.d_out, true);
     fcl2.ForwardProp();
 
-    //print_d_var3(fcl2.d_out, BATCH_SIZE, fcl2.output_neurons, false);
-
     // Back-propagation
     fcl2.ComputeSoftmaxGradients(y);
-    //print_d_var3(fcl2.d_gradients, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols, false);
-    
-
-
     fcl1.ComputeLayerGradients(fcl2.d_prev_layer_derivatives);
     fcl0.ComputeLayerGradients(fcl1.d_prev_layer_derivatives);
     cl2.ComputeLayerGradients(fcl0.d_prev_layer_derivatives);
     cl1.ComputeLayerGradients(cl2.d_prev_layer_derivatives);
     cl0.ComputeLayerGradients(cl1.d_prev_layer_derivatives);
 
-    
-
+    // Weight Updation
     fcl2.UpdateWeights(fcl2.d_gradients);
     fcl1.UpdateWeights(fcl1.d_gradients);
     fcl0.UpdateWeights(fcl0.d_gradients);
@@ -518,23 +490,10 @@ int main() {
     cl1.UpdateWeights(cl1.d_filter_gradients, cl1.d_bias_gradients);
     cl0.UpdateWeights(cl0.d_filter_gradients, cl0.d_bias_gradients);
 
-    //print_d_var3(cl0.d_out, BATCH_SIZE, cl0.output_c * cl0.output_h * cl0.output_w);
-    //print_d_var3(cl0.d_filt, cl0.feature_maps, cl0.input_c * cl0.kernel_h * cl0.kernel_w);
-    //print_d_var3(cl0.d_filter_gradients, cl0.feature_maps, cl0.input_c * cl0.kernel_h
-                 //* cl0.kernel_w);
-
     train_end = std::chrono::high_resolution_clock::now();
+    
+//------------------------TRAINING LOOP-----------------------//
 
-    //print_d_var3(fcl2.d_weight_matrix, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols);
-    
-
-    
-    //cl0.Convolve();
-    //fcl0.LoadData(cl0.d_out, true);
-    //fcl0.ForwardProp();
-    //fcl2.LoadData(fcl0.d_out, true);
-    //fcl2.ForwardProp();
-    
     t0 = std::chrono::high_resolution_clock::now();
     cudaMemcpy(h_out, fcl2.d_out, sizeof(float) * BATCH_SIZE * LABELS, //CAUSING DELAY
                cudaMemcpyDeviceToHost);
@@ -552,25 +511,24 @@ int main() {
     my_loss /= BATCH_SIZE;
     wt_sum = 0.0f;
     
-    // cl0_wt_sum = matrix_square_sum(cl0.d_filt, cl0.input_c * cl0.feature_maps
-    //                                * cl0.kernel_h * cl0.kernel_w);
-    // cl1_wt_sum = matrix_square_sum(cl1.d_filt, cl1.input_c * cl1.feature_maps
-    //                                * cl1.kernel_h * cl1.kernel_w);
-    // cl2_wt_sum = matrix_square_sum(cl2.d_filt, cl2.input_c * cl2.feature_maps
-    //                                * cl2.kernel_h * cl2.kernel_w);
+    cl0_wt_sum = matrix_square_sum(cl0.d_filt, cl0.input_c * cl0.feature_maps
+                                   * cl0.kernel_h * cl0.kernel_w);
+    cl1_wt_sum = matrix_square_sum(cl1.d_filt, cl1.input_c * cl1.feature_maps
+                                   * cl1.kernel_h * cl1.kernel_w);
+    cl2_wt_sum = matrix_square_sum(cl2.d_filt, cl2.input_c * cl2.feature_maps
+                                   * cl2.kernel_h * cl2.kernel_w);
 
-    // fcl0_wt_sum = matrix_square_sum_exclude_bias(fcl0.d_weight_matrix, fcl0.weight_matrix_size,
-    //                                              fcl0.weight_matrix_cols);
-    // fcl1_wt_sum = matrix_square_sum_exclude_bias(fcl1.d_weight_matrix, fcl1.weight_matrix_size,
-    //                                              fcl1.weight_matrix_cols);
-    // fcl2_wt_sum = matrix_square_sum_exclude_bias(fcl2.d_weight_matrix, fcl2.weight_matrix_size,
-    //                                              fcl2.weight_matrix_cols);
+    fcl0_wt_sum = matrix_square_sum_exclude_bias(fcl0.d_weight_matrix, fcl0.weight_matrix_size,
+                                                 fcl0.weight_matrix_cols);
+    fcl1_wt_sum = matrix_square_sum_exclude_bias(fcl1.d_weight_matrix, fcl1.weight_matrix_size,
+                                                 fcl1.weight_matrix_cols);
+    fcl2_wt_sum = matrix_square_sum_exclude_bias(fcl2.d_weight_matrix, fcl2.weight_matrix_size,
+                                                 fcl2.weight_matrix_cols);
     
-    // wt_sum = cl0_wt_sum + cl1_wt_sum + cl2_wt_sum + fcl0_wt_sum + fcl1_wt_sum + fcl2_wt_sum;
-    // float wt_loss = (reg * 0.5f) * wt_sum;
+    wt_sum = cl0_wt_sum + cl1_wt_sum + cl2_wt_sum + fcl0_wt_sum + fcl1_wt_sum + fcl2_wt_sum;
+    float wt_loss = (reg * 0.5f) * wt_sum;
     
-    loss = my_loss;// + wt_loss;
-      
+    loss = my_loss + wt_loss;
     dur = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(train_end 
                                                                       - train_start)
       .count() * 1e-9f;
@@ -584,24 +542,29 @@ int main() {
       avg_dur += dur;
       avg_dur /= 2;
     }
-    std::cout << "\nBatch " << batch
-      << " Epoch = " << epoch << " Loss = " << loss 
-      << " C++_CUDA_GPU Avg iter time = " << avg_dur << std::endl;
-    //return 0;
+    std::cout << "Batch " << batch
+      << ", Epoch = " << epoch << ", Loss = " << loss
+      << ", Actual Loss = " << my_loss
+      << ", Wt loss = " << wt_loss
+      << ", C++_CUDA_GPU Avg iter time = " << avg_dur << std::endl;
+
+    results_file.open("shmlearn_results.txt", std::ofstream::out | std::ofstream::app);
+    results_file << "Timestamp = " << ts << ", Batch " << batch
+      << ", Epoch = " << epoch << ", Loss = " << loss
+      << ", Actual Loss = " << my_loss
+      << ", Wt loss = " << wt_loss
+      << ", C++_CUDA_GPU Avg iter time = " << avg_dur << std::endl;
+    results_file.close();
+    std::cout << std::endl;
+
     batch++;
     prog++;
-
     if (read_imgs_global < prev_read_imgs) {
       batch = 1;
       epoch++;
     }
     prev_read_imgs = read_imgs_global;
-    results_file.open("shmlearn_results.txt", std::ofstream::out | std::ofstream::app);
-    results_file << ts << " " << loss << "\n";
-    results_file.close();
-    std::cout << std::endl;
     cnt++;
-    //break;
   }
   results_file.open("shmlearn_results.txt", std::ofstream::out | std::ofstream::app);
   results_file << "Avg iter time = " << avg_dur << " seconds\n";
