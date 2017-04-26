@@ -1,4 +1,5 @@
 #!/bin/bash
+NODES=$1
 make clean
 make all
-./convnet
+mpirun -n $NODES -f $COBALT_NODEFILE ./convnet

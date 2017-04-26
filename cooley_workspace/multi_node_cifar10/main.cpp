@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
+#include <mpi.h>
 
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
@@ -268,6 +269,22 @@ int my_floorf_division(float a, float b) {
 //}
 
 int main() {
+  MPI_Init(NULL, NULL);
+  int world_size;
+  MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+  int my_rank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
+  char processor_name[MPI_MAX_PROCESSOR_NAME];
+  int name_len;
+  MPI_Get_processor_name(processor_name, &name_len);
+  std::cout << "Processor rank " << my_rank
+    << " out of " << world_size << " nodes" << std::endl
+    << "Processor: " << processor_name << std::endl;
+
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Finalize();
+  return 0;
+
   cudaError_t cudaError_stat;
   curandStatus_t curandStatus_stat;
   cudnnStatus_t cudnnStatus_stat;

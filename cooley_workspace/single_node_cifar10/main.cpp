@@ -40,7 +40,7 @@ inline std::string separator() {
 #define BATCH_SIZE 128
 #define LABELS 10
 
-#define EPOCHS 100
+#define EPOCHS 500
 
 #define EPOCH_COMPONENT_SIZE 10000
 #define EPOCH_SIZE 50000
@@ -358,7 +358,7 @@ int main() {
   read_imgs_local = 0;
   read_imgs_global = 0;
 
-  float base_lr = 0.01f, gamma = 0.4f, power = 0;
+  float base_lr = 0.001f, gamma = 0.4f, power = 0;
   float lr = base_lr * powf(1 + gamma, -power);
   float reg = 0.004f;
   float mom = 0.0f;
