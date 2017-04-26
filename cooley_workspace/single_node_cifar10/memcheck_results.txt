@@ -2,1168 +2,3395 @@ Using GPU Device -> Tesla K80
 cuda dev reset -->0
 cublas handle create -->0
 cuDNN initialization -->0
--------------------------
-Shape = (128, 3072)
-Minimum at index 33 = 0
-Maximum at index 496 = 1
-Average of all elements = 0.465246
 *****************************
-Shape = (128, 3072)
-Minimum at index 33 = 0
-Maximum at index 496 = 1
-Average of all elements = 0.465246
+Shape = (5, 576)
+Minimum at index 6 = 0
+Maximum at index 1093 = 0.107966
+Average of all elements = 0.00912338
 ###
+reqd_threads = 10
+num_threadblocks = 1
+cols = 576
+---------
+threadIdx = 0
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 1
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 2
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 3
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 4
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 5
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 6
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 7
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+---------
+threadIdx = 8
+write_idx = 8
+i = 3
+j = 573
+read_idx = 2301
+-----------
+---------
+threadIdx = 9
+write_idx = 9
+i = 3
+j = 572
+read_idx = 2300
+-----------
+---------
+threadIdx = 10
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 11
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 12
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 13
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 14
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 15
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 16
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 17
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+---------
+threadIdx = 18
+write_idx = 8
+i = 3
+j = 573
+read_idx = 2301
+-----------
+---------
+threadIdx = 19
+write_idx = 9
+i = 3
+j = 572
+read_idx = 2300
+-----------
+---------
+threadIdx = 20
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 21
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 22
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 23
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 24
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 25
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 26
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 27
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+---------
+threadIdx = 28
+write_idx = 8
+i = 3
+j = 573
+read_idx = 2301
+-----------
+---------
+threadIdx = 29
+write_idx = 9
+i = 3
+j = 572
+read_idx = 2300
+-----------
+---------
+threadIdx = 30
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 31
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 32
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 33
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 34
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 35
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 36
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 37
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+---------
+threadIdx = 38
+write_idx = 8
+i = 3
+j = 573
+read_idx = 2301
+-----------
+---------
+threadIdx = 39
+write_idx = 9
+i = 3
+j = 572
+read_idx = 2300
+-----------
+---------
+threadIdx = 40
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 41
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 42
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 43
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 44
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 45
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 46
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 47
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+---------
+threadIdx = 48
+write_idx = 8
+i = 3
+j = 573
+read_idx = 2301
+-----------
+---------
+threadIdx = 49
+write_idx = 9
+i = 3
+j = 572
+read_idx = 2300
+-----------
+---------
+threadIdx = 50
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 51
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 52
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 53
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 54
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 55
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 56
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 57
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+---------
+threadIdx = 58
+write_idx = 8
+i = 3
+j = 573
+read_idx = 2301
+-----------
+---------
+threadIdx = 59
+write_idx = 9
+i = 3
+j = 572
+read_idx = 2300
+-----------
+---------
+threadIdx = 60
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 61
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 62
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 63
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 64
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 65
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 66
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 67
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+---------
+threadIdx = 68
+write_idx = 8
+i = 3
+j = 573
+read_idx = 2301
+-----------
+---------
+threadIdx = 69
+write_idx = 9
+i = 3
+j = 572
+read_idx = 2300
+-----------
+---------
+threadIdx = 70
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 71
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 72
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 73
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 74
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 75
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 76
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 77
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+---------
+threadIdx = 78
+write_idx = 8
+i = 3
+j = 573
+read_idx = 2301
+-----------
+---------
+threadIdx = 79
+write_idx = 9
+i = 3
+j = 572
+read_idx = 2300
+-----------
+---------
+threadIdx = 80
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 81
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 82
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 83
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 84
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 85
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 86
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 87
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+---------
+threadIdx = 88
+write_idx = 8
+i = 3
+j = 573
+read_idx = 2301
+-----------
+---------
+threadIdx = 89
+write_idx = 9
+i = 3
+j = 572
+read_idx = 2300
+-----------
+---------
+threadIdx = 90
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 91
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 92
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 93
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 94
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 95
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 96
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 97
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+---------
+threadIdx = 98
+write_idx = 8
+i = 3
+j = 573
+read_idx = 2301
+-----------
+---------
+threadIdx = 99
+write_idx = 9
+i = 3
+j = 572
+read_idx = 2300
+-----------
+---------
+threadIdx = 100
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 101
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 102
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 103
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 104
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 105
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 106
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 107
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+---------
+threadIdx = 108
+write_idx = 8
+i = 3
+j = 573
+read_idx = 2301
+-----------
+---------
+threadIdx = 109
+write_idx = 9
+i = 3
+j = 572
+read_idx = 2300
+-----------
+---------
+threadIdx = 110
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 111
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 112
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 113
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 114
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 115
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 116
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 117
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+---------
+threadIdx = 118
+write_idx = 8
+i = 3
+j = 573
+read_idx = 2301
+-----------
+---------
+threadIdx = 119
+write_idx = 9
+i = 3
+j = 572
+read_idx = 2300
+-----------
+---------
+threadIdx = 120
+write_idx = 0
+i = 0
+j = 575
+read_idx = 575
+-----------
+---------
+threadIdx = 121
+write_idx = 1
+i = 1
+j = 575
+read_idx = 1151
+-----------
+---------
+threadIdx = 122
+write_idx = 2
+i = 1
+j = 574
+read_idx = 1150
+-----------
+---------
+threadIdx = 123
+write_idx = 3
+i = 2
+j = 575
+read_idx = 1727
+-----------
+---------
+threadIdx = 124
+write_idx = 4
+i = 2
+j = 574
+read_idx = 1726
+-----------
+---------
+threadIdx = 125
+write_idx = 5
+i = 2
+j = 573
+read_idx = 1725
+-----------
+---------
+threadIdx = 126
+write_idx = 6
+i = 3
+j = 575
+read_idx = 2303
+-----------
+---------
+threadIdx = 127
+write_idx = 7
+i = 3
+j = 574
+read_idx = 2302
+-----------
+*****************************
+Shape = (5, 577)
+Minimum at index 7 = 0
+Maximum at index 0 = 1
+Average of all elements = 0.0108407
+###
+reqd_threads = 10
+num_threadblocks = 1
+cols = 64
+---------
+threadIdx = 0
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 1
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 2
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 3
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 4
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 5
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 6
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 7
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+---------
+threadIdx = 8
+write_idx = 8
+i = 3
+j = 61
+read_idx = 253
+-----------
+---------
+threadIdx = 9
+write_idx = 9
+i = 3
+j = 60
+read_idx = 252
+-----------
+---------
+threadIdx = 10
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 11
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 12
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 13
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 14
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 15
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 16
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 17
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+---------
+threadIdx = 18
+write_idx = 8
+i = 3
+j = 61
+read_idx = 253
+-----------
+---------
+threadIdx = 19
+write_idx = 9
+i = 3
+j = 60
+read_idx = 252
+-----------
+---------
+threadIdx = 20
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 21
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 22
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 23
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 24
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 25
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 26
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 27
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+---------
+threadIdx = 28
+write_idx = 8
+i = 3
+j = 61
+read_idx = 253
+-----------
+---------
+threadIdx = 29
+write_idx = 9
+i = 3
+j = 60
+read_idx = 252
+-----------
+---------
+threadIdx = 30
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 31
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 32
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 33
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 34
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 35
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 36
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 37
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+---------
+threadIdx = 38
+write_idx = 8
+i = 3
+j = 61
+read_idx = 253
+-----------
+---------
+threadIdx = 39
+write_idx = 9
+i = 3
+j = 60
+read_idx = 252
+-----------
+---------
+threadIdx = 40
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 41
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 42
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 43
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 44
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 45
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 46
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 47
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+---------
+threadIdx = 48
+write_idx = 8
+i = 3
+j = 61
+read_idx = 253
+-----------
+---------
+threadIdx = 49
+write_idx = 9
+i = 3
+j = 60
+read_idx = 252
+-----------
+---------
+threadIdx = 50
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 51
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 52
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 53
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 54
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 55
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 56
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 57
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+---------
+threadIdx = 58
+write_idx = 8
+i = 3
+j = 61
+read_idx = 253
+-----------
+---------
+threadIdx = 59
+write_idx = 9
+i = 3
+j = 60
+read_idx = 252
+-----------
+---------
+threadIdx = 60
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 61
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 62
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 63
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 64
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 65
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 66
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 67
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+---------
+threadIdx = 68
+write_idx = 8
+i = 3
+j = 61
+read_idx = 253
+-----------
+---------
+threadIdx = 69
+write_idx = 9
+i = 3
+j = 60
+read_idx = 252
+-----------
+---------
+threadIdx = 70
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 71
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 72
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 73
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 74
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 75
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 76
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 77
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+---------
+threadIdx = 78
+write_idx = 8
+i = 3
+j = 61
+read_idx = 253
+-----------
+---------
+threadIdx = 79
+write_idx = 9
+i = 3
+j = 60
+read_idx = 252
+-----------
+---------
+threadIdx = 80
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 81
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 82
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 83
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 84
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 85
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 86
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 87
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+---------
+threadIdx = 88
+write_idx = 8
+i = 3
+j = 61
+read_idx = 253
+-----------
+---------
+threadIdx = 89
+write_idx = 9
+i = 3
+j = 60
+read_idx = 252
+-----------
+---------
+threadIdx = 90
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 91
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 92
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 93
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 94
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 95
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 96
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 97
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+---------
+threadIdx = 98
+write_idx = 8
+i = 3
+j = 61
+read_idx = 253
+-----------
+---------
+threadIdx = 99
+write_idx = 9
+i = 3
+j = 60
+read_idx = 252
+-----------
+---------
+threadIdx = 100
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 101
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 102
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 103
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 104
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 105
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 106
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 107
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+---------
+threadIdx = 108
+write_idx = 8
+i = 3
+j = 61
+read_idx = 253
+-----------
+---------
+threadIdx = 109
+write_idx = 9
+i = 3
+j = 60
+read_idx = 252
+-----------
+---------
+threadIdx = 110
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 111
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 112
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 113
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 114
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 115
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 116
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 117
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+---------
+threadIdx = 118
+write_idx = 8
+i = 3
+j = 61
+read_idx = 253
+-----------
+---------
+threadIdx = 119
+write_idx = 9
+i = 3
+j = 60
+read_idx = 252
+-----------
+---------
+threadIdx = 120
+write_idx = 0
+i = 0
+j = 63
+read_idx = 63
+-----------
+---------
+threadIdx = 121
+write_idx = 1
+i = 1
+j = 63
+read_idx = 127
+-----------
+---------
+threadIdx = 122
+write_idx = 2
+i = 1
+j = 62
+read_idx = 126
+-----------
+---------
+threadIdx = 123
+write_idx = 3
+i = 2
+j = 63
+read_idx = 191
+-----------
+---------
+threadIdx = 124
+write_idx = 4
+i = 2
+j = 62
+read_idx = 190
+-----------
+---------
+threadIdx = 125
+write_idx = 5
+i = 2
+j = 61
+read_idx = 189
+-----------
+---------
+threadIdx = 126
+write_idx = 6
+i = 3
+j = 63
+read_idx = 255
+-----------
+---------
+threadIdx = 127
+write_idx = 7
+i = 3
+j = 62
+read_idx = 254
+-----------
+###
+reqd_threads = 10
+num_threadblocks = 1
+cols = 32
+---------
+threadIdx = 0
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 1
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 2
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 3
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 4
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 5
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 6
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 7
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
+---------
+threadIdx = 8
+write_idx = 8
+i = 3
+j = 29
+read_idx = 125
+-----------
+---------
+threadIdx = 9
+write_idx = 9
+i = 3
+j = 28
+read_idx = 124
+-----------
+---------
+threadIdx = 10
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 11
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 12
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 13
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 14
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 15
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 16
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 17
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
+---------
+threadIdx = 18
+write_idx = 8
+i = 3
+j = 29
+read_idx = 125
+-----------
+---------
+threadIdx = 19
+write_idx = 9
+i = 3
+j = 28
+read_idx = 124
+-----------
+---------
+threadIdx = 20
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 21
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 22
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 23
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 24
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 25
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 26
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 27
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
+---------
+threadIdx = 28
+write_idx = 8
+i = 3
+j = 29
+read_idx = 125
+-----------
+---------
+threadIdx = 29
+write_idx = 9
+i = 3
+j = 28
+read_idx = 124
+-----------
+---------
+threadIdx = 30
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 31
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 32
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 33
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 34
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 35
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 36
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 37
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
+---------
+threadIdx = 38
+write_idx = 8
+i = 3
+j = 29
+read_idx = 125
+-----------
+---------
+threadIdx = 39
+write_idx = 9
+i = 3
+j = 28
+read_idx = 124
+-----------
+---------
+threadIdx = 40
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 41
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 42
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 43
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 44
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 45
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 46
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 47
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
+---------
+threadIdx = 48
+write_idx = 8
+i = 3
+j = 29
+read_idx = 125
+-----------
+---------
+threadIdx = 49
+write_idx = 9
+i = 3
+j = 28
+read_idx = 124
+-----------
+---------
+threadIdx = 50
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 51
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 52
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 53
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 54
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 55
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 56
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 57
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
+---------
+threadIdx = 58
+write_idx = 8
+i = 3
+j = 29
+read_idx = 125
+-----------
+---------
+threadIdx = 59
+write_idx = 9
+i = 3
+j = 28
+read_idx = 124
+-----------
+---------
+threadIdx = 60
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 61
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 62
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 63
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 64
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 65
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 66
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 67
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
+---------
+threadIdx = 68
+write_idx = 8
+i = 3
+j = 29
+read_idx = 125
+-----------
+---------
+threadIdx = 69
+write_idx = 9
+i = 3
+j = 28
+read_idx = 124
+-----------
+---------
+threadIdx = 70
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 71
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 72
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 73
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 74
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 75
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 76
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 77
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
+---------
+threadIdx = 78
+write_idx = 8
+i = 3
+j = 29
+read_idx = 125
+-----------
+---------
+threadIdx = 79
+write_idx = 9
+i = 3
+j = 28
+read_idx = 124
+-----------
+---------
+threadIdx = 80
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 81
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 82
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 83
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 84
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 85
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 86
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 87
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
+---------
+threadIdx = 88
+write_idx = 8
+i = 3
+j = 29
+read_idx = 125
+-----------
+---------
+threadIdx = 89
+write_idx = 9
+i = 3
+j = 28
+read_idx = 124
+-----------
+---------
+threadIdx = 90
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 91
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 92
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 93
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 94
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 95
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 96
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 97
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
+---------
+threadIdx = 98
+write_idx = 8
+i = 3
+j = 29
+read_idx = 125
+-----------
+---------
+threadIdx = 99
+write_idx = 9
+i = 3
+j = 28
+read_idx = 124
+-----------
+---------
+threadIdx = 100
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 101
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 102
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 103
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 104
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 105
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 106
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 107
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
+---------
+threadIdx = 108
+write_idx = 8
+i = 3
+j = 29
+read_idx = 125
+-----------
+---------
+threadIdx = 109
+write_idx = 9
+i = 3
+j = 28
+read_idx = 124
+-----------
+---------
+threadIdx = 110
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 111
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 112
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 113
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 114
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 115
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 116
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 117
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
+---------
+threadIdx = 118
+write_idx = 8
+i = 3
+j = 29
+read_idx = 125
+-----------
+---------
+threadIdx = 119
+write_idx = 9
+i = 3
+j = 28
+read_idx = 124
+-----------
+---------
+threadIdx = 120
+write_idx = 0
+i = 0
+j = 31
+read_idx = 31
+-----------
+---------
+threadIdx = 121
+write_idx = 1
+i = 1
+j = 31
+read_idx = 63
+-----------
+---------
+threadIdx = 122
+write_idx = 2
+i = 1
+j = 30
+read_idx = 62
+-----------
+---------
+threadIdx = 123
+write_idx = 3
+i = 2
+j = 31
+read_idx = 95
+-----------
+---------
+threadIdx = 124
+write_idx = 4
+i = 2
+j = 30
+read_idx = 94
+-----------
+---------
+threadIdx = 125
+write_idx = 5
+i = 2
+j = 29
+read_idx = 93
+-----------
+---------
+threadIdx = 126
+write_idx = 6
+i = 3
+j = 31
+read_idx = 127
+-----------
+---------
+threadIdx = 127
+write_idx = 7
+i = 3
+j = 30
+read_idx = 126
+-----------
 ========= CUDA-MEMCHECK
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (95,0,0) in block (63,0,0)
-=========     Address 0x62051f7f7c is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (94,0,0) in block (63,0,0)
-=========     Address 0x62051f7f78 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (93,0,0) in block (63,0,0)
-=========     Address 0x62051f7f74 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (92,0,0) in block (63,0,0)
-=========     Address 0x62051f7f70 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (91,0,0) in block (63,0,0)
-=========     Address 0x62051f7f6c is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (90,0,0) in block (63,0,0)
-=========     Address 0x62051f7f68 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (89,0,0) in block (63,0,0)
-=========     Address 0x62051f7f64 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (88,0,0) in block (63,0,0)
-=========     Address 0x62051f7f60 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (87,0,0) in block (63,0,0)
-=========     Address 0x62051f7f5c is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (86,0,0) in block (63,0,0)
-=========     Address 0x62051f7f58 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (85,0,0) in block (63,0,0)
-=========     Address 0x62051f7f54 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (84,0,0) in block (63,0,0)
-=========     Address 0x62051f7f50 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (83,0,0) in block (63,0,0)
-=========     Address 0x62051f7f4c is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (82,0,0) in block (63,0,0)
-=========     Address 0x62051f7f48 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (81,0,0) in block (63,0,0)
-=========     Address 0x62051f7f44 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (80,0,0) in block (63,0,0)
-=========     Address 0x62051f7f40 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (79,0,0) in block (63,0,0)
-=========     Address 0x62051f7f3c is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (78,0,0) in block (63,0,0)
-=========     Address 0x62051f7f38 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (77,0,0) in block (63,0,0)
-=========     Address 0x62051f7f34 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (76,0,0) in block (63,0,0)
-=========     Address 0x62051f7f30 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (75,0,0) in block (63,0,0)
-=========     Address 0x62051f7f2c is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (74,0,0) in block (63,0,0)
-=========     Address 0x62051f7f28 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (73,0,0) in block (63,0,0)
-=========     Address 0x62051f7f24 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (72,0,0) in block (63,0,0)
-=========     Address 0x62051f7f20 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (71,0,0) in block (63,0,0)
-=========     Address 0x62051f7f1c is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (70,0,0) in block (63,0,0)
-=========     Address 0x62051f7f18 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (69,0,0) in block (63,0,0)
-=========     Address 0x62051f7f14 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (68,0,0) in block (63,0,0)
-=========     Address 0x62051f7f10 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (67,0,0) in block (63,0,0)
-=========     Address 0x62051f7f0c is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (66,0,0) in block (63,0,0)
-=========     Address 0x62051f7f08 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (65,0,0) in block (63,0,0)
-=========     Address 0x62051f7f04 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (64,0,0) in block (63,0,0)
-=========     Address 0x62051f7f00 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (127,0,0) in block (63,0,0)
-=========     Address 0x62051f7ffc is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (126,0,0) in block (63,0,0)
-=========     Address 0x62051f7ff8 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (125,0,0) in block (63,0,0)
-=========     Address 0x62051f7ff4 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (124,0,0) in block (63,0,0)
-=========     Address 0x62051f7ff0 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (123,0,0) in block (63,0,0)
-=========     Address 0x62051f7fec is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (122,0,0) in block (63,0,0)
-=========     Address 0x62051f7fe8 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (121,0,0) in block (63,0,0)
-=========     Address 0x62051f7fe4 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (120,0,0) in block (63,0,0)
-=========     Address 0x62051f7fe0 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (119,0,0) in block (63,0,0)
-=========     Address 0x62051f7fdc is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (118,0,0) in block (63,0,0)
-=========     Address 0x62051f7fd8 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (117,0,0) in block (63,0,0)
-=========     Address 0x62051f7fd4 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (116,0,0) in block (63,0,0)
-=========     Address 0x62051f7fd0 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (115,0,0) in block (63,0,0)
-=========     Address 0x62051f7fcc is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (114,0,0) in block (63,0,0)
-=========     Address 0x62051f7fc8 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (113,0,0) in block (63,0,0)
-=========     Address 0x62051f7fc4 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (112,0,0) in block (63,0,0)
-=========     Address 0x62051f7fc0 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (111,0,0) in block (63,0,0)
-=========     Address 0x62051f7fbc is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (110,0,0) in block (63,0,0)
-=========     Address 0x62051f7fb8 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (109,0,0) in block (63,0,0)
-=========     Address 0x62051f7fb4 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (108,0,0) in block (63,0,0)
-=========     Address 0x62051f7fb0 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (107,0,0) in block (63,0,0)
-=========     Address 0x62051f7fac is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (106,0,0) in block (63,0,0)
-=========     Address 0x62051f7fa8 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (105,0,0) in block (63,0,0)
-=========     Address 0x62051f7fa4 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (104,0,0) in block (63,0,0)
-=========     Address 0x62051f7fa0 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (103,0,0) in block (63,0,0)
-=========     Address 0x62051f7f9c is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (102,0,0) in block (63,0,0)
-=========     Address 0x62051f7f98 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (101,0,0) in block (63,0,0)
-=========     Address 0x62051f7f94 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (100,0,0) in block (63,0,0)
-=========     Address 0x62051f7f90 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (99,0,0) in block (63,0,0)
-=========     Address 0x62051f7f8c is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (98,0,0) in block (63,0,0)
-=========     Address 0x62051f7f88 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (97,0,0) in block (63,0,0)
-=========     Address 0x62051f7f84 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= Invalid __global__ write of size 4
-=========     at 0x000005e0 in /gpfs/mira-fs1/projects/EnergyFEC_2/users/souham/SHM-Learn/cooley_workspace/single_node_cifar10/FCLayer.cu:200:ShiftRight_PopulateHelper_GPUKernel(float*, float*, int, int, int)
-=========     by thread (96,0,0) in block (63,0,0)
-=========     Address 0x62051f7f80 is out of bounds
-=========     Saved host backtrace up to driver entry point at kernel launch time
-=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 [0xd23d]
-=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcudart.so.8.0 (cudaLaunch + 0x143) [0x33783]
-=========     Host Frame:convnet [0x9d4c]
-=========     Host Frame:convnet [0x960e]
-=========     Host Frame:convnet [0x9655]
-=========     Host Frame:convnet [0x7bb2]
-=========     Host Frame:convnet [0xb3bc]
-=========     Host Frame:convnet [0xa99b]
-=========     Host Frame:convnet [0x584f]
-=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
-=========     Host Frame:convnet [0x36f9]
-=========
-========= ERROR SUMMARY: 64 errors
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (137,0,0) in block (0,0,0)
+=========     Address 0x019280e4 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (136,0,0) in block (0,0,0)
+=========     Address 0x019280e0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (135,0,0) in block (0,0,0)
+=========     Address 0x019280dc is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (134,0,0) in block (0,0,0)
+=========     Address 0x019280d8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (133,0,0) in block (0,0,0)
+=========     Address 0x019280d4 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (132,0,0) in block (0,0,0)
+=========     Address 0x019280d0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (131,0,0) in block (0,0,0)
+=========     Address 0x019280cc is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (130,0,0) in block (0,0,0)
+=========     Address 0x019280c8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (129,0,0) in block (0,0,0)
+=========     Address 0x019280c4 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (128,0,0) in block (0,0,0)
+=========     Address 0x019280c0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (201,0,0) in block (0,0,0)
+=========     Address 0x0192810c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (200,0,0) in block (0,0,0)
+=========     Address 0x01928108 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (199,0,0) in block (0,0,0)
+=========     Address 0x01928104 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (198,0,0) in block (0,0,0)
+=========     Address 0x01928100 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (197,0,0) in block (0,0,0)
+=========     Address 0x019280fc is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (196,0,0) in block (0,0,0)
+=========     Address 0x019280f8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (195,0,0) in block (0,0,0)
+=========     Address 0x019280f4 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (194,0,0) in block (0,0,0)
+=========     Address 0x019280f0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (193,0,0) in block (0,0,0)
+=========     Address 0x019280ec is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (192,0,0) in block (0,0,0)
+=========     Address 0x019280e8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (9,0,0) in block (0,0,0)
+=========     Address 0x01928094 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (8,0,0) in block (0,0,0)
+=========     Address 0x01928090 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (7,0,0) in block (0,0,0)
+=========     Address 0x0192808c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (6,0,0) in block (0,0,0)
+=========     Address 0x01928088 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (5,0,0) in block (0,0,0)
+=========     Address 0x01928084 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (4,0,0) in block (0,0,0)
+=========     Address 0x01928080 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (3,0,0) in block (0,0,0)
+=========     Address 0x0192807c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (2,0,0) in block (0,0,0)
+=========     Address 0x01928078 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (1,0,0) in block (0,0,0)
+=========     Address 0x01928074 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (0,0,0) in block (0,0,0)
+=========     Address 0x01928070 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (73,0,0) in block (0,0,0)
+=========     Address 0x019280bc is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (72,0,0) in block (0,0,0)
+=========     Address 0x019280b8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (71,0,0) in block (0,0,0)
+=========     Address 0x019280b4 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (70,0,0) in block (0,0,0)
+=========     Address 0x019280b0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (69,0,0) in block (0,0,0)
+=========     Address 0x019280ac is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (68,0,0) in block (0,0,0)
+=========     Address 0x019280a8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (67,0,0) in block (0,0,0)
+=========     Address 0x019280a4 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (66,0,0) in block (0,0,0)
+=========     Address 0x019280a0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (65,0,0) in block (0,0,0)
+=========     Address 0x0192809c is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= Invalid __global__ read of size 4
+=========     at 0x00000550 in void geam_kernel<float, bool=0, bool=0, bool=0, bool=0, int=6, int=5, int=3, bool=1>(cublasGeamParams<float>, float const *, float const *, float*, float const *, float const *)
+=========     by thread (64,0,0) in block (0,0,0)
+=========     Address 0x01928098 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib64/libcuda.so.1 (cuLaunchKernel + 0x2c5) [0x204235]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x385a51]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x3a35f3]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x221d2a]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x22260d]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2232c5]
+=========     Host Frame:/home/souham/.local/cuda-8.0/lib64/libcublas.so.8.0 [0x2236e5]
+=========     Host Frame:convnet [0xaf68]
+=========     Host Frame:convnet [0x59f4]
+=========     Host Frame:/lib64/libc.so.6 (__libc_start_main + 0xfd) [0x1ed1d]
+=========     Host Frame:convnet [0x3819]
+=========
+========= ERROR SUMMARY: 40 errors

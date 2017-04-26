@@ -37,7 +37,7 @@ inline std::string separator() {
 #define DATA_SIDE 32 //Throws GPU setup error if above 257
 #define CHANNELS 3
 
-#define BATCH_SIZE 128
+#define BATCH_SIZE 5
 #define LABELS 10
 
 #define EPOCHS 10
@@ -438,8 +438,8 @@ int main() {
     cl0.LoadData(x, false);
 
     //std::cout << "cuda mem copy to GPU ---> " << cl0.cudaError_stat << std::endl;
-    print_h_var3(x, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
-    print_d_var3(cl0.d_data, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
+    //print_h_var3(x, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
+    //print_d_var3(cl0.d_data, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);
     
     cl0.Convolve();
 
@@ -453,9 +453,9 @@ int main() {
     cl2.LoadData(cl1.d_out, true);
     cl2.Convolve();
 
-    //print_d_var3(cl2.d_out, BATCH_SIZE, cl2.output_c * cl2.output_h * cl2.output_w, false);
-    
+    print_d_var3(cl2.d_out, BATCH_SIZE, cl2.output_c * cl2.output_h * cl2.output_w, false);
     fcl0.LoadData(cl2.d_out, true);
+    print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons + 1, false);
     fcl0.ForwardProp();
     
     //return 0;
@@ -472,11 +472,11 @@ int main() {
     fcl2.LoadData(fcl1.d_out, true);
     fcl2.ForwardProp();
 
-    print_d_var3(fcl2.d_out, BATCH_SIZE, fcl2.output_neurons, false);
+    //print_d_var3(fcl2.d_out, BATCH_SIZE, fcl2.output_neurons, false);
 
     // Back-propagation
     fcl2.ComputeSoftmaxGradients(y);
-    print_d_var3(fcl2.d_gradients, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols, false);
+    //print_d_var3(fcl2.d_gradients, fcl2.weight_matrix_rows, fcl2.weight_matrix_cols, false);
     
 
 
