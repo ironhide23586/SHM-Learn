@@ -299,13 +299,13 @@ int main() {
   float *x, *y;
   float *h_out;
 
-  // cudaMallocHost((void **)&x, sizeof(float) * BATCH_SIZE * CHANNELS 
-  //                * DATA_SIDE * DATA_SIDE);
-  // cudaMallocHost((void **)&y, sizeof(float) * BATCH_SIZE * LABELS);
+  cudaMallocHost((void **)&x, sizeof(float) * BATCH_SIZE * CHANNELS 
+                 * DATA_SIDE * DATA_SIDE);
+  cudaMallocHost((void **)&y, sizeof(float) * BATCH_SIZE * LABELS);
 
-  x = (float *)malloc(sizeof(float) * BATCH_SIZE * CHANNELS 
-                                  * DATA_SIDE * DATA_SIDE);
-  y = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
+  // x = (float *)malloc(sizeof(float) * BATCH_SIZE * CHANNELS 
+  //                                 * DATA_SIDE * DATA_SIDE);
+  // y = (float *)malloc(sizeof(float) * BATCH_SIZE * LABELS);
 
   float *x_test = (float *)malloc(sizeof(float) * BATCH_SIZE * CHANNELS 
                                   * DATA_SIDE * DATA_SIDE);
@@ -435,7 +435,7 @@ int main() {
     // Forward Pass
     train_start = std::chrono::high_resolution_clock::now();
 
-    cl0.LoadData(x, false);
+    cl0.LoadData(x, true);
 
     //std::cout << "cuda mem copy to GPU ---> " << cl0.cudaError_stat << std::endl;
     //print_h_var3(x, cl0.input_n, cl0.input_c * cl0.input_h * cl0.input_w, false);

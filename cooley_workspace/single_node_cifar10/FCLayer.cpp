@@ -240,6 +240,7 @@ void FCLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
 }
 
 void FCLayer::ComputePrevLayerDerivatives(float *d_fwd_derivatives) {
+  std::cout << "+=+=+=" << std::endl;
   CublasSafeCall(cublasSgemm_v2(cublas_handle, CUBLAS_OP_T, CUBLAS_OP_N,
                                 input_neurons + 1, input_batch_size,
                                 output_neurons, &alpha, d_weight_matrix,

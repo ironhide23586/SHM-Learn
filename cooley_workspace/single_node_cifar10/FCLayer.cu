@@ -191,9 +191,9 @@ __global__ void Replace2Vals_GPUKernel(float *d_mat, int total_size,
 
 __global__ void ShiftRight_PopulateHelper_GPUKernel(float *d_mat,
                                                     float *d_helper,
-                                                    int total_size,
+                                                    int damaged_elems,
                                                     int rows, int cols) {
-  int idx = (blockDim.x * blockIdx.x + threadIdx.x) % total_size;
+  int idx = (blockDim.x * blockIdx.x + threadIdx.x) % damaged_elems;
   int i = floor(0.5f * (sqrt((float)1 + 8 * idx) - 1.0f)) + 1;
   int j = idx - i * (i - 1) / 2;
   int read_idx = j + i * cols;
@@ -244,6 +244,7 @@ void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
     threadblock_size = max_threadblock_size;
   int num_threadblocks = my_ceilf_division_FCLayer(reqd_threads, threadblock_size);
   int thread_chunk_size = my_ceilf_division_FCLayer(cols, max_threadblock_size);
+
   std::cout << "###" << std::endl;
   std::cout << "reqd_threads = " << reqd_threads << std::endl;
   std::cout << "num_threadblocks = " << num_threadblocks << std::endl;
@@ -255,13 +256,13 @@ void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
     std::cout << "write_idx = " << idx << std::endl;
     int i = floorf(0.5f * (sqrtf((float)1 + 8 * idx) - 1.0f));
     std::cout << "i = " << i << std::endl;
-    int j = cols - (idx - i * (i - 1) / 2) - 1 + i;
+    int j = idx - i * (i - 1) / 2;
     std::cout << "j = " << j << std::endl;
     int read_idx = j + i * cols;
     std::cout << "read_idx = " << read_idx << std::endl;
     std::cout << "-----------" << std::endl;
   }
-
+  
   ShiftRight_PopulateHelper_GPUKernel << < num_threadblocks,
     threadblock_size >> >
     (d_mat, d_helper, reqd_threads,
@@ -279,9 +280,9 @@ void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
 
 __global__ void ShiftLeft_PopulateHelper_GPUKernel(float *d_mat,
                                                    float *d_helper,
-                                                   int damaged_elems,
+                                                   int total_size,
                                                    int rows, int cols) {
-  int idx = (blockDim.x * blockIdx.x + threadIdx.x) % damaged_elems;
+  int idx = (blockDim.x * blockIdx.x + threadIdx.x) % total_size;
   int i = floor(0.5f * (sqrt((float)1 + 8 * idx) - 1.0f));
   int j = cols - (idx - i * (i - 1) / 2) - 1 + i;
   int read_idx = j + i * cols;
@@ -336,6 +337,8 @@ void ReAlignMemory_ShiftLeft(float *d_mat, float *d_helper,
     threadblock_size = max_threadblock_size;
   int num_threadblocks = my_ceilf_division_FCLayer(reqd_threads, threadblock_size);
   int thread_chunk_size = my_ceilf_division_FCLayer((cols - 1), max_threadblock_size);
+
+  
   ShiftLeft_PopulateHelper_GPUKernel << < num_threadblocks,
     threadblock_size >> >
     (d_mat, d_helper, org_size,
