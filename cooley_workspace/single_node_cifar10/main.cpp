@@ -186,27 +186,29 @@ void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls, unsigned c
   memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
 
   //FIX THISSSS!!!!!!!!!! >:@
-  if ((read_imgs_local + 3*BATCH_SIZE) > EPOCH_COMPONENT_SIZE) {
-    fclose(fp);
-    data_file_idx = (data_file_idx % 5) + 1;
-    if (data_file_idx == 1) {
-      read_imgs_global = 0;
-    }
-    std::string train_file = "cifar-10-binary" + separator() + "cifar-10-batches-bin" + separator()
-      + "data_batch_"
-      + std::to_string(data_file_idx) + ".bin";
-    fp = fopen(train_file.c_str(), "r");
 
-    read_imgs_local = 0;
-    curr_example = 0;
-  }
-
-  fread(buff, sizeof(unsigned char), batch_bytes, fp);
-
-
-  memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
-  //float batch_mean = 0.0f, batch_var = 0.0;
-  //int cnt = 0;
+  // if ((read_imgs_local + BATCH_SIZE) > EPOCH_COMPONENT_SIZE) {
+  //   fclose(fp);
+  //   data_file_idx = (data_file_idx % 5) + 1;
+  //   if (data_file_idx == 1) {
+  //     read_imgs_global = 0;
+  //   }
+  //   std::string my_train_file = "cifar-10-binary" + separator() + "cifar-10-batches-bin" + separator()
+  //     + "data_batch_"
+  //     + std::to_string(data_file_idx) + ".bin";
+  //   std::cout << my_train_file << std::endl;
+  //   fp = fopen(my_train_file.c_str(), "r");
+  //   if (fp == NULL) {
+  //     std::cout << "File read error :(" << std::endl;
+  //     return;
+  //   }
+  //   read_imgs_local = 0;
+  //   //curr_example = 0;
+  // }
+  std::cout << "read_imgs_local = " << read_imgs_local << ", read_imgs_global = " << read_imgs_global << std::endl;
+  auto lsz = fread(buff, sizeof(unsigned char), batch_bytes, fp);
+  std::cout << "Read next batch; read = " << lsz << " desired = " << batch_bytes << std::endl;
+  //memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
 
   for (int i = 0; i < BATCH_SIZE; i++) {
     start_idx = i * row_size;
@@ -417,7 +419,27 @@ int main() {
                                                 * batch_bytes);
   while (epoch <= EPOCHS) {
     t0 = std::chrono::high_resolution_clock::now();
+
+
+    if ((read_imgs_local + BATCH_SIZE) > EPOCH_COMPONENT_SIZE) {
+      fclose(fp_data_train);
+      data_file_idx = (data_file_idx % 5) + 1;
+      if (data_file_idx == 1) {
+        read_imgs_global = 0;
+      }
+      std::string my_train_file = "cifar-10-binary" + separator() + "cifar-10-batches-bin" + separator()
+        + "data_batch_"
+        + std::to_string(data_file_idx) + ".bin";
+      std::cout << my_train_file << std::endl;
+      fp_data_train = fopen(my_train_file.c_str(), "r");
+      if (fp_data_train == NULL) {
+        std::cout << "File read error :(" << std::endl;
+        return 0;
+      }
+      read_imgs_local = 0;
+    }
     readBatch_cifar10_lim_v2(fp_data_train, x, y, buff);
+
     t1 = std::chrono::high_resolution_clock::now();
     dur0 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(t1
                                                                       - t0)
