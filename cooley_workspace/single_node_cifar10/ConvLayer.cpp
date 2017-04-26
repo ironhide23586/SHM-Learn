@@ -466,7 +466,7 @@ void ConvLayer::UpdateWeights(float *d_filter_gradients,
 
 void ConvLayer::InitBackpropVars() {
   if (activation_set) {
-    std::cout << output_n << ", " << output_c << ", " << output_h << ", " << output_w << std::endl;
+    //std::cout << output_n << ", " << output_c << ", " << output_h << ", " << output_w << std::endl;
     CudaSafeCall(cudaMalloc((void **)&d_activation_derivatives,
                             sizeof(float) * output_n * output_c
                             * output_h * output_w));

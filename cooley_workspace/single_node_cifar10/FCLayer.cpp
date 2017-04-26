@@ -240,7 +240,6 @@ void FCLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
 }
 
 void FCLayer::ComputePrevLayerDerivatives(float *d_fwd_derivatives) {
-  std::cout << "+=+=+=" << std::endl;
   CublasSafeCall(cublasSgemm_v2(cublas_handle, CUBLAS_OP_T, CUBLAS_OP_N,
                                 input_neurons + 1, input_batch_size,
                                 output_neurons, &alpha, d_weight_matrix,
@@ -409,16 +408,6 @@ void FCLayer::SumColumns(float *d_mat, float *d_out, int rows, int cols) {
                                 &beta, d_out, 1));
   CudaSafeCall(cudaFree(d_onevect));
 }
-
-// cublasStatus_t FCLayer::MatMulT(float *d_A, float *d_B, float *d_C,
-//                                 int rows_A, int cols_A,
-//                                 int rows_B, int cols_B, float scale_coeff,
-//                                 float prior_coeff) {
-//   return cublasSgemm_v2(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_T,
-//                         cols_A, cols_B, rows_A, &scale_coeff,
-//                         d_A, cols_A, d_B, cols_B, &prior_coeff, d_C,
-//                         cols_A);
-// }
 
 void FCLayer::InitBackpropVars() {
   if (!is_input_layer) {

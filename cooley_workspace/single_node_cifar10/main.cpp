@@ -37,7 +37,7 @@ inline std::string separator() {
 #define DATA_SIDE 32 //Throws GPU setup error if above 257
 #define CHANNELS 3
 
-#define BATCH_SIZE 5
+#define BATCH_SIZE 256
 #define LABELS 10
 
 #define EPOCHS 10
@@ -185,7 +185,8 @@ void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls, unsigned c
   int lbl;
   memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
 
-  if ((read_imgs_local + BATCH_SIZE) > EPOCH_COMPONENT_SIZE) {
+  //FIX THISSSS!!!!!!!!!! >:@
+  if ((read_imgs_local + 3*BATCH_SIZE) > EPOCH_COMPONENT_SIZE) {
     fclose(fp);
     data_file_idx = (data_file_idx % 5) + 1;
     if (data_file_idx == 1) {
@@ -453,9 +454,9 @@ int main() {
     cl2.LoadData(cl1.d_out, true);
     cl2.Convolve();
 
-    print_d_var3(cl2.d_out, BATCH_SIZE, cl2.output_c * cl2.output_h * cl2.output_w, false);
+    //print_d_var3(cl2.d_out, BATCH_SIZE, cl2.output_c * cl2.output_h * cl2.output_w, false);
     fcl0.LoadData(cl2.d_out, true);
-    print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons + 1, false);
+    //print_d_var3(fcl0.d_data, fcl0.input_batch_size, fcl0.input_neurons + 1, false);
     fcl0.ForwardProp();
     
     //return 0;
@@ -573,12 +574,12 @@ int main() {
       epoch++;
     }
     prev_read_imgs = read_imgs_global;
-    // results_file.open("shmlearn_results.txt", std::ofstream::out | std::ofstream::app);
-    // results_file << ts << " " << loss << "\n";
-    // results_file.close();
+    results_file.open("shmlearn_results.txt", std::ofstream::out | std::ofstream::app);
+    results_file << ts << " " << loss << "\n";
+    results_file.close();
     std::cout << std::endl;
     cnt++;
-    break;
+    //break;
   }
   results_file.open("shmlearn_results.txt", std::ofstream::out | std::ofstream::app);
   results_file << "Avg iter time = " << avg_dur << " seconds\n";
