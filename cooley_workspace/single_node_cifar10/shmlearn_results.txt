@@ -7821,3 +7821,4 @@
 0.106264 -nan
 0.106773 -nan
 0.107278 -nan
+Avg iter time = 0.597074 seconds
