@@ -34,6 +34,7 @@ inline std::string separator() {
 }
 
 
+
 #define DATA_SIDE 32 //Throws GPU setup error if above 257
 #define CHANNELS 3
 
@@ -358,15 +359,15 @@ int main() {
   read_imgs_local = 0;
   read_imgs_global = 0;
 
-  float base_lr = 0.001f, gamma = 0.4f, power = 0;
+  float base_lr = 0.005f, gamma = 0.4f, power = 0;
   float lr = base_lr * powf(1 + gamma, -power);
-  float reg = 0.004f;
+  float reg = 0.001f;
   float mom = 0.0f;
 
 
   ConvLayer cl0(cudnnHandle, cublasHandle, BATCH_SIZE, CHANNELS, DATA_SIDE, DATA_SIDE,
                 2, 2, 1, 1, 5, 5, 32, lr, mom, reg);
-  cl0.SetPoolingParams(CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING, 3, 3, 2, 2, 0, 0);
+  cl0.SetPoolingParams(CUDNN_POOLING_MAX, 3, 3, 2, 2, 0, 0);
   cl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
   cl0.is_input_layer = true;
 
@@ -386,11 +387,15 @@ int main() {
   fcl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
 
   FCLayer fcl1(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
-               fcl0.output_neurons, 32, false, lr, mom, reg);
+               fcl0.output_neurons, 10, true, lr, mom, reg);
   fcl1.SetActivationFunc(CUDNN_ACTIVATION_RELU);
 
-  FCLayer fcl2(cudnnHandle, cublasHandle, cudaProp, fcl1.input_batch_size,
-               fcl1.output_neurons, LABELS, true, lr, mom, reg);
+  // FCLayer fcl1(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
+  //              fcl0.output_neurons, 32, false, lr, mom, reg);
+  // fcl1.SetActivationFunc(CUDNN_ACTIVATION_RELU);
+
+  // FCLayer fcl2(cudnnHandle, cublasHandle, cudaProp, fcl1.input_batch_size,
+  //              fcl1.output_neurons, LABELS, true, lr, mom, reg);
 
   auto st = std::chrono::system_clock::now();
 
@@ -453,7 +458,7 @@ int main() {
     cl2.learning_rate = lr;
     fcl0.learning_rate = lr;
     fcl1.learning_rate = lr;
-    fcl2.learning_rate = lr;
+    // fcl2.learning_rate = lr;
 
 //------------------------TRAINING LOOP-----------------------//
 
@@ -471,19 +476,21 @@ int main() {
     fcl0.ForwardProp();
     fcl1.LoadData(fcl0.d_out, true);
     fcl1.ForwardProp();
-    fcl2.LoadData(fcl1.d_out, true);
-    fcl2.ForwardProp();
+    // fcl2.LoadData(fcl1.d_out, true);
+    // fcl2.ForwardProp();
 
     // Back-propagation
-    fcl2.ComputeSoftmaxGradients(y);
-    fcl1.ComputeLayerGradients(fcl2.d_prev_layer_derivatives);
+    // fcl2.ComputeSoftmaxGradients(y);
+    // fcl1.ComputeLayerGradients(fcl2.d_prev_layer_derivatives);
+
+    fcl1.ComputeSoftmaxGradients(y);
     fcl0.ComputeLayerGradients(fcl1.d_prev_layer_derivatives);
     cl2.ComputeLayerGradients(fcl0.d_prev_layer_derivatives);
     cl1.ComputeLayerGradients(cl2.d_prev_layer_derivatives);
     cl0.ComputeLayerGradients(cl1.d_prev_layer_derivatives);
 
     // Weight Updation
-    fcl2.UpdateWeights(fcl2.d_gradients);
+    // fcl2.UpdateWeights(fcl2.d_gradients);
     fcl1.UpdateWeights(fcl1.d_gradients);
     fcl0.UpdateWeights(fcl0.d_gradients);
     cl2.UpdateWeights(cl2.d_filter_gradients, cl2.d_bias_gradients);
@@ -495,7 +502,7 @@ int main() {
 //------------------------TRAINING LOOP-----------------------//
 
     t0 = std::chrono::high_resolution_clock::now();
-    cudaMemcpy(h_out, fcl2.d_out, sizeof(float) * BATCH_SIZE * LABELS, //CAUSING DELAY
+    cudaMemcpy(h_out, fcl1.d_out, sizeof(float) * BATCH_SIZE * LABELS, //CAUSING DELAY
                cudaMemcpyDeviceToHost);
     t1 = std::chrono::high_resolution_clock::now();
     dur2 = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(t1
@@ -522,10 +529,10 @@ int main() {
                                                  fcl0.weight_matrix_cols);
     fcl1_wt_sum = matrix_square_sum_exclude_bias(fcl1.d_weight_matrix, fcl1.weight_matrix_size,
                                                  fcl1.weight_matrix_cols);
-    fcl2_wt_sum = matrix_square_sum_exclude_bias(fcl2.d_weight_matrix, fcl2.weight_matrix_size,
-                                                 fcl2.weight_matrix_cols);
+    // fcl2_wt_sum = matrix_square_sum_exclude_bias(fcl2.d_weight_matrix, fcl2.weight_matrix_size,
+    //                                              fcl2.weight_matrix_cols);
     
-    wt_sum = cl0_wt_sum + cl1_wt_sum + cl2_wt_sum + fcl0_wt_sum + fcl1_wt_sum + fcl2_wt_sum;
+    wt_sum = cl0_wt_sum + cl1_wt_sum + cl2_wt_sum + fcl0_wt_sum + fcl1_wt_sum;// + fcl2_wt_sum;
     float wt_loss = (reg * 0.5f) * wt_sum;
     
     loss = my_loss + wt_loss;
