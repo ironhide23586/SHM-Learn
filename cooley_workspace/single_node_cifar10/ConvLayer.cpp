@@ -279,7 +279,7 @@ void ConvLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz) {
   float *h_tmp_wt_mat = (float *)malloc(sizeof(float) * wt_mat_sz);
   float wt_avg = 0.0;
   float coeff = 1.0 / std::sqrt(wt_mat_sz);
-  coeff = 1.0;
+  //coeff = 1.0;
   for (long int i = 0; i < wt_mat_sz; i++) {
     h_tmp_wt_mat[i] = GetRandomNum(weight_init_mean, weight_init_stddev)
                       * coeff;
@@ -289,11 +289,27 @@ void ConvLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz) {
   CudaSafeCall(cudaMemcpy(d_wt_mat, h_tmp_wt_mat,
                           sizeof(float) * wt_mat_sz,
                           cudaMemcpyHostToDevice));
-  //SubtractElemwise_Conv(d_wt_mat, wt_avg, wt_mat_sz);
+  SubtractElemwise_Conv(d_wt_mat, wt_avg, wt_mat_sz);
   print_d_var2(d_wt_mat, feature_maps, input_c * kernel_h * kernel_w, false);
   CudaCheckError();
   free(h_tmp_wt_mat);
 }
+
+// void ConvLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz) {
+//   float *h_tmp_wt_mat = (float *)malloc(sizeof(float) * wt_mat_sz);
+//   //float wt_avg = 0.0;
+//   for (long int i = 0; i < wt_mat_sz; i++) {
+//     h_tmp_wt_mat[i] = GetRandomNum(weight_init_mean, weight_init_stddev);
+//     //wt_avg += h_tmp_wt_mat[i];
+//   }
+//   //wt_avg /= wt_mat_sz;
+//   CudaSafeCall(cudaMemcpy(d_wt_mat, h_tmp_wt_mat,
+//                           sizeof(float) * wt_mat_sz,
+//                           cudaMemcpyHostToDevice));
+//   //SubtractElemwise_Conv(d_wt_mat, wt_avg, wt_mat_sz);
+//   //print_d_var2(d_wt_mat, feature_maps, input_c * kernel_h * kernel_w, false);
+//   free(h_tmp_wt_mat);
+// }
 
 float ConvLayer::GetRandomNum(float mean, float stddev) {
   static std::default_random_engine re;

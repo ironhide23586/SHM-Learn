@@ -378,7 +378,7 @@ void FCLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
   else {
     coeff = 1.0 / std::sqrt(weight_matrix_size - weight_matrix_cols);
   }
-  coeff = 1.0;
+  //coeff = 1.0;
   for (long int i = 0; i < weight_matrix_size; i++) {
     if (i < weight_matrix_cols)
       h_tmp_wt_mat[i] = bias_wt_val;
@@ -401,6 +401,31 @@ void FCLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
   CudaCheckError();
   free(h_tmp_wt_mat);
 }
+
+// void FCLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
+//                                       float bias_wt_val) {
+//   float *h_tmp_wt_mat = (float *)malloc(sizeof(float) * weight_matrix_size);
+//   float wt_avg = 0.0;
+//   for (long int i = 0; i < weight_matrix_size; i++) {
+//     if (i < weight_matrix_cols)
+//       h_tmp_wt_mat[i] = bias_wt_val;
+//     else {
+//       h_tmp_wt_mat[i] = GetRandomNum(weight_init_mean, weight_init_stddev);
+//       wt_avg += h_tmp_wt_mat[i];
+//     }
+//   }
+//   wt_avg /= (weight_matrix_size - weight_matrix_cols);
+//   for (long int i = 0; i < weight_matrix_cols; i++) {
+//     h_tmp_wt_mat[i] += wt_avg;
+//   }
+//   CudaSafeCall(cudaMemcpy(d_weight_matrix, h_tmp_wt_mat,
+//                           sizeof(float) * weight_matrix_size,
+//                           cudaMemcpyHostToDevice));
+//   SubtractElemwise(d_weight_matrix, wt_avg, weight_matrix_size);
+//   CudaCheckError();
+//   free(h_tmp_wt_mat);
+// }
+
 
 float FCLayer::GetRandomNum(float mean, float stddev) {
   static std::default_random_engine re;
