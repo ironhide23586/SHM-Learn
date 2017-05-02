@@ -370,37 +370,23 @@ void FCLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
                                       float bias_wt_val) {
   float *h_tmp_wt_mat = (float *)malloc(sizeof(float) * weight_matrix_size);
   float wt_avg = 0.0;
-  float den;
+  float coeff;
 
   if (activation_mode == CUDNN_ACTIVATION_RELU) {
-    den = std::sqrt((weight_matrix_size - weight_matrix_cols) / 2.0f);
+    coeff = std::sqrt(2.0 / (weight_matrix_size - weight_matrix_cols));
   }
   else {
-    den = std::sqrt(weight_matrix_size - weight_matrix_cols);
+    coeff = 1.0 / std::sqrt(weight_matrix_size - weight_matrix_cols);
   }
-  //den = std::sqrt(weight_matrix_size - weight_matrix_cols);
-
+  coeff = 1.0;
   for (long int i = 0; i < weight_matrix_size; i++) {
     if (i < weight_matrix_cols)
       h_tmp_wt_mat[i] = bias_wt_val;
     else {
       h_tmp_wt_mat[i] = GetRandomNum(weight_init_mean, weight_init_stddev)
-                        / den;
+                        * coeff;
       wt_avg += h_tmp_wt_mat[i];
     }
-  }
-
-  int p[20]={};
-  for (int i=weight_matrix_cols; i<weight_matrix_size; i++) {
-    float number = h_tmp_wt_mat[i];
-    if ((number>-1.0)&&(number<1.0)) ++p[int((number*100) + 10)];
-  }
-
-  std::cout << "normal_distribution (" << weight_init_mean << ", " << weight_init_stddev << "):" << std::endl;
-  
-  for (int i=0; i<20; ++i) {
-    std::cout << (i - 10) << "-" << (i - 9) << ": ";
-    std::cout << p[i]*100/20 << std::endl;
   }
 
   wt_avg /= (weight_matrix_size - weight_matrix_cols);

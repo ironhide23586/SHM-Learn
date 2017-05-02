@@ -26,6 +26,8 @@ using namespace std;
 void WeightMatrixRegularizeElemWiseConv(float *d_mat_in,
                                         float reg_inp_scalar, int d_mat_size);
 
+void SubtractElemwise_Conv(float *d_mat, float delta, int mat_size);
+
 enum regularizer_type_Conv { L1_Conv, L2_Conv };
 
 class ConvLayer {
@@ -42,9 +44,9 @@ public:
             int feature_maps_arg, float learning_rate_arg = 1e-2f,
             float momentum_arg = 1e-3f,
             float regularization_coeff_arg = 1e-2f,
-            regularizer_type_Conv regularizer_arg = L2_Conv,
             float weight_init_mean_arg = 0.0f,
-            float weight_init_stddev_arg = 0.5f);
+            float weight_init_stddev_arg = 0.5f,
+            regularizer_type_Conv regularizer_arg = L2_Conv);
   void LoadData(float *input_data_arg, bool input_data_on_gpu_arg);
   void SetPoolingParams(cudnnPoolingMode_t pool_mode_arg,
                         int pool_height_arg, int pool_width_arg,
@@ -119,7 +121,7 @@ public:
 private:
   void AllocateGPUMemory(void);
   void InitializeFilters(float mean, float stddev); //Temporary
-  float GetRandomNum();
+  float GetRandomNum(float mean, float stddev);
   void InitializeBiases(void); //Temporary
   void InitBackpropVars(void);
   void CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz);

@@ -16,7 +16,8 @@ __global__ void WeightMatrixRegularizeElemWiseConv_GPUKernel(float *d_mat_in,
 __global__ void SubtractElemwise_Conv_GPUKernel(float *d_mat, float delta,
                                            int total_size) {
   int idx = (blockDim.x * blockIdx.x + threadIdx.x);
-  d_mat[idx] -= (delta * (idx < total_size));
+  if (idx < total_size)
+    d_mat[idx] -= delta;
 }
 
 void SubtractElemwise_Conv(float *d_mat, float delta, int mat_size) {

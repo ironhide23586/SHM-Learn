@@ -1,0 +1,1 @@
+Timestamp = 0.0882301, Batch 1, Epoch = 1, Loss = -nan, Actual Loss = -nan, Wt loss = inf, C++_CUDA_GPU Avg iter time = 0.0882301

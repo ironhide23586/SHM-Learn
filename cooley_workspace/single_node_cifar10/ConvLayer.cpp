@@ -1,8 +1,40 @@
 #include "ConvLayer.h"
 //#include "Layers.h"
 
-void print_d_var2(float *d_v, int r, int c) {
-  bool print_elem = false;
+// void print_d_var2(float *d_v, int r, int c) {
+//   bool print_elem = false;
+//   std::cout << "*****************************" << std::endl;
+//   float *h_v = (float *)malloc(sizeof(float) * r * c);
+//   cudaMemcpy(h_v, d_v, sizeof(float) * r * c, cudaMemcpyDeviceToHost);
+//   float mini = h_v[0], maxi = h_v[0];
+//   int mini_idx = 0, maxi_idx = 0;
+//   float sum = 0.0;
+//   for (int i = 0; i < r; i++) {
+//     for (int j = 0; j < c; j++) {
+//       if (print_elem)
+//         printf("%f\t", h_v[j + i * c]);
+//       if (h_v[j + i * c] < mini) {
+//         mini = h_v[j + i * c];
+//         mini_idx = j + i * c;
+//       }
+//       if (h_v[j + i * c] > maxi) {
+//         maxi = h_v[j + i * c];
+//         maxi_idx = j + i * c;
+//       }
+//       sum += h_v[j + i * c];
+//     }
+//     if (print_elem)
+//       std::cout << std::endl;
+//   }
+//   std::cout << "Shape = (" << r << ", " << c << ")" << std::endl;
+//   std::cout << "Minimum at index " << mini_idx << " = " << mini << std::endl;
+//   std::cout << "Maximum at index " << maxi_idx << " = " << maxi << std::endl;
+//   std::cout << "Average of all elements = " << sum / (r * c) << std::endl;
+//   // std::cout << std::endl;
+//   free(h_v);
+// }
+
+void print_d_var2(float *d_v, int r, int c, bool print_elem = true) {
   std::cout << "*****************************" << std::endl;
   float *h_v = (float *)malloc(sizeof(float) * r * c);
   cudaMemcpy(h_v, d_v, sizeof(float) * r * c, cudaMemcpyDeviceToHost);
@@ -30,7 +62,6 @@ void print_d_var2(float *d_v, int r, int c) {
   std::cout << "Minimum at index " << mini_idx << " = " << mini << std::endl;
   std::cout << "Maximum at index " << maxi_idx << " = " << maxi << std::endl;
   std::cout << "Average of all elements = " << sum / (r * c) << std::endl;
-  // std::cout << std::endl;
   free(h_v);
 }
 
@@ -72,8 +103,9 @@ ConvLayer::ConvLayer(const cudnnHandle_t &cudnn_handle_arg,
                      int kernel_h_arg, int kernel_w_arg,
                      int feature_maps_arg, float learning_rate_arg,
                      float momentum_arg, float regularization_coeff_arg,
-                     regularizer_type_Conv regularizer_arg,
-                     float weight_init_mean_arg, float weight_init_stddev_arg)
+                     float weight_init_mean_arg,
+                     float weight_init_stddev_arg,
+                     regularizer_type_Conv regularizer_arg)
   : cudnn_handle(cudnn_handle_arg),
   cublas_handle(cublas_handle_arg),
   input_n(input_n_arg),
@@ -90,9 +122,9 @@ ConvLayer::ConvLayer(const cudnnHandle_t &cudnn_handle_arg,
   learning_rate(learning_rate_arg),
   momentum(momentum_arg),
   regularization_coeff(regularization_coeff_arg),
-  regularizer(regularizer_arg),
   weight_init_mean(weight_init_mean_arg),
-  weight_init_stddev(weight_init_stddev_arg) {
+  weight_init_stddev(weight_init_stddev_arg),
+  regularizer(regularizer_arg) {
   CudnnSafeCall(cudnnCreateTensorDescriptor(&dataTensor));
   CudnnSafeCall(cudnnSetTensor4dDescriptor(dataTensor, CUDNN_TENSOR_NCHW,
                                            CUDNN_DATA_FLOAT,
@@ -245,22 +277,28 @@ void ConvLayer::InitializeBiases() {
 
 void ConvLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz) {
   float *h_tmp_wt_mat = (float *)malloc(sizeof(float) * wt_mat_sz);
-  //float wt_avg = 0.0;
+  float wt_avg = 0.0;
+  float coeff = 1.0 / std::sqrt(wt_mat_sz);
+  coeff = 1.0;
   for (long int i = 0; i < wt_mat_sz; i++) {
-    h_tmp_wt_mat[i] = GetRandomNum();
-    //wt_avg += h_tmp_wt_mat[i];
+    h_tmp_wt_mat[i] = GetRandomNum(weight_init_mean, weight_init_stddev)
+                      * coeff;
+    wt_avg += h_tmp_wt_mat[i];
   }
-  //wt_avg /= wt_mat_sz;
+  wt_avg /= wt_mat_sz;
   CudaSafeCall(cudaMemcpy(d_wt_mat, h_tmp_wt_mat,
                           sizeof(float) * wt_mat_sz,
                           cudaMemcpyHostToDevice));
   //SubtractElemwise_Conv(d_wt_mat, wt_avg, wt_mat_sz);
+  print_d_var2(d_wt_mat, feature_maps, input_c * kernel_h * kernel_w, false);
+  CudaCheckError();
   free(h_tmp_wt_mat);
 }
 
-float ConvLayer::GetRandomNum() {
+float ConvLayer::GetRandomNum(float mean, float stddev) {
   static std::default_random_engine re;
-  static std::uniform_real_distribution<float> dist(-0.05f, 0.05f);
+  //static std::uniform_real_distribution<float> dist(-0.05f, 0.05f);
+  static std::normal_distribution<float> dist(mean, stddev);
   return dist(re);
 }
 

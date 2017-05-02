@@ -359,37 +359,41 @@ int main() {
   read_imgs_local = 0;
   read_imgs_global = 0;
 
-  float base_lr = 0.005f, gamma = 0.4f, power = 0;
+  float base_lr = 0.001f, gamma = 0.4f, power = 0;
   float lr = base_lr * powf(1 + gamma, -power);
-  float reg = 0.001f;
+  float reg = 0.004f;
   float mom = 0.0f;
 
 
   ConvLayer cl0(cudnnHandle, cublasHandle, BATCH_SIZE, CHANNELS, DATA_SIDE, DATA_SIDE,
-                2, 2, 1, 1, 5, 5, 32, lr, mom, reg);
+                2, 2, 1, 1, 5, 5, 32, lr, mom, reg, 0.0, 0.0001);
   cl0.SetPoolingParams(CUDNN_POOLING_MAX, 3, 3, 2, 2, 0, 0);
   cl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
   cl0.is_input_layer = true;
 
   ConvLayer cl1(cudnnHandle, cublasHandle, cl0.output_n, cl0.output_c,
-                cl0.output_h, cl0.output_w, 2, 2, 1, 1, 5, 5, 32, lr, mom, reg);
+                cl0.output_h, cl0.output_w, 2, 2, 1, 1, 5, 5, 32, lr,
+                mom, reg, 0.0, 0.01);
   cl1.SetPoolingParams(CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING, 3, 3, 2, 2, 0, 0);
   cl1.SetActivationFunc(CUDNN_ACTIVATION_RELU);
 
   ConvLayer cl2(cudnnHandle, cublasHandle, cl1.output_n, cl1.output_c,
-                cl1.output_h, cl1.output_w, 2, 2, 1, 1, 5, 5, 64, lr, mom, reg);
+                cl1.output_h, cl1.output_w, 2, 2, 1, 1, 5, 5, 64, lr,
+                mom, reg, 0.0, 0.01);
   cl2.SetPoolingParams(CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING, 3, 3, 2, 2, 0, 0);
   cl2.SetActivationFunc(CUDNN_ACTIVATION_RELU);
 
+  //return 0;
+
   FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, cl2.output_n,
                cl2.output_c * cl2.output_h * cl2.output_w,
-               64, false, lr, mom, reg, 0.0, 2.0f);
+               64, false, lr, mom, reg, 0.0, 0.1);
   fcl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
 
-  return 0;
+  
 
   FCLayer fcl1(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
-               fcl0.output_neurons, 10, true, lr, mom, reg);
+               fcl0.output_neurons, 10, true, lr, mom, reg, 0.0, 0.1);
   fcl1.SetActivationFunc(CUDNN_ACTIVATION_RELU);
 
   // FCLayer fcl1(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
@@ -538,6 +542,9 @@ int main() {
     float wt_loss = (reg * 0.5f) * wt_sum;
     float cl0_wt_loss = (reg * 0.5f) * cl0_wt_sum;
     float cl1_wt_loss = (reg * 0.5f) * cl1_wt_sum;
+    float cl2_wt_loss = (reg * 0.5f) * cl2_wt_sum;
+    float fcl0_wt_loss = (reg * 0.5f) * fcl0_wt_sum;
+    float fcl1_wt_loss = (reg * 0.5f) * fcl1_wt_sum;
     
     loss = my_loss + wt_loss;
     dur = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(train_end 
@@ -557,7 +564,12 @@ int main() {
       << ", Epoch = " << epoch << ", Loss = " << loss
       << ", Actual Loss = " << my_loss
       << ", Wt loss = " << wt_loss
-      << ", C++_CUDA_GPU Avg iter time = " << avg_dur << std::endl;
+      << ", cl0_loss = " << cl0_wt_loss
+      << ", cl1_loss = " << cl1_wt_loss
+      << ", cl2_loss = " << cl2_wt_loss
+      << ", fcl0_loss = " << fcl0_wt_loss
+      << ", fcl1_loss = " << fcl1_wt_loss << std::endl;
+      //<< ", C++_CUDA_GPU Avg iter time = " << avg_dur << std::endl;
 
     results_file.open("shmlearn_results.txt", std::ofstream::out | std::ofstream::app);
     results_file << "Timestamp = " << ts << ", Batch " << batch
