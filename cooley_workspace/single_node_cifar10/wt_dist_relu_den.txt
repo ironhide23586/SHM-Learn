@@ -1,0 +1,70 @@
+rm -rf *o convnet
+nvcc -c -std=c++11 -I/home/souham/.local/cuda-8.0/include -o ConvLayerCU.o ConvLayer.cu \
+	-gencode arch=compute_37,code=sm_37
+nvcc -c -std=c++11 -I/home/souham/.local/cuda-8.0/include -o FCLayerCU.o FCLayer.cu \
+	-gencode arch=compute_37,code=sm_37
+g++ -c -std=c++11 -L/home/souham/.local/cuda-8.0/lib64 -lcuda -lcudart -lcublas -lcurand \
+	-L/home/souham/.local/cuda-8.0/lib64 -lcudnn -o FCLayerCPP.o FCLayer.cpp
+g++ -c -std=c++11 -L/home/souham/.local/cuda-8.0/lib64 -lcuda -lcudart -lcublas -lcurand \
+	-L/home/souham/.local/cuda-8.0/lib64 -lcudnn -o ConvLayerCPP.o ConvLayer.cpp
+g++ main.cpp -std=c++11 -I/home/souham/.local/cuda-8.0/include \
+	-o convnet -L/home/souham/.local/cuda-8.0/lib64 -lcuda -lcudart -lcublas -lcurand \
+	-L/home/souham/.local/cuda-8.0/lib64 -lcudnn \
+	FCLayerCU.o FCLayerCPP.o ConvLayerCU.o ConvLayerCPP.o
+rm *.o
+Using GPU Device -> Tesla K80
+cuda dev reset -->0
+cublas handle create -->0
+cuDNN initialization -->0
+normal_distribution (0, 2):
+-10--9: 0
+-9--8: 0
+-8--7: 0
+-7--6: 0
+-6--5: 0
+-5--4: 15
+-4--3: 310
+-3--2: 4985
+-2--1: 25985
+-1-0: 60715
+0-1: 61210
+1-2: 25950
+2-3: 4785
+3-4: 350
+4-5: 15
+5-6: 0
+6-7: 0
+7-8: 0
+8-9: 0
+9-10: 0
+*****************************
+Shape = (577, 64)
+Minimum at index 8522 = -0.0417512
+Maximum at index 17021 = 0.0497941
+Average of all elements = 8.91589e-11
+normal_distribution (0, 2):
+-10--9: 0
+-9--8: 0
+-8--7: 0
+-7--6: 0
+-6--5: 50
+-5--4: 660
+-4--3: 3195
+-3--2: 12105
+-2--1: 29095
+-1-0: 46350
+0-1: 47295
+1-2: 29745
+2-3: 12100
+3-4: 3050
+4-5: 620
+5-6: 55
+6-7: 0
+7-8: 0
+8-9: 0
+9-10: 0
+*****************************
+Shape = (577, 64)
+Minimum at index 30311 = -0.0564219
+Maximum at index 26960 = 0.0569329
+Average of all elements = 1.85266e-10

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <math.h>
 
 #define GPU_WARP_DISPATCHERS 2
 #define GPU_WARP_SIZE 32
@@ -126,7 +127,7 @@ public:
 
 private:
   void AllocateGPUMemory();
-  void InitializeWeightMatrix(float mean, float stddev);
+  void InitializeWeightMatrix();
   void AddOneVector_CPU(float *d_mat, int rows, int cols); //Adds a column of 1's to input data matrix
   void AddOneVector_GPU(float *d_mat, int rows, int cols); //Adds a column of 1's to input data matrix
   void CustomWeightInitializer(float *d_wt_mat, int len, float val);

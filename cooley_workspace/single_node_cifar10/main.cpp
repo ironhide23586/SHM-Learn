@@ -383,7 +383,7 @@ int main() {
 
   FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, cl2.output_n,
                cl2.output_c * cl2.output_h * cl2.output_w,
-               64, false, lr, mom, reg, 0.0, 0.001);
+               64, false, lr, mom, reg, 0.0, 2.0f);
   fcl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
 
   return 0;

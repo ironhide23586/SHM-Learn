@@ -107,7 +107,7 @@ FCLayer::FCLayer(const cudnnHandle_t &cudnn_handle_arg,
   neg_one_scalar = -1.0f;
   threadBlockSize = GPU_WARP_DISPATCHERS * GPU_WARP_SIZE;
   AllocateGPUMemory();
-  InitializeWeightMatrix(weight_init_mean, weight_init_stddev);
+  InitializeWeightMatrix();
   activation_set = false;
   grads_initialized = false;
   d_data_allocated = false;
@@ -149,6 +149,7 @@ void FCLayer::SetActivationFunc(cudnnActivationMode_t activation_mode_arg,
   CudaSafeCall(cudaMalloc((void **)&d_out_xw_act,
                           sizeof(float) * input_batch_size
                           * (output_neurons + 1)));
+  InitializeWeightMatrix();
   relu_activation_clip = relu_clip;
 }
 
@@ -303,7 +304,7 @@ void FCLayer::AllocateGPUMemory() {
   }
 }
 
-void FCLayer::InitializeWeightMatrix(float mean, float stddev) { //Bias set to 0
+void FCLayer::InitializeWeightMatrix() { //Bias set to 0
   CustomWeightInitializer(d_weight_matrix, weight_matrix_size, 0.0f);
   CudaCheckError();
 }
@@ -369,11 +370,22 @@ void FCLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
                                       float bias_wt_val) {
   float *h_tmp_wt_mat = (float *)malloc(sizeof(float) * weight_matrix_size);
   float wt_avg = 0.0;
+  float den;
+
+  if (activation_mode == CUDNN_ACTIVATION_RELU) {
+    den = std::sqrt((weight_matrix_size - weight_matrix_cols) / 2.0f);
+  }
+  else {
+    den = std::sqrt(weight_matrix_size - weight_matrix_cols);
+  }
+  //den = std::sqrt(weight_matrix_size - weight_matrix_cols);
+
   for (long int i = 0; i < weight_matrix_size; i++) {
     if (i < weight_matrix_cols)
       h_tmp_wt_mat[i] = bias_wt_val;
     else {
-      h_tmp_wt_mat[i] = GetRandomNum(weight_init_mean, weight_init_stddev);
+      h_tmp_wt_mat[i] = GetRandomNum(weight_init_mean, weight_init_stddev)
+                        / den;
       wt_avg += h_tmp_wt_mat[i];
     }
   }
@@ -381,7 +393,7 @@ void FCLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
   int p[20]={};
   for (int i=weight_matrix_cols; i<weight_matrix_size; i++) {
     float number = h_tmp_wt_mat[i];
-    if ((number>-1.0)&&(number<1.0)) ++p[int((number*10) + 10)];
+    if ((number>-1.0)&&(number<1.0)) ++p[int((number*100) + 10)];
   }
 
   std::cout << "normal_distribution (" << weight_init_mean << ", " << weight_init_stddev << "):" << std::endl;
