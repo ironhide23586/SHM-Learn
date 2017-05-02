@@ -81,9 +81,9 @@ FCLayer::FCLayer(const cudnnHandle_t &cudnn_handle_arg,
                  float learning_rate_arg,
                  float momentum_arg,
                  float regularization_coeff_arg,
-                 regularizer_type_FC regularizer_arg,
                  float weight_init_mean_arg,
-                 float weight_init_stddev_arg)
+                 float weight_init_stddev_arg,
+                 regularizer_type_FC regularizer_arg)
   : cudnn_handle(cudnn_handle_arg),
   cublas_handle(cublas_handle_arg),
   cuda_device_prop(cuda_device_prop_arg),
@@ -94,9 +94,9 @@ FCLayer::FCLayer(const cudnnHandle_t &cudnn_handle_arg,
   learning_rate(learning_rate_arg),
   momentum(momentum_arg),
   regularization_coeff(regularization_coeff_arg),
-  regularizer(regularizer_arg),
   weight_init_mean(weight_init_mean_arg),
-  weight_init_stddev(weight_init_stddev_arg) {
+  weight_init_stddev(weight_init_stddev_arg),
+  regularizer(regularizer_arg) {
   is_input_layer = false;
   weight_matrix_size = (input_neurons + 1) * output_neurons;
   input_data_matrix_size = input_batch_size * (input_neurons + 1);
@@ -373,10 +373,24 @@ void FCLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
     if (i < weight_matrix_cols)
       h_tmp_wt_mat[i] = bias_wt_val;
     else {
-      h_tmp_wt_mat[i] = GetRandomNum();
+      h_tmp_wt_mat[i] = GetRandomNum(weight_init_mean, weight_init_stddev);
       wt_avg += h_tmp_wt_mat[i];
     }
   }
+
+  int p[20]={};
+  for (int i=weight_matrix_cols; i<weight_matrix_size; i++) {
+    float number = h_tmp_wt_mat[i];
+    if ((number>-1.0)&&(number<1.0)) ++p[int((number*10) + 10)];
+  }
+
+  std::cout << "normal_distribution (" << weight_init_mean << ", " << weight_init_stddev << "):" << std::endl;
+  
+  for (int i=0; i<20; ++i) {
+    std::cout << (i - 10) << "-" << (i - 9) << ": ";
+    std::cout << p[i]*100/20 << std::endl;
+  }
+
   wt_avg /= (weight_matrix_size - weight_matrix_cols);
   for (long int i = 0; i < weight_matrix_cols; i++) {
     h_tmp_wt_mat[i] += wt_avg;
@@ -385,13 +399,15 @@ void FCLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
                           sizeof(float) * weight_matrix_size,
                           cudaMemcpyHostToDevice));
   SubtractElemwise(d_weight_matrix, wt_avg, weight_matrix_size);
+  print_d_var(d_weight_matrix, weight_matrix_rows, weight_matrix_cols, false);
   CudaCheckError();
   free(h_tmp_wt_mat);
 }
 
-float FCLayer::GetRandomNum() {
+float FCLayer::GetRandomNum(float mean, float stddev) {
   static std::default_random_engine re;
-  static std::uniform_real_distribution<float> dist(-0.05f, 0.05f);
+  //static std::uniform_real_distribution<float> dist(-0.05f, 0.05f);
+  static std::normal_distribution<float> dist(mean, stddev);
   return dist(re);
 }
 

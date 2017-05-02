@@ -383,8 +383,10 @@ int main() {
 
   FCLayer fcl0(cudnnHandle, cublasHandle, cudaProp, cl2.output_n,
                cl2.output_c * cl2.output_h * cl2.output_w,
-               64, false, lr, mom, reg);
+               64, false, lr, mom, reg, 0.0, 0.001);
   fcl0.SetActivationFunc(CUDNN_ACTIVATION_RELU);
+
+  return 0;
 
   FCLayer fcl1(cudnnHandle, cublasHandle, cudaProp, fcl0.input_batch_size,
                fcl0.output_neurons, 10, true, lr, mom, reg);
@@ -534,6 +536,8 @@ int main() {
     
     wt_sum = cl0_wt_sum + cl1_wt_sum + cl2_wt_sum + fcl0_wt_sum + fcl1_wt_sum;// + fcl2_wt_sum;
     float wt_loss = (reg * 0.5f) * wt_sum;
+    float cl0_wt_loss = (reg * 0.5f) * cl0_wt_sum;
+    float cl1_wt_loss = (reg * 0.5f) * cl1_wt_sum;
     
     loss = my_loss + wt_loss;
     dur = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(train_end 

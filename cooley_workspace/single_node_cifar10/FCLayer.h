@@ -64,9 +64,9 @@ public:
           float learning_rate_arg = 1e-2f,
           float momentum_arg = 1e-3f,
           float regularization_coeff_arg = 1e-3f,
-          regularizer_type_FC regularizer_arg = L2,
           float weight_init_mean_arg = 0.0f,
-          float weight_init_stddev_arg = 1.0f);
+          float weight_init_stddev_arg = 0.1f,
+          regularizer_type_FC regularizer_arg = L2);
   void LoadData(float *input_data_arg, bool input_data_on_gpu_arg);
 
   // This automatically applies softmax if is_softmax_layer is true
@@ -130,7 +130,7 @@ private:
   void AddOneVector_CPU(float *d_mat, int rows, int cols); //Adds a column of 1's to input data matrix
   void AddOneVector_GPU(float *d_mat, int rows, int cols); //Adds a column of 1's to input data matrix
   void CustomWeightInitializer(float *d_wt_mat, int len, float val);
-  float GetRandomNum();
+  float GetRandomNum(float mean, float stddev);
   void SumColumns(float *d_mat, float *d_out, int rows, int cols);
 
 

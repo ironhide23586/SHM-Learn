@@ -1,0 +1,23 @@
+Using GPU Device -> Tesla K80
+cuda dev reset -->0
+cublas handle create -->0
+cuDNN initialization -->0
+*****************************
+Shape = (5, 576)
+Minimum at index 6 = 0
+Maximum at index 1093 = 0.107966
+Average of all elements = 0.00912338
+*****************************
+Shape = (5, 577)
+Minimum at index 7 = 0
+Maximum at index 0 = 1
+Average of all elements = 0.0108407
++=+=+=
++=+=+=
++=+=+=
+5, 64, 3, 3
+5, 32, 7, 7
+5, 32, 15, 15
+
+Batch 1 Epoch = 1 Loss = 2.30252 C++_CUDA_GPU Avg iter time = 0.597074
+
