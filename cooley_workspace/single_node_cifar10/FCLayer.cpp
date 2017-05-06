@@ -378,7 +378,7 @@ void FCLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
   else {
     coeff = 1.0 / std::sqrt(weight_matrix_size - weight_matrix_cols);
   }
-  //coeff = 1.0;
+  coeff = 1.0;
   for (long int i = 0; i < weight_matrix_size; i++) {
     if (i < weight_matrix_cols)
       h_tmp_wt_mat[i] = bias_wt_val;
@@ -397,7 +397,7 @@ void FCLayer::CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz,
                           sizeof(float) * weight_matrix_size,
                           cudaMemcpyHostToDevice));
   SubtractElemwise(d_weight_matrix, wt_avg, weight_matrix_size);
-  print_d_var(d_weight_matrix, weight_matrix_rows, weight_matrix_cols, false);
+  //print_d_var(d_weight_matrix, weight_matrix_rows, weight_matrix_cols, false);
   CudaCheckError();
   free(h_tmp_wt_mat);
 }
