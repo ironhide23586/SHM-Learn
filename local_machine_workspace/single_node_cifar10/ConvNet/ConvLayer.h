@@ -1,13 +1,26 @@
 #pragma once
+
+#include <cuda.h>
 #include <cudnn.h>
 #include <cublas.h>
 #include <curand.h>
-//#include <curand_kernel.h>
-#include <vector>
 
 #include <iostream>
 #include <random>
-//#include "GlobalInclude.h"
+#include <chrono>
+
+#define GPU_WARP_DISPATCHERS 2
+#define GPU_WARP_SIZE 32
+
+#define __cudaSafeCall __cudaSafeCall_Conv
+#define __cudnnSafeCall __cudnnSafeCall_Conv
+#define __cublasSafeCall __cublasSafeCall_Conv
+#define __cudaCheckError __cudaCheckError_Conv
+#define cublasGetErrorString cublasGetErrorString_Conv
+
+#include "err_check.h"
+
+using namespace std;
 
 // Computes W - lambda * W^2
 void WeightMatrixRegularizeElemWiseConv(float *d_mat_in,
@@ -31,9 +44,9 @@ public:
             int feature_maps_arg, float learning_rate_arg = 1e-2f,
             float momentum_arg = 1e-3f,
             float regularization_coeff_arg = 1e-2f,
-            regularizer_type_Conv regularizer_arg = L2_Conv,
             float weight_init_mean_arg = 0.0f,
-            float weight_init_stddev_arg = 0.5f);
+            float weight_init_stddev_arg = 0.5f,
+            regularizer_type_Conv regularizer_arg = L2_Conv);
   void LoadData(float *input_data_arg, bool input_data_on_gpu_arg);
   void SetPoolingParams(cudnnPoolingMode_t pool_mode_arg,
                         int pool_height_arg, int pool_width_arg,
@@ -98,12 +111,17 @@ public:
   cudnnHandle_t cudnn_handle;
   cublasHandle_t cublas_handle;
 
+  cudaError_t cudaError_stat;
+  curandStatus_t curandStatus_stat;
+  cudnnStatus_t cudnnStatus_stat;
+  cublasStatus_t cublasStatus_stat;
+
   ~ConvLayer();
 
 private:
   void AllocateGPUMemory(void);
   void InitializeFilters(float mean, float stddev); //Temporary
-  float GetRandomNum();
+  float GetRandomNum(float mean, float stddev);
   void InitializeBiases(void); //Temporary
   void InitBackpropVars(void);
   void CustomWeightInitializer(float *d_wt_mat, int wt_mat_sz);
@@ -136,9 +154,4 @@ private:
   cudnnPoolingDescriptor_t poolDesc;
   cudnnPoolingMode_t pool_mode;
   cudnnActivationDescriptor_t cudnn_activation_desc;
-
-  cudaError_t cudaError_stat;
-  curandStatus_t curandStatus_stat;
-  cudnnStatus_t cudnnStatus_stat;
-  cublasStatus_t cublasStatus_stat;
 };

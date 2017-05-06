@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConvLayer.h" />
+    <ClInclude Include="err_check.h" />
     <ClInclude Include="FCLayer.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,43 +1,36 @@
 #include "FCLayer.h"
-//#include <cuda.h>
-//#include "cuda_runtime.h"
-//#include "device_launch_parameters.h"
 #include "math_functions.h"
-#include <cmath>
 
-#define GPU_WARP_DISPATCHERS 2
-#define GPU_WARP_SIZE 32
-
-void print_d_var2(float *d_v, int r, int c, bool print_elem = true) {
-  std::cout << "*****************************" << std::endl;
-  float *h_v = (float *)malloc(sizeof(float) * r * c);
-  cudaMemcpy(h_v, d_v, sizeof(float) * r * c, cudaMemcpyDeviceToHost);
-  float mini = h_v[0], maxi = h_v[0];
-  int mini_idx = 0, maxi_idx = 0;
-  float sum = 0.0;
-  for (int i = 0; i < r; i++) {
-    for (int j = 0; j < c; j++) {
-      if (print_elem)
-        printf("%f\t", h_v[j + i * c]);
-      if (h_v[j + i * c] < mini) {
-        mini = h_v[j + i * c];
-        mini_idx = j + i * c;
-      }
-      if (h_v[j + i * c] > maxi) {
-        maxi = h_v[j + i * c];
-        maxi_idx = j + i * c;
-      }
-      sum += h_v[j + i * c];
-    }
-    if (print_elem)
-      std::cout << std::endl;
-  }
-  std::cout << "Shape = (" << r << ", " << c << ")" << std::endl;
-  std::cout << "Minimum at index " << mini_idx << " = " << mini << std::endl;
-  std::cout << "Maximum at index " << maxi_idx << " = " << maxi << std::endl;
-  std::cout << "Average of all elements = " << sum / (r * c) << std::endl;
-  free(h_v);
-}
+// void print_d_var2(float *d_v, int r, int c, bool print_elem = true) {
+//   std::cout << "*****************************" << std::endl;
+//   float *h_v = (float *)malloc(sizeof(float) * r * c);
+//   cudaMemcpy(h_v, d_v, sizeof(float) * r * c, cudaMemcpyDeviceToHost);
+//   float mini = h_v[0], maxi = h_v[0];
+//   int mini_idx = 0, maxi_idx = 0;
+//   float sum = 0.0;
+//   for (int i = 0; i < r; i++) {
+//     for (int j = 0; j < c; j++) {
+//       if (print_elem)
+//         printf("%f\t", h_v[j + i * c]);
+//       if (h_v[j + i * c] < mini) {
+//         mini = h_v[j + i * c];
+//         mini_idx = j + i * c;
+//       }
+//       if (h_v[j + i * c] > maxi) {
+//         maxi = h_v[j + i * c];
+//         maxi_idx = j + i * c;
+//       }
+//       sum += h_v[j + i * c];
+//     }
+//     if (print_elem)
+//       std::cout << std::endl;
+//   }
+//   std::cout << "Shape = (" << r << ", " << c << ")" << std::endl;
+//   std::cout << "Minimum at index " << mini_idx << " = " << mini << std::endl;
+//   std::cout << "Maximum at index " << maxi_idx << " = " << maxi << std::endl;
+//   std::cout << "Average of all elements = " << sum / (r * c) << std::endl;
+//   free(h_v);
+// }
 
 int my_ceilf_division_FCLayer(float a, float b) {
   return 1 + ((a - 1) / b);
@@ -182,7 +175,8 @@ __global__ void ReplaceVal_GPUKernel(float *d_mat, int total_size,
 __global__ void SubtractElemwise_GPUKernel(float *d_mat, float delta,
                                            int total_size) {
   int idx = (blockDim.x * blockIdx.x + threadIdx.x);
-  d_mat[idx] -= (delta * (idx < total_size));
+  if (idx < total_size)
+    d_mat[idx] -= delta;
 }
 
 __global__ void Replace2Vals_GPUKernel(float *d_mat, int total_size,
@@ -197,9 +191,9 @@ __global__ void Replace2Vals_GPUKernel(float *d_mat, int total_size,
 
 __global__ void ShiftRight_PopulateHelper_GPUKernel(float *d_mat,
                                                     float *d_helper,
-                                                    int total_size,
+                                                    int damaged_elems,
                                                     int rows, int cols) {
-  int idx = (blockDim.x * blockIdx.x + threadIdx.x) % total_size;
+  int idx = (blockDim.x * blockIdx.x + threadIdx.x) % damaged_elems;
   int i = floor(0.5f * (sqrt((float)1 + 8 * idx) - 1.0f)) + 1;
   int j = idx - i * (i - 1) / 2;
   int read_idx = j + i * cols;
@@ -252,7 +246,7 @@ void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
   int thread_chunk_size = my_ceilf_division_FCLayer(cols, max_threadblock_size);
   ShiftRight_PopulateHelper_GPUKernel << < num_threadblocks,
     threadblock_size >> >
-    (d_mat, d_helper, org_size,
+    (d_mat, d_helper, reqd_threads,
      rows, cols);
   reqd_threads = my_ceilf_division_FCLayer(cols, thread_chunk_size);
   threadblock_size = my_ceilf_division_FCLayer(reqd_threads, GPU_WARP_SIZE)
@@ -267,9 +261,9 @@ void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
 
 __global__ void ShiftLeft_PopulateHelper_GPUKernel(float *d_mat,
                                                    float *d_helper,
-                                                   int total_size,
+                                                   int damaged_elems,
                                                    int rows, int cols) {
-  int idx = (blockDim.x * blockIdx.x + threadIdx.x) % total_size;
+  int idx = (blockDim.x * blockIdx.x + threadIdx.x) % damaged_elems;
   int i = floor(0.5f * (sqrt((float)1 + 8 * idx) - 1.0f));
   int j = cols - (idx - i * (i - 1) / 2) - 1 + i;
   int read_idx = j + i * cols;
@@ -326,7 +320,7 @@ void ReAlignMemory_ShiftLeft(float *d_mat, float *d_helper,
   int thread_chunk_size = my_ceilf_division_FCLayer((cols - 1), max_threadblock_size);
   ShiftLeft_PopulateHelper_GPUKernel << < num_threadblocks,
     threadblock_size >> >
-    (d_mat, d_helper, org_size,
+    (d_mat, d_helper, reqd_threads,
      rows, cols);
   reqd_threads = my_ceilf_division_FCLayer((cols - 1), thread_chunk_size);
   threadblock_size = my_ceilf_division_FCLayer(reqd_threads, GPU_WARP_SIZE)

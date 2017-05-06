@@ -32,6 +32,9 @@
     <ClInclude Include="ConvLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="err_check.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="FCLayer.cu">
