@@ -1,0 +1,75 @@
+layer {
+  name: "data"
+  type: "Input"
+  top: "data"
+  include {
+    phase: TRAIN
+  }
+  input_param { shape: { dim: 128 dim: 784 } }
+}
+
+layer {
+  name: "labels"
+  type: "Input"
+  top: "labels"
+  include {
+    phase: TRAIN
+  }
+  input_param { shape: { dim: 128 } }
+}
+
+layer {
+  name: "ip0"
+  type: "InnerProduct"
+  bottom: "data"
+  top: "ip0"
+  inner_product_param {
+    num_output: 64
+    weight_filler {
+      type: "uniform"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "sigmoid0"
+  type: "Sigmoid"
+  bottom: "ip0"
+  top: "ip0"
+}
+
+layer {
+  name: "ip1"
+  type: "InnerProduct"
+  bottom: "ip0"
+  top: "ip1"
+  inner_product_param {
+    num_output: 10
+    weight_filler {
+      type: "uniform"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer {
+	name: "prob"
+	type: "Softmax"
+	bottom: "ip1"
+	top: "prob"
+	include {
+		phase: TRAIN
+  }
+}
+
+layer {
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "ip1"
+  bottom: "labels"
+  top: "loss"
+}

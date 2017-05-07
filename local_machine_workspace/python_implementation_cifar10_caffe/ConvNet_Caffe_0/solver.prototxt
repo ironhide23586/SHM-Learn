@@ -1,0 +1,15 @@
+# reduce the learning rate after 8 epochs (4000 iters) by a factor of 10
+
+# The train/test net protocol buffer definition
+net: "conv.prototxt"
+# The base learning rate, momentum and the weight decay of the network.
+base_lr: 0.001
+momentum: 0.9
+weight_decay: 0.004
+# The learning rate policy
+lr_policy: "fixed"
+# The maximum number of iterations
+max_iter: 10000
+# solver mode: CPU or GPU
+solver_mode: GPU
+type: "SGD"

@@ -1,0 +1,13 @@
+# The train/test net protocol buffer definition
+net: "net_mnist.prototxt"
+# The base learning rate, momentum and the weight decay of the network.
+base_lr: 0.05
+momentum: 0.0
+weight_decay: 0.01
+# The learning rate policy
+lr_policy: "fixed"
+# The maximum number of iterations
+max_iter: 10000
+# solver mode: CPU or GPU
+solver_mode: GPU
+type: "SGD"

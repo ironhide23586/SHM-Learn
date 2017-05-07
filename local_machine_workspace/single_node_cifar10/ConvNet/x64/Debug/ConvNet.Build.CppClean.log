@@ -1,8 +1,8 @@
 d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\vc140.pdb
 d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\vc140.idb
-d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\main.obj
-d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\fclayer.obj
 d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\convlayer.obj
+d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\fclayer.obj
+d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\main.obj
 d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\x64\debug\convnet.ilk
 d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\x64\debug\convnet.exe
 d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\x64\debug\convnet.pdb
@@ -10,9 +10,6 @@ d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\con
 d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\fclayer.cu.cache
 d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\convlayer.cu.obj
 d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\fclayer.cu.obj
-d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\convlayer.obj.enc
-d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\fclayer.obj.enc
-d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\main.obj.enc
 d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\convnet.tlog\cl.command.1.tlog
 d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\convnet.tlog\cl.read.1.tlog
 d:\users\monst\desktop\shm-learn\local_machine_workspace\single_node_cifar10\convnet\x64\debug\convnet.tlog\cl.write.1.tlog

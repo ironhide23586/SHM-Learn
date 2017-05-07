@@ -186,29 +186,9 @@ void readBatch_cifar10_lim_v2(FILE *fp, float *h_imgs, float *h_lbls, unsigned c
   int lbl;
   memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
 
-  //FIX THISSSS!!!!!!!!!! >:@
-
-  // if ((read_imgs_local + BATCH_SIZE) > EPOCH_COMPONENT_SIZE) {
-  //   fclose(fp);
-  //   data_file_idx = (data_file_idx % 5) + 1;
-  //   if (data_file_idx == 1) {
-  //     read_imgs_global = 0;
-  //   }
-  //   std::string my_train_file = "cifar-10-binary" + separator() + "cifar-10-batches-bin" + separator()
-  //     + "data_batch_"
-  //     + std::to_string(data_file_idx) + ".bin";
-  //   std::cout << my_train_file << std::endl;
-  //   fp = fopen(my_train_file.c_str(), "r");
-  //   if (fp == NULL) {
-  //     std::cout << "File read error :(" << std::endl;
-  //     return;
-  //   }
-  //   read_imgs_local = 0;
-  //   //curr_example = 0;
-  // }
-  std::cout << "read_imgs_local = " << read_imgs_local << ", read_imgs_global = " << read_imgs_global << std::endl;
+  //std::cout << "read_imgs_local = " << read_imgs_local << ", read_imgs_global = " << read_imgs_global << std::endl;
   auto lsz = fread(buff, sizeof(unsigned char), batch_bytes, fp);
-  std::cout << "Read next batch; read = " << lsz << " desired = " << batch_bytes << std::endl;
+  //std::cout << "Read next batch; read = " << lsz << " desired = " << batch_bytes << std::endl;
   //memset(h_lbls, 0, sizeof(float) * BATCH_SIZE * LABELS);
 
   for (int i = 0; i < BATCH_SIZE; i++) {
@@ -359,7 +339,7 @@ int main() {
   read_imgs_local = 0;
   read_imgs_global = 0;
 
-  float base_lr = 0.001f, gamma = 0.4f, power = 0;
+  float base_lr = 0.01f, gamma = 0.4f, power = 0;
   float lr = base_lr * powf(1 + gamma, -power);
   float reg = 0.004f;
   float mom = 0.9f;
@@ -476,17 +456,17 @@ int main() {
     cl0.LoadData(x, true);
     cl0.Convolve();
 
-    print_d_var3(cl0.d_out, BATCH_SIZE, cl0.output_c * cl0.output_h * cl0.output_w, false);
+    //print_d_var3(cl0.d_out, BATCH_SIZE, cl0.output_c * cl0.output_h * cl0.output_w, false);
 
     cl1.LoadData(cl0.d_out, true);
     cl1.Convolve();
 
-    print_d_var3(cl1.d_out, BATCH_SIZE, cl1.output_c * cl1.output_h * cl1.output_w, false);
+    //print_d_var3(cl1.d_out, BATCH_SIZE, cl1.output_c * cl1.output_h * cl1.output_w, false);
 
     cl2.LoadData(cl1.d_out, true);
     cl2.Convolve();
     
-    print_d_var3(cl2.d_out, BATCH_SIZE, cl2.output_c * cl2.output_h * cl2.output_w, false);
+    //print_d_var3(cl2.d_out, BATCH_SIZE, cl2.output_c * cl2.output_h * cl2.output_w, false);
     
     fcl0.LoadData(cl2.d_out, true);
     fcl0.ForwardProp();
@@ -495,8 +475,7 @@ int main() {
     // fcl2.LoadData(fcl1.d_out, true);
     // fcl2.ForwardProp();
 
-    print_d_var3(fcl0.d_out, fcl0.input_batch_size, fcl0.output_neurons, false);
-    return 0;
+    //print_d_var3(fcl0.d_out, fcl0.input_batch_size, fcl0.output_neurons, false);
 
     // Back-propagation
     // fcl2.ComputeSoftmaxGradients(y);
