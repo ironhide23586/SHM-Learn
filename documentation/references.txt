@@ -1,0 +1,1 @@
+1. https://papers.nips.cc/paper/4687-large-scale-distributed-deep-networks.pdf
