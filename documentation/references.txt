@@ -1,1 +1,4 @@
 1. https://papers.nips.cc/paper/4687-large-scale-distributed-deep-networks.pdf
+2. https://arxiv.org/pdf/1611.04581v1.pdf
+3. SHM-Learn (single node report)
+4. http://on-demand.gputechconf.com/gtc-express/2011/presentations/cuda_webinars_WarpsAndOccupancy.pdf
