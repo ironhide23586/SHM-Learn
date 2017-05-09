@@ -2,3 +2,7 @@
 2. https://arxiv.org/pdf/1611.04581v1.pdf
 3. SHM-Learn (single node report)
 4. http://on-demand.gputechconf.com/gtc-express/2011/presentations/cuda_webinars_WarpsAndOccupancy.pdf
+5. https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks
+6. http://mvapich.cse.ohio-state.edu/
+7. http://mpitutorial.com/tutorials/mpi-broadcast-and-collective-communication/
+8. https://github.com/NVIDIA/nccl
