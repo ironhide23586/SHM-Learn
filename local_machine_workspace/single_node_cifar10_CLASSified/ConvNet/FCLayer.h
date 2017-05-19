@@ -34,8 +34,8 @@ void ReAlignMemory_ShiftRight(float *d_mat, float *d_helper,
                             int rows, int cols, int max_threadblock_size);
 
 void ReluBackprop(float *d_backprop_derivatives, float *d_out_xw_act,
-                float *d_fwd_layer_derivatives, float relu_clip,
-                int derivative_matrix_size);
+                  float *d_fwd_layer_derivatives, float relu_clip,
+                  int derivative_matrix_size);
 
 void SigmoidBackprop(float *d_backprop_derivatives, float *d_out_xw_act,
                    float *d_fwd_layer_derivatives,
@@ -49,7 +49,7 @@ void WeightMatrixRegularizeElemWise(float *d_mat_in, int d_mat_cols,
                                     float reg_inp_scalar, int d_mat_size);
 
 void FloatGPUMemset(float *d_array_arg,
-                  int array_size_arg, float val);
+                    int array_size_arg, float val);
 
 enum regularizer_type_FC { L1, L2 };
 

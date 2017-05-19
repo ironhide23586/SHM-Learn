@@ -27,6 +27,9 @@
     <ClCompile Include="Layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SHMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FCLayer.h">
@@ -41,12 +44,18 @@
     <ClInclude Include="Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SHMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="FCLayer.cu">
       <Filter>Source Files</Filter>
     </CudaCompile>
     <CudaCompile Include="ConvLayer.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="SHMatrix.cu">
       <Filter>Source Files</Filter>
     </CudaCompile>
   </ItemGroup>

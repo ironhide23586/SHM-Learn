@@ -165,20 +165,13 @@ void FCLayer::ComputeSoftmaxGradients(float *h_pinned_labels) {
     grads_initialized = true;
   }
   d_labels = h_pinned_labels;
-
-  //print_d_var(d_labels, input_batch_size, output_neurons);
-  //print_d_var(d_out, input_batch_size, output_neurons);
   CublasSafeCall(cublasSgeam(cublas_handle, CUBLAS_OP_N, CUBLAS_OP_N,
                              output_neurons, input_batch_size,
                              &softmax_grad_coeff, d_out, output_neurons,
                              &neg_softmax_grad_coeff, d_labels,
                              output_neurons, d_out_minus_labels,
                              output_neurons));
-  //print_d_var(d_out_minus_labels, input_batch_size, output_neurons);
-  //auto st = std::chrono::high_resolution_clock::now();
   ComputeLayerGradients(d_out_minus_labels);
-  //auto et = std::chrono::high_resolution_clock::now();
-  //float dur = (float)std::chrono::duration_cast<std::chrono::nanoseconds>(et - st).count() * 1e-9f;
 }
 
 void FCLayer::ComputeLayerGradients(float *d_backprop_derivatives) {
@@ -408,7 +401,7 @@ void FCLayer::SumColumns(float *d_mat, float *d_out, int rows, int cols) {
   float *d_onevect;
   CudaSafeCall(cudaMalloc((void **)&d_onevect,
                           sizeof(float) * rows));
-  FloatGPUMemset(d_onevect, rows, 1.0f);
+  FloatCUDAMemset(d_onevect, rows, 1.0f);
   CudaCheckError();
   CublasSafeCall(cublasSgemv_v2(cublas_handle, CUBLAS_OP_N,
                                 cols, rows,

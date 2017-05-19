@@ -173,16 +173,19 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="FCLayer.cpp" />
+    <ClCompile Include="SHMatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConvLayer.h" />
     <ClInclude Include="err_check.h" />
     <ClInclude Include="FCLayer.h" />
     <ClInclude Include="Layer.h" />
+    <ClInclude Include="SHMatrix.h" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="ConvLayer.cu" />
     <CudaCompile Include="FCLayer.cu" />
+    <CudaCompile Include="SHMatrix.cu" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data_batch_1.bin" />
