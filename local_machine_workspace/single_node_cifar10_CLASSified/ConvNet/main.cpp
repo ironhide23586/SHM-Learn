@@ -248,6 +248,8 @@ int my_floorf_division(float a, float b) {
 //  return train_file.c_str();
 //}
 
+//#include "SHMatrix.h"
+
 int main() {
   cudaError_t cudaError_stat;
   curandStatus_t curandStatus_stat;
@@ -261,24 +263,27 @@ int main() {
   cudaDeviceProp cudaProp;
   cudaGetDeviceProperties(&cudaProp, 0);
   std::cout << "Using GPU Device -> " << cudaProp.name << std::endl;
-  cudaError_stat = cudaDeviceReset();
-  std::cout << "cuda dev reset -->" << cudaError_stat << std::endl;
+  CudaSafeCall(cudaDeviceReset());
+  //std::cout << "cuda dev reset -->" << cudaError_stat << std::endl;
 
   //cv::Mat img = cv::imread("t0.jpg");
   //show_img(img);
-
 
   int batch_size = BATCH_SIZE;
   float my_loss, loss, wt_sum, cl0_wt_sum, cl1_wt_sum, cl2_wt_sum, fcl0_wt_sum, fcl1_wt_sum,
     fcl2_wt_sum, dur, avg_dur;
   cublasHandle_t cublasHandle;
-  cublasStatus_stat = cublasCreate_v2(&cublasHandle);
-  std::cout << "cublas handle create -->" << cublasStatus_stat << std::endl;
+  CublasSafeCall(cublasCreate_v2(&cublasHandle));
+  //std::cout << "cublas handle create -->" << cublasStatus_stat << std::endl;
 
   cudnnHandle_t cudnnHandle;
   cudnnStatus_t cudnn_status;
-  cudnn_status = cudnnCreate(&cudnnHandle);
-  std::cout << "cuDNN initialization -->" << cudnn_status << std::endl;
+  CudnnSafeCall(cudnnCreate(&cudnnHandle));
+  //std::cout << "cuDNN initialization -->" << cudnn_status << std::endl;
+
+  SHMatrix m(cublasHandle, std::vector<int>{ 3, 4 }, GPU, true);
+  m.GaussianInit();
+  m.Print();
 
   float *x, *y;
   float *h_out;

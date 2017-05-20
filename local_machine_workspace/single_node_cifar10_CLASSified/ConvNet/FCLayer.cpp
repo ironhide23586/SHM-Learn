@@ -401,7 +401,7 @@ void FCLayer::SumColumns(float *d_mat, float *d_out, int rows, int cols) {
   float *d_onevect;
   CudaSafeCall(cudaMalloc((void **)&d_onevect,
                           sizeof(float) * rows));
-  FloatCUDAMemset(d_onevect, rows, 1.0f);
+  FloatGPUMemset(d_onevect, rows, 1.0f);
   CudaCheckError();
   CublasSafeCall(cublasSgemv_v2(cublas_handle, CUBLAS_OP_N,
                                 cols, rows,

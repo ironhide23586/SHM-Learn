@@ -12,17 +12,6 @@
 
 #include "Layer.h"
 
-#define GPU_WARP_DISPATCHERS 2
-#define GPU_WARP_SIZE 32
-
-#define __cudaSafeCall __cudaSafeCall_FC
-#define __cudnnSafeCall __cudnnSafeCall_FC
-#define __cublasSafeCall __cublasSafeCall_FC
-#define __cudaCheckError __cudaCheckError_FC
-#define cublasGetErrorString cublasGetErrorString_FC
-
-#include "err_check.h"
-
 using namespace std;
 
 //All vectors assumed to be column vectors

@@ -1,6 +1,7 @@
 #include "SHMatrix.h"
 
-SHMatrix::SHMatrix(float *mat_data, std::vector<int> &dims,
+SHMatrix::SHMatrix(const cublasHandle_t &cublas_handle_arg,
+                   float *mat_data, std::vector<int> &dims,
                    mem_location loc)
   : data(mat_data),
     data_dims(dims),
@@ -8,7 +9,8 @@ SHMatrix::SHMatrix(float *mat_data, std::vector<int> &dims,
   load_dims(dims);
 }
 
-SHMatrix::SHMatrix(std::vector<int> &dims,
+SHMatrix::SHMatrix(const cublasHandle_t &cublas_handle_arg,
+                   std::vector<int> &dims,
                    mem_location loc, bool default_init,
                    float init_val)
   : data_dims(dims),
@@ -44,6 +46,65 @@ void SHMatrix::Print(bool print_elems) {
   print_h_var(h_v, rows, cols, print_elems);
   if (data_loc == GPU)
     free(h_v);
+}
+
+
+void SHMatrix::GaussianInit(float mean, float stddev) {
+  if (data_loc == GPU) {
+    gaussian_init_gpu(mean, stddev);
+  }
+  else if (data_loc == CPU) {
+    gaussian_init_cpu(mean, stddev);
+  }
+}
+
+void SHMatrix::UniformInit(float mean, float stddev) {
+  if (data_loc == GPU) {
+    uniform_init_gpu(mean, stddev);
+  }
+  else if (data_loc == CPU) {
+    uniform_init_cpu(mean, stddev);
+  }
+}
+
+float SHMatrix::GetGaussianNum(float mean, float stddev) {
+  static std::default_random_engine re;
+  static std::normal_distribution<float> dist(mean, stddev);
+  return dist(re);
+}
+
+float SHMatrix::GetUniformNum(float lower, float higher) {
+  static std::default_random_engine re;
+  static std::uniform_real_distribution<float> dist(lower, higher);
+  return dist(re);
+}
+
+void SHMatrix::gaussian_init_gpu(float mean, float stddev) {
+  curandGenerator_t rng;
+  CurandSafeCall(curandCreateGenerator(&rng, CURAND_RNG_PSEUDO_XORWOW));
+  CurandSafeCall(curandGenerateNormal(rng, data, sizeof(float) * num_elems,
+                                      mean, stddev));
+  CurandSafeCall(curandDestroyGenerator(rng));
+}
+
+void SHMatrix::gaussian_init_cpu(float mean, float stddev) {
+  for (int i = 0; i < num_elems; i++) {
+    data[i] = GetGaussianNum(mean, stddev);
+  }
+}
+
+void SHMatrix::uniform_init_gpu(float lower, float higher) {
+  curandGenerator_t rng;
+  CurandSafeCall(curandCreateGenerator(&rng, CURAND_RNG_PSEUDO_XORWOW));
+  CurandSafeCall(curandGenerateUniform(rng, data, sizeof(float) * num_elems));
+  CurandSafeCall(curandDestroyGenerator(rng));
+  ScaleUniformSHMatrix(data, num_elems, lower, higher);
+}
+
+void SHMatrix::uniform_init_cpu(float lower, float higher) {
+  for (int i = 0; i < num_elems; i++) {
+    data[i] = GetUniformNum(lower, higher);
+  }
 }
 
 SHMatrix::~SHMatrix() { }
@@ -82,10 +143,15 @@ void SHMatrix::print_h_var(float *h_v, int r, int c, bool print_elem) {
       std::cout << std::endl;
   }
   mean = sum / (r * c);
-  std::cout << "Shape = (" << r << ", " << c << ")" << std::endl;
+  std::cout << "Shape = (";// << r << ", " << c << ")" << std::endl;
+  for (int i = 0; i < data_dims.size() - 1; i++) {
+    std::cout << data_dims[i] << ", ";
+  }
+  std::cout << data_dims[data_dims.size() - 1] << ")" << std::endl;
   std::cout << "Minimum at index " << mini_idx << " = " << mini << std::endl;
   std::cout << "Maximum at index " << maxi_idx << " = " << maxi << std::endl;
   std::cout << "Average of all elements = " << mean << std::endl;
+  std::cout << "Number of elements = " << num_elems << std::endl;
   if (data_loc == GPU) {
     std::cout << "Location = GPU" << std::endl;
   }

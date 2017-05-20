@@ -11,17 +11,6 @@
 
 #include "Layer.h"
 
-#define GPU_WARP_DISPATCHERS 2
-#define GPU_WARP_SIZE 32
-
-#define __cudaSafeCall __cudaSafeCall_Conv
-#define __cudnnSafeCall __cudnnSafeCall_Conv
-#define __cublasSafeCall __cublasSafeCall_Conv
-#define __cudaCheckError __cudaCheckError_Conv
-#define cublasGetErrorString cublasGetErrorString_Conv
-
-#include "err_check.h"
-
 using namespace std;
 
 // Computes W - lambda * W^2
