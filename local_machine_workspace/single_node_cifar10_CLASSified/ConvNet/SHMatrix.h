@@ -8,17 +8,10 @@
 #include <vector>
 #include <iostream>
 #include <random>
+#include <string>
 
 #define GPU_WARP_DISPATCHERS 2
 #define GPU_WARP_SIZE 32
-
-//#define __cudaSafeCall __cudaSafeCall_SHMat
-//#define __cudnnSafeCall __cudnnSafeCall_SHMat
-//#define __cublasSafeCall __cublasSafeCall_SHMat
-//#define __curandSafeCall __curandSafeCall_SHMat
-//#define __cudaCheckError __cudaCheckError_SHMat
-//#define cublasGetErrorString cublasGetErrorString_SHMat
-//#define curandGetErrorString curandGetErrorString_SHMat
 
 #include "err_check.h"
 
@@ -27,6 +20,10 @@ using namespace std;
 void FloatCUDAMemset(float *d_array, int array_size, float val);
 void ScaleUniformSHMatrix(float *d_array, int array_size,
                           float lower, float higher);
+void ElemwiseMultiplyInPlaceGPU(float *d_src, float *d_arg,
+                                int array_size);
+void ElemwiseMultiplyInPlaceCPU(float *d_src, float *d_arg,
+                                int array_size);
 
 enum mem_location { CPU, GPU };
 
@@ -47,10 +44,15 @@ public:
   static float GetGaussianNum(float mean, float stddev);
   static float GetUniformNum(float lower, float higher);
 
-  void gaussian_init_gpu(float mean = 0.0f, float stddev = 0.1f);
-  void gaussian_init_cpu(float mean = 0.0f, float stddev = 0.1f);
-  void uniform_init_gpu(float lower = -0.5f, float higher = 0.5f);
-  void uniform_init_cpu(float lower = -0.5f, float higher = 0.5f);
+  void operator*=(SHMatrix &arg);
+  void operator+=(SHMatrix &arg);
+  void operator-=(SHMatrix &arg);
+  void operator/=(SHMatrix &arg);
+
+  SHMatrix operator*(SHMatrix &arg);
+  SHMatrix operator+(SHMatrix &arg);
+  SHMatrix operator-(SHMatrix &arg);
+  SHMatrix operator/(SHMatrix &arg);
 
   float *data;
   float mean, mini, maxi;
@@ -58,12 +60,18 @@ public:
   mem_location data_loc;
   std::vector<int> data_dims;
   int rows, cols, num_elems;
+  std::string name;
   
   ~SHMatrix();
 
 private:
   void load_dims(std::vector<int> &dims);
   void print_h_var(float *h_v, int r, int c, bool print_elem);
-  
-};
+  void gaussian_init_gpu(float mean = 0.0f, float stddev = 0.1f);
+  void gaussian_init_cpu(float mean = 0.0f, float stddev = 0.1f);
+  void uniform_init_gpu(float lower = -0.5f, float higher = 0.5f);
+  void uniform_init_cpu(float lower = -0.5f, float higher = 0.5f);
 
+  void gpu2any_elemwise_mult(SHMatrix &arg);
+  void cpu2any_elemwise_mult(SHMatrix &arg);
+};

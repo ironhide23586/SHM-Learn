@@ -79,6 +79,42 @@ float SHMatrix::GetUniformNum(float lower, float higher) {
   return dist(re);
 }
 
+void SHMatrix::operator*=(SHMatrix &arg) {
+  if (data_loc == GPU) {
+    gpu2any_elemwise_mult(arg);
+  }
+  else if (data_loc == CPU) {
+    cpu2any_elemwise_mult(arg);
+  }
+}
+
+void SHMatrix::operator+=(SHMatrix &arg) {
+}
+
+void SHMatrix::operator-=(SHMatrix &arg) {
+  
+}
+
+void SHMatrix::operator/=(SHMatrix &arg) {
+  
+}
+
+SHMatrix SHMatrix::operator*(SHMatrix &arg) {
+  return arg;
+}
+
+SHMatrix SHMatrix::operator+(SHMatrix &arg) {
+  return arg;
+}
+
+SHMatrix SHMatrix::operator-(SHMatrix &arg) {
+  return arg;
+}
+
+SHMatrix SHMatrix::operator/(SHMatrix &arg) {
+  return arg;
+}
+
 void SHMatrix::gaussian_init_gpu(float mean, float stddev) {
   curandGenerator_t rng;
   CurandSafeCall(curandCreateGenerator(&rng, CURAND_RNG_PSEUDO_XORWOW));
@@ -157,5 +193,41 @@ void SHMatrix::print_h_var(float *h_v, int r, int c, bool print_elem) {
   }
   else if (data_loc == CPU) {
     std::cout << "Location = CPU" << std::endl;
+  }
+}
+
+void SHMatrix::gpu2any_elemwise_mult(SHMatrix &arg) {
+  float *d_arg_data;
+  if (arg.data_loc == GPU) {
+    d_arg_data = arg.data;
+  }
+  else if (arg.data_loc == CPU) {
+    CudaSafeCall(cudaMalloc((void **)&d_arg_data,
+                            sizeof(float) * arg.num_elems));
+    CudaSafeCall(cudaMemcpy(d_arg_data, arg.data,
+                            sizeof(float) * arg.num_elems,
+                            cudaMemcpyHostToDevice));
+  }
+  ElemwiseMultiplyInPlaceGPU(data, d_arg_data, num_elems);
+  if (arg.data_loc == CPU) {
+    CudaSafeCall(cudaFree(d_arg_data));
+  }
+}
+
+void SHMatrix::cpu2any_elemwise_mult(SHMatrix &arg) {
+  float *h_arg_data;
+  if (arg.data_loc == GPU) {
+    h_arg_data = (float *)malloc(sizeof(float)
+                                 * arg.num_elems);
+    CudaSafeCall(cudaMemcpy(h_arg_data, arg.data,
+                            sizeof(float) * arg.num_elems,
+                            cudaMemcpyDeviceToHost));
+  }
+  else if (arg.data_loc == CPU) {
+    h_arg_data = arg.data;
+  }
+  ElemwiseMultiplyInPlaceCPU(data, h_arg_data, num_elems);
+  if (arg.data_loc == GPU) {
+    free(h_arg_data);
   }
 }

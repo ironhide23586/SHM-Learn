@@ -281,9 +281,17 @@ int main() {
   CudnnSafeCall(cudnnCreate(&cudnnHandle));
   //std::cout << "cuDNN initialization -->" << cudnn_status << std::endl;
 
-  SHMatrix m(cublasHandle, std::vector<int>{ 3, 4 }, GPU, true);
-  m.GaussianInit();
-  m.Print();
+  SHMatrix m0(cublasHandle, std::vector<int>{ 10, 5 }, GPU);
+  m0.GaussianInit();
+  m0.Print();
+
+  SHMatrix m1(cublasHandle, std::vector<int>{ 10, 5 }, CPU);
+  m1.GaussianInit();
+  m1.Print();
+
+  m0 *= m0;
+
+  m0.Print();
 
   float *x, *y;
   float *h_out;
