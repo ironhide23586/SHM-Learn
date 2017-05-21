@@ -285,6 +285,12 @@ int main() {
   m0.GaussianInit();
   m0.Print();
 
+  m0.Move2CPU();
+  m0.Print();
+
+  m0.Move2GPU();
+  m0.Print();
+
   SHMatrix m1(cublasHandle, std::vector<int>{ 10, 5 }, CPU);
   m1.GaussianInit();
   m1.Print();

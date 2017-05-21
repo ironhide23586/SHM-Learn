@@ -20,10 +20,24 @@ using namespace std;
 void FloatCUDAMemset(float *d_array, int array_size, float val);
 void ScaleUniformSHMatrix(float *d_array, int array_size,
                           float lower, float higher);
+
 void ElemwiseMultiplyInPlaceGPU(float *d_src, float *d_arg,
                                 int array_size);
+void ElemwiseAddInPlaceGPU(float *d_src, float *d_arg,
+                           int array_size);
+void ElemwiseSubtractInPlaceGPU(float *d_src, float *d_arg,
+                                int array_size);
+void ElemwiseDivideInPlaceGPU(float *d_src, float *d_arg,
+                              int array_size);
+
 void ElemwiseMultiplyInPlaceCPU(float *d_src, float *d_arg,
                                 int array_size);
+void ElemwiseAddInPlaceCPU(float *d_src, float *d_arg,
+                           int array_size);
+void ElemwiseSubtractInPlaceCPU(float *d_src, float *d_arg,
+                                int array_size);
+void ElemwiseDivideInPlaceCPU(float *d_src, float *d_arg,
+                              int array_size);
 
 enum mem_location { CPU, GPU };
 
@@ -36,7 +50,10 @@ public:
   SHMatrix(const cublasHandle_t &cublas_handle_arg,
            std::vector<int> &dims, mem_location = GPU,
            bool default_init = false, float init_val = 0.0f);
+
   void Print(bool print_elem = true);
+  void Move2GPU();
+  void Move2CPU();
 
   void GaussianInit(float mean = 0.0f, float stddev = 0.1f);
   void UniformInit(float lower = -0.5f, float higher = 0.5f);
@@ -48,6 +65,11 @@ public:
   void operator+=(SHMatrix &arg);
   void operator-=(SHMatrix &arg);
   void operator/=(SHMatrix &arg);
+
+  void operator*=(float arg);
+  void operator+=(float arg);
+  void operator-=(float arg);
+  void operator/=(float arg);
 
   SHMatrix operator*(SHMatrix &arg);
   SHMatrix operator+(SHMatrix &arg);
@@ -73,5 +95,22 @@ private:
   void uniform_init_cpu(float lower = -0.5f, float higher = 0.5f);
 
   void gpu2any_elemwise_mult(SHMatrix &arg);
+  void gpu2any_elemwise_add(SHMatrix &arg);
+  void gpu2any_elemwise_subtract(SHMatrix &arg);
+  void gpu2any_elemwise_divide(SHMatrix &arg);
+
+  void gpu2any_elemwise_mult(float arg);
+  void gpu2any_elemwise_add(float arg);
+  void gpu2any_elemwise_subtract(float arg);
+  void gpu2any_elemwise_divide(float arg);
+
   void cpu2any_elemwise_mult(SHMatrix &arg);
+  void cpu2any_elemwise_add(SHMatrix &arg);
+  void cpu2any_elemwise_subtract(SHMatrix &arg);
+  void cpu2any_elemwise_divide(SHMatrix &arg);
+
+  void cpu2any_elemwise_mult(float arg);
+  void cpu2any_elemwise_add(float arg);
+  void cpu2any_elemwise_subtract(float arg);
+  void cpu2any_elemwise_divide(float arg);
 };

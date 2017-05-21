@@ -48,6 +48,28 @@ void SHMatrix::Print(bool print_elems) {
     free(h_v);
 }
 
+void SHMatrix::Move2GPU() {
+  if (data_loc == GPU)
+    return;
+  float *d_data;
+  CudaSafeCall(cudaMalloc((void **)&d_data, sizeof(float) * num_elems));
+  CudaSafeCall(cudaMemcpy(d_data, data, sizeof(float) * num_elems,
+                          cudaMemcpyHostToDevice));
+  free(data);
+  data = d_data;
+  data_loc = GPU;
+}
+
+void SHMatrix::Move2CPU() {
+  if (data_loc == CPU)
+    return;
+  float *h_data = (float *)malloc(sizeof(float) * num_elems);
+  CudaSafeCall(cudaMemcpy(h_data, data, sizeof(float) * num_elems,
+                          cudaMemcpyDeviceToHost));
+  CudaSafeCall(cudaFree(data));
+  data = h_data;
+  data_loc = CPU;
+}
 
 void SHMatrix::GaussianInit(float mean, float stddev) {
   if (data_loc == GPU) {
@@ -89,14 +111,66 @@ void SHMatrix::operator*=(SHMatrix &arg) {
 }
 
 void SHMatrix::operator+=(SHMatrix &arg) {
+  if (data_loc == GPU) {
+    gpu2any_elemwise_add(arg);
+  }
+  else if (data_loc == CPU) {
+    cpu2any_elemwise_add(arg);
+  }
 }
 
 void SHMatrix::operator-=(SHMatrix &arg) {
-  
+  if (data_loc == GPU) {
+    gpu2any_elemwise_subtract(arg);
+  }
+  else if (data_loc == CPU) {
+    cpu2any_elemwise_subtract(arg);
+  }
 }
 
 void SHMatrix::operator/=(SHMatrix &arg) {
-  
+  if (data_loc == GPU) {
+    gpu2any_elemwise_divide(arg);
+  }
+  else if (data_loc == CPU) {
+    cpu2any_elemwise_divide(arg);
+  }
+}
+
+void SHMatrix::operator*=(float arg) {
+  if (data_loc == GPU) {
+    gpu2any_elemwise_mult(arg);
+  }
+  else if (data_loc == CPU) {
+    cpu2any_elemwise_mult(arg);
+  }
+}
+
+void SHMatrix::operator+=(float arg) {
+  if (data_loc == GPU) {
+    gpu2any_elemwise_add(arg);
+  }
+  else if (data_loc == CPU) {
+    cpu2any_elemwise_add(arg);
+  }
+}
+
+void SHMatrix::operator-=(float arg) {
+  if (data_loc == GPU) {
+    gpu2any_elemwise_subtract(arg);
+  }
+  else if (data_loc == CPU) {
+    cpu2any_elemwise_subtract(arg);
+  }
+}
+
+void SHMatrix::operator/=(float arg) {
+  if (data_loc == GPU) {
+    gpu2any_elemwise_divide(arg);
+  }
+  else if (data_loc == CPU) {
+    cpu2any_elemwise_divide(arg);
+  }
 }
 
 SHMatrix SHMatrix::operator*(SHMatrix &arg) {
@@ -214,6 +288,76 @@ void SHMatrix::gpu2any_elemwise_mult(SHMatrix &arg) {
   }
 }
 
+void SHMatrix::gpu2any_elemwise_add(SHMatrix &arg) {
+  float *d_arg_data;
+  if (arg.data_loc == GPU) {
+    d_arg_data = arg.data;
+  }
+  else if (arg.data_loc == CPU) {
+    CudaSafeCall(cudaMalloc((void **)&d_arg_data,
+                            sizeof(float) * arg.num_elems));
+    CudaSafeCall(cudaMemcpy(d_arg_data, arg.data,
+                            sizeof(float) * arg.num_elems,
+                            cudaMemcpyHostToDevice));
+  }
+  ElemwiseAddInPlaceGPU(data, d_arg_data, num_elems);
+  if (arg.data_loc == CPU) {
+    CudaSafeCall(cudaFree(d_arg_data));
+  }
+}
+
+void SHMatrix::gpu2any_elemwise_subtract(SHMatrix &arg) {
+  float *d_arg_data;
+  if (arg.data_loc == GPU) {
+    d_arg_data = arg.data;
+  }
+  else if (arg.data_loc == CPU) {
+    CudaSafeCall(cudaMalloc((void **)&d_arg_data,
+                            sizeof(float) * arg.num_elems));
+    CudaSafeCall(cudaMemcpy(d_arg_data, arg.data,
+                            sizeof(float) * arg.num_elems,
+                            cudaMemcpyHostToDevice));
+  }
+  ElemwiseSubtractInPlaceGPU(data, d_arg_data, num_elems);
+  if (arg.data_loc == CPU) {
+    CudaSafeCall(cudaFree(d_arg_data));
+  }
+}
+
+void SHMatrix::gpu2any_elemwise_divide(SHMatrix &arg) {
+  float *d_arg_data;
+  if (arg.data_loc == GPU) {
+    d_arg_data = arg.data;
+  }
+  else if (arg.data_loc == CPU) {
+    CudaSafeCall(cudaMalloc((void **)&d_arg_data,
+                            sizeof(float) * arg.num_elems));
+    CudaSafeCall(cudaMemcpy(d_arg_data, arg.data,
+                            sizeof(float) * arg.num_elems,
+                            cudaMemcpyHostToDevice));
+  }
+  ElemwiseDivideInPlaceGPU(data, d_arg_data, num_elems);
+  if (arg.data_loc == CPU) {
+    CudaSafeCall(cudaFree(d_arg_data));
+  }
+}
+
+void SHMatrix::gpu2any_elemwise_mult(float arg) {
+
+}
+
+void SHMatrix::gpu2any_elemwise_add(float arg) {
+
+}
+
+void SHMatrix::gpu2any_elemwise_subtract(float arg) {
+
+}
+
+void SHMatrix::gpu2any_elemwise_divide(float arg) {
+
+}
+
 void SHMatrix::cpu2any_elemwise_mult(SHMatrix &arg) {
   float *h_arg_data;
   if (arg.data_loc == GPU) {
@@ -230,4 +374,74 @@ void SHMatrix::cpu2any_elemwise_mult(SHMatrix &arg) {
   if (arg.data_loc == GPU) {
     free(h_arg_data);
   }
+}
+
+void SHMatrix::cpu2any_elemwise_add(SHMatrix &arg) {
+  float *h_arg_data;
+  if (arg.data_loc == GPU) {
+    h_arg_data = (float *)malloc(sizeof(float)
+                                 * arg.num_elems);
+    CudaSafeCall(cudaMemcpy(h_arg_data, arg.data,
+                            sizeof(float) * arg.num_elems,
+                            cudaMemcpyDeviceToHost));
+  }
+  else if (arg.data_loc == CPU) {
+    h_arg_data = arg.data;
+  }
+  ElemwiseAddInPlaceCPU(data, h_arg_data, num_elems);
+  if (arg.data_loc == GPU) {
+    free(h_arg_data);
+  }
+}
+
+void SHMatrix::cpu2any_elemwise_subtract(SHMatrix &arg) {
+  float *h_arg_data;
+  if (arg.data_loc == GPU) {
+    h_arg_data = (float *)malloc(sizeof(float)
+                                 * arg.num_elems);
+    CudaSafeCall(cudaMemcpy(h_arg_data, arg.data,
+                            sizeof(float) * arg.num_elems,
+                            cudaMemcpyDeviceToHost));
+  }
+  else if (arg.data_loc == CPU) {
+    h_arg_data = arg.data;
+  }
+  ElemwiseSubtractInPlaceCPU(data, h_arg_data, num_elems);
+  if (arg.data_loc == GPU) {
+    free(h_arg_data);
+  }
+}
+
+void SHMatrix::cpu2any_elemwise_divide(SHMatrix &arg) {
+  float *h_arg_data;
+  if (arg.data_loc == GPU) {
+    h_arg_data = (float *)malloc(sizeof(float)
+                                 * arg.num_elems);
+    CudaSafeCall(cudaMemcpy(h_arg_data, arg.data,
+                            sizeof(float) * arg.num_elems,
+                            cudaMemcpyDeviceToHost));
+  }
+  else if (arg.data_loc == CPU) {
+    h_arg_data = arg.data;
+  }
+  ElemwiseDivideInPlaceCPU(data, h_arg_data, num_elems);
+  if (arg.data_loc == GPU) {
+    free(h_arg_data);
+  }
+}
+
+void SHMatrix::cpu2any_elemwise_mult(float arg) {
+
+}
+
+void SHMatrix::cpu2any_elemwise_add(float arg) {
+
+}
+
+void SHMatrix::cpu2any_elemwise_subtract(float arg) {
+
+}
+
+void SHMatrix::cpu2any_elemwise_divide(float arg) {
+
 }
