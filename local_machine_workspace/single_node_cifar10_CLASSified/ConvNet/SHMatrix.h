@@ -44,22 +44,30 @@ enum mem_location { CPU, GPU };
 class SHMatrix {
 
 public:
-  SHMatrix(const cublasHandle_t &cublas_handle,
+  SHMatrix(const cublasHandle_t &cublas_handle_arg,
            float *mat_data, std::vector<int> &dims,
            mem_location = GPU);
   SHMatrix(const cublasHandle_t &cublas_handle_arg,
            std::vector<int> &dims, mem_location = GPU,
            bool default_init = false, float init_val = 0.0f);
+  SHMatrix(const cublasHandle_t &cublas_handle_arg,
+           SHMatrix &src_shmatrix, mem_location = GPU);
+
+  void Equate(SHMatrix &src_shmatrix);
 
   void Print(bool print_elem = true);
   void Move2GPU();
   void Move2CPU();
+
+  void Clear();
 
   void GaussianInit(float mean = 0.0f, float stddev = 0.1f);
   void UniformInit(float lower = -0.5f, float higher = 0.5f);
 
   static float GetGaussianNum(float mean, float stddev);
   static float GetUniformNum(float lower, float higher);
+
+  void T(); //Transpose operation
 
   void operator*=(SHMatrix &arg);
   void operator+=(SHMatrix &arg);
@@ -76,14 +84,20 @@ public:
   SHMatrix operator-(SHMatrix &arg);
   SHMatrix operator/(SHMatrix &arg);
 
+  cublasHandle_t cublas_handle;
+
   float *data;
+  float scalar;
   float mean, mini, maxi;
   int mini_idx, maxi_idx;
   mem_location data_loc;
   std::vector<int> data_dims;
   int rows, cols, num_elems;
   std::string name;
-  
+  bool allocated;
+  bool transpose_called, transpose_done;
+  bool scale_called, scale_done;
+
   ~SHMatrix();
 
 private:
@@ -113,4 +127,10 @@ private:
   void cpu2any_elemwise_add(float arg);
   void cpu2any_elemwise_subtract(float arg);
   void cpu2any_elemwise_divide(float arg);
+
+  void duplicate_shmatrix(SHMatrix &src_shmatrix);
+  void copy_data_from(SHMatrix &src_shmatrix);
+
+  void reset_metadata();
+  void allocate_memory();
 };

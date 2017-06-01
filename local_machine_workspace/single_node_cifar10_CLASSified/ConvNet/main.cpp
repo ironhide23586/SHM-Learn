@@ -261,10 +261,9 @@ int main() {
   cudaGetDeviceCount(&numGPUs);
   cudaSetDevice(0);
   cudaDeviceProp cudaProp;
-  cudaGetDeviceProperties(&cudaProp, 0);
+  CudaSafeCall(cudaGetDeviceProperties(&cudaProp, 0));
   std::cout << "Using GPU Device -> " << cudaProp.name << std::endl;
   CudaSafeCall(cudaDeviceReset());
-  //std::cout << "cuda dev reset -->" << cudaError_stat << std::endl;
 
   //cv::Mat img = cv::imread("t0.jpg");
   //show_img(img);
@@ -274,28 +273,27 @@ int main() {
     fcl2_wt_sum, dur, avg_dur;
   cublasHandle_t cublasHandle;
   CublasSafeCall(cublasCreate_v2(&cublasHandle));
-  //std::cout << "cublas handle create -->" << cublasStatus_stat << std::endl;
 
   cudnnHandle_t cudnnHandle;
   cudnnStatus_t cudnn_status;
   CudnnSafeCall(cudnnCreate(&cudnnHandle));
-  //std::cout << "cuDNN initialization -->" << cudnn_status << std::endl;
 
-  SHMatrix m0(cublasHandle, std::vector<int>{ 10, 5 }, GPU);
+  SHMatrix m0(cublasHandle, std::vector<int>{ 10, 5 }, CPU);
   m0.GaussianInit();
   m0.Print();
 
-  m0.Move2CPU();
-  m0.Print();
-
-  m0.Move2GPU();
-  m0.Print();
-
-  SHMatrix m1(cublasHandle, std::vector<int>{ 10, 5 }, CPU);
+  SHMatrix m1(cublasHandle, std::vector<int>{ 3, 3 }, CPU);
   m1.GaussianInit();
   m1.Print();
 
-  m0 *= m0;
+  m1.Equate(m0);
+  m1.Print();
+
+  
+
+  m0 *= m1;
+
+
 
   m0.Print();
 
