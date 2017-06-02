@@ -67,7 +67,10 @@ public:
   static float GetGaussianNum(float mean, float stddev);
   static float GetUniformNum(float lower, float higher);
 
+  void CommitUnaryOps(); //commits the transpose & scaling operations
+
   void T(); //Transpose operation
+  void Scale(float scale_arg); //Scalar multiplication
 
   void operator*=(SHMatrix &arg);
   void operator+=(SHMatrix &arg);
@@ -131,6 +134,11 @@ private:
   void duplicate_shmatrix(SHMatrix &src_shmatrix);
   void copy_data_from(SHMatrix &src_shmatrix);
 
+  
+  void transpose_worker();
+  void scale_worker();
+
   void reset_metadata();
   void allocate_memory();
+  void init();
 };

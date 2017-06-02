@@ -6,12 +6,8 @@ SHMatrix::SHMatrix(const cublasHandle_t &cublas_handle_arg,
   : cublas_handle(cublas_handle_arg),
     data(mat_data),
     data_dims(dims),
-    data_loc(loc),
-    allocated(false) {
-  transpose_called = false;
-  transpose_done = false;
-  scale_called = false;
-  scale_done = false;
+    data_loc(loc) {
+  init();
   load_dims(dims);
   allocated = true;
 }
@@ -22,12 +18,8 @@ SHMatrix::SHMatrix(const cublasHandle_t &cublas_handle_arg,
                    float init_val)
   : cublas_handle(cublas_handle_arg), 
     data_dims(dims),
-    data_loc(loc),
-    allocated(false) {
-  transpose_called = false;
-  transpose_done = false;
-  scale_called = false;
-  scale_done = false;
+    data_loc(loc) {
+  init();
   load_dims(dims);
   allocate_memory();
   if (data_loc == GPU) {
@@ -48,11 +40,8 @@ SHMatrix::SHMatrix(const cublasHandle_t &cublas_handle_arg,
 SHMatrix::SHMatrix(const cublasHandle_t &cublas_handle_arg,
                    SHMatrix &src_shmatrix, mem_location loc)
   : cublas_handle(cublas_handle_arg),
-    data_loc(loc), allocated(false) {
-  transpose_called = false;
-  transpose_done = false;
-  scale_called = false;
-  scale_done = false;
+    data_loc(loc) {
+  init();
   duplicate_shmatrix(src_shmatrix);
 }
 
@@ -63,6 +52,7 @@ void SHMatrix::Equate(SHMatrix &src_shmatrix) {
 }
 
 void SHMatrix::Print(bool print_elems) {
+  CommitUnaryOps();
   float *h_v;
   if (data_loc == GPU) {
     h_v = (float *)malloc(sizeof(float) * rows * cols);
@@ -87,11 +77,13 @@ void SHMatrix::Move2GPU() {
   free(data);
   data = d_data;
   data_loc = GPU;
+  //commit_unary_operations();
 }
 
 void SHMatrix::Move2CPU() {
   if (data_loc == CPU)
     return;
+  CommitUnaryOps();
   float *h_data = (float *)malloc(sizeof(float) * num_elems);
   CudaSafeCall(cudaMemcpy(h_data, data, sizeof(float) * num_elems,
                           cudaMemcpyDeviceToHost));
@@ -157,7 +149,20 @@ void SHMatrix::T() { //mini_idx & maxi_idx computation pending
   std::reverse(data_dims.begin(), data_dims.end());
 }
 
+void SHMatrix::Scale(float scale_arg) {
+  scale_called = true;
+  if (scale_done) {
+    scalar = scale_arg;
+  }
+  else {
+    scalar *= scale_arg;
+  }
+  scale_done = false;
+}
+
 void SHMatrix::operator*=(SHMatrix &arg) {
+  CommitUnaryOps();
+  arg.CommitUnaryOps();
   if (data_loc == GPU) {
     gpu2any_elemwise_mult(arg);
   }
@@ -185,6 +190,8 @@ void SHMatrix::operator-=(SHMatrix &arg) {
 }
 
 void SHMatrix::operator/=(SHMatrix &arg) {
+  CommitUnaryOps();
+  arg.CommitUnaryOps();
   if (data_loc == GPU) {
     gpu2any_elemwise_divide(arg);
   }
@@ -194,12 +201,13 @@ void SHMatrix::operator/=(SHMatrix &arg) {
 }
 
 void SHMatrix::operator*=(float arg) {
-  if (data_loc == GPU) {
+  Scale(arg);
+  /*if (data_loc == GPU) {
     gpu2any_elemwise_mult(arg);
   }
   else if (data_loc == CPU) {
     cpu2any_elemwise_mult(arg);
-  }
+  }*/
 }
 
 void SHMatrix::operator+=(float arg) {
@@ -221,12 +229,13 @@ void SHMatrix::operator-=(float arg) {
 }
 
 void SHMatrix::operator/=(float arg) {
-  if (data_loc == GPU) {
-    gpu2any_elemwise_divide(arg);
-  }
-  else if (data_loc == CPU) {
-    cpu2any_elemwise_divide(arg);
-  }
+  Scale(1.0f / arg);
+  //if (data_loc == GPU) {
+  //  gpu2any_elemwise_divide(arg);
+  //}
+  //else if (data_loc == CPU) {
+  //  cpu2any_elemwise_divide(arg);
+  //}
 }
 
 SHMatrix SHMatrix::operator*(SHMatrix &arg) {
@@ -542,6 +551,25 @@ void SHMatrix::copy_data_from(SHMatrix &src_shmatrix) {
   }
 }
 
+void SHMatrix::CommitUnaryOps() {
+  if (transpose_called && !transpose_done) {
+    transpose_worker();
+    transpose_done = true;
+  }
+  if (scale_called && !scale_done) {
+    scale_worker();
+    scale_done = true;
+  }
+}
+
+void SHMatrix::transpose_worker() {
+
+}
+
+void SHMatrix::scale_worker() {
+
+}
+
 void SHMatrix::reset_metadata() {
   if (allocated) {
     mean = 0.0f;
@@ -570,4 +598,13 @@ void SHMatrix::allocate_memory() {
     data = (float *)malloc(sizeof(float) * num_elems);
   }
   allocated = true;
+}
+
+void SHMatrix::init() {
+  allocated = false;
+  scalar = 1.0f;
+  transpose_called = false;
+  transpose_done = false;
+  scale_called = false;
+  scale_done = false;
 }
