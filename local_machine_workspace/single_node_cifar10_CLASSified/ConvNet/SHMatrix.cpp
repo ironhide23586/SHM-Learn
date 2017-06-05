@@ -563,7 +563,17 @@ void SHMatrix::CommitUnaryOps() {
 }
 
 void SHMatrix::transpose_worker() {
+  float *d_data_T;
+  CudaSafeCall(cudaMalloc((void **)&d_data_T, 
+                          sizeof(float) * num_elems));
+  float alpha = 1.0f, beta = 0.0f;
 
+  CublasSafeCall(cublasSgeam(cublas_handle, CUBLAS_OP_T, CUBLAS_OP_N,
+                             cols, rows, &alpha, data, rows, &beta,
+                             d_data_T, cols, d_data_T, cols));
+
+  CudaSafeCall(cudaFree(data));
+  data = d_data_T;
 }
 
 void SHMatrix::scale_worker() {
