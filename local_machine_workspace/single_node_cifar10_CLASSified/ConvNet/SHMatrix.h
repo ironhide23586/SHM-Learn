@@ -104,6 +104,8 @@ public:
   ~SHMatrix();
 
 private:
+  float alpha, beta; //dummy vars passed to some cuBLAS calls
+
   void load_dims(std::vector<int> &dims);
   void print_h_var(float *h_v, int r, int c, bool print_elem);
   void gaussian_init_gpu(float mean = 0.0f, float stddev = 0.1f);
@@ -137,6 +139,11 @@ private:
   
   void transpose_worker();
   void scale_worker();
+
+  int vect_to_lin_idx(std::vector<int> &vect_idx,
+                      std::vector<int> &vect_dims);
+  void next_vect_idx(std::vector<int> &vect_idx,
+                     std::vector<int> &vect_dims);
 
   void reset_metadata();
   void allocate_memory();

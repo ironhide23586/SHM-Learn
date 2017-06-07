@@ -563,21 +563,81 @@ void SHMatrix::CommitUnaryOps() {
 }
 
 void SHMatrix::transpose_worker() {
-  float *d_data_T;
-  CudaSafeCall(cudaMalloc((void **)&d_data_T, 
-                          sizeof(float) * num_elems));
-  float alpha = 1.0f, beta = 0.0f;
+  if (data_loc == GPU) {
+    float *d_data_T;
+    CudaSafeCall(cudaMalloc((void **)&d_data_T,
+                            sizeof(float) * num_elems));
+    CublasSafeCall(cublasSgeam(cublas_handle, CUBLAS_OP_T, CUBLAS_OP_N,
+                               cols, rows, &alpha, data, rows, &beta,
+                               d_data_T, cols, d_data_T, cols));
+    CudaSafeCall(cudaFree(data));
+    data = d_data_T;
+  }
+  else if (data_loc == CPU) {
+    float *h_data_T = (float *)malloc(sizeof(float) * num_elems);
+    float tmp;
+    int read_lin_idx = 0, write_lin_idx = 0;
+    std::vector<int> read_idx_vect(data_dims.size(), 0);
+    std::vector<int> write_idx_vect(data_dims.size(), 0);
+    std::vector<int> read_data_dims(data_dims.size());
+    std::vector<int> write_data_dims(data_dims.size());
+    std::copy(data_dims.begin(), data_dims.end(),
+              read_data_dims.begin());
+    std::copy(data_dims.begin(), data_dims.end(),
+              write_data_dims.begin());
+    std::reverse(read_data_dims.begin(), read_data_dims.end());
+    int dim = data_dims.size() - 1;
 
-  CublasSafeCall(cublasSgeam(cublas_handle, CUBLAS_OP_T, CUBLAS_OP_N,
-                             cols, rows, &alpha, data, rows, &beta,
-                             d_data_T, cols, d_data_T, cols));
+    while (read_lin_idx < num_elems) {
+      read_lin_idx = vect_to_lin_idx(read_idx_vect, read_data_dims);
+      std::copy(read_idx_vect.begin(), read_idx_vect.end(),
+                write_idx_vect.begin());
+      std::reverse(write_idx_vect.begin(), write_idx_vect.end());
+      write_lin_idx = vect_to_lin_idx(write_idx_vect, read_data_dims);
+      h_data_T[write_lin_idx] = data[read_lin_idx];
 
-  CudaSafeCall(cudaFree(data));
-  data = d_data_T;
+      if (read_idx_vect[dim] + 1 >= read_data_dims[dim]) {
+        for (int i = dim; i < data_dims.size(); i++) {
+          read_idx_vect[i] = 0;
+        }
+        //dim--;
+        read_idx_vect[dim - 1]++;
+      }
+      if (read_idx_vect[dim - 1] >= read_data_dims[dim - 1])
+      for (int i = data_dims.size() - 1; i > dim; i++) {
+        read_idx_vect[i] = 0;
+      }
+    }
+    free(data);
+    data = h_data_T;
+  }
 }
 
 void SHMatrix::scale_worker() {
 
+}
+
+void SHMatrix::next_vect_idx(std::vector<int> &vect_idx,
+                             std::vector<int> &vect_dims) {
+  int alter_dim = vect_idx.size() - 1;
+  while (vect_idx[alter_dim] >= vect_idx.size() - 1) {
+    alter_dim--;
+  }
+  vect_idx[alter_dim]++;
+  for (int i = alter_dim + 1; i < vect_idx.size(); i++) {
+    vect_idx[i] = 0;
+  }
+  //for (int i = vect_idx.size())
+
+}
+
+int SHMatrix::vect_to_lin_idx(std::vector<int> &vect_idx,
+                              std::vector<int> &vect_dims) {
+  int lin_idx = vect_idx[vect_idx.size() - 1];
+  for (int dim = vect_idx.size() - 2; dim >= 0; dim--) {
+    lin_idx += vect_dims[dim + 1] * vect_idx[dim];
+  }
+  return lin_idx;
 }
 
 void SHMatrix::reset_metadata() {
@@ -617,4 +677,6 @@ void SHMatrix::init() {
   transpose_done = false;
   scale_called = false;
   scale_done = false;
+  alpha = 1.0f;
+  beta = 0.0f;
 }
