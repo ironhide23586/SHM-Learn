@@ -136,6 +136,11 @@ private:
   void duplicate_shmatrix(SHMatrix &src_shmatrix);
   void copy_data_from(SHMatrix &src_shmatrix);
 
+  void transpose_worker_gpu();
+  void transpose_worker_cpu();
+
+  void scale_worker_gpu(float coeff);
+  void scale_worker_cpu(float coeff);
   
   void transpose_worker();
   void scale_worker();
