@@ -138,7 +138,13 @@ float SHMatrix::GetUniformNum(float lower, float higher) {
 
 void SHMatrix::CommitUnaryOps() {
   if (transpose_called && !transpose_done) {
-    transpose_worker();
+    if (scale_called && !scale_done) {
+      transpose_worker(scalar);
+      scale_done = true;
+      scalar = 1.0f;
+    }
+    else
+      transpose_worker();
     transpose_done = true;
   }
   if (scale_called && !scale_done) {
@@ -150,7 +156,7 @@ void SHMatrix::CommitUnaryOps() {
 // Transpose operation : speeds up computation by postponing T operations
 void SHMatrix::T() { //mini_idx & maxi_idx computation pending
   if (!transpose_done)
-    transpose_called = ~transpose_called;
+    transpose_called ^= 1; //toggling boolean
   else
     transpose_called = true;
   transpose_done = false;
@@ -162,12 +168,13 @@ void SHMatrix::T() { //mini_idx & maxi_idx computation pending
 
 void SHMatrix::Scale(float scale_arg) {
   scale_called = true;
-  if (scale_done) {
-    scalar = scale_arg;
-  }
-  else {
-    scalar *= scale_arg;
-  }
+  scalar *= scale_arg;
+  //if (scale_done) {
+  //  scalar = scale_arg;
+  //}
+  //else {
+  //  scalar *= scale_arg;
+  //}
   scale_done = false;
 }
 
@@ -213,12 +220,6 @@ void SHMatrix::operator/=(SHMatrix &arg) {
 
 void SHMatrix::operator*=(float arg) {
   Scale(arg);
-  /*if (data_loc == GPU) {
-    gpu2any_elemwise_mult(arg);
-  }
-  else if (data_loc == CPU) {
-    cpu2any_elemwise_mult(arg);
-  }*/
 }
 
 void SHMatrix::operator+=(float arg) {
@@ -241,12 +242,6 @@ void SHMatrix::operator-=(float arg) {
 
 void SHMatrix::operator/=(float arg) {
   Scale(1.0f / arg);
-  //if (data_loc == GPU) {
-  //  gpu2any_elemwise_divide(arg);
-  //}
-  //else if (data_loc == CPU) {
-  //  cpu2any_elemwise_divide(arg);
-  //}
 }
 
 SHMatrix SHMatrix::operator*(SHMatrix &arg) {
@@ -562,18 +557,35 @@ void SHMatrix::copy_data_from(SHMatrix &src_shmatrix) {
   }
 }
 
-void SHMatrix::transpose_worker_gpu() {
+void SHMatrix::transpose_worker_gpu(float coeff) {
   float *d_data_T;
   CudaSafeCall(cudaMalloc((void **)&d_data_T,
                           sizeof(float) * num_elems));
   CublasSafeCall(cublasSgeam(cublas_handle, CUBLAS_OP_T, CUBLAS_OP_N,
-                             cols, rows, &alpha, data, rows, &beta,
+                             cols, rows, &coeff, data, rows, &beta,
                              d_data_T, cols, d_data_T, cols));
   CudaSafeCall(cudaFree(data));
   data = d_data_T;
 }
 
-void SHMatrix::transpose_worker_cpu() {
+//Operation currently offloaded to CPU; GPU Kernel for this pending!
+void SHMatrix::transpose_worker_ndim_gpu(float coeff) {
+  float *h_data_tmp = (float *)malloc(sizeof(float) * num_elems);
+  CudaSafeCall(cudaMemcpy(h_data_tmp, data,
+                          sizeof(float) * num_elems,
+                          cudaMemcpyDeviceToHost));
+  float *tmp = data;
+  data = h_data_tmp;
+  transpose_worker_cpu(coeff);
+  h_data_tmp = data;
+  data = tmp;
+  CudaSafeCall(cudaMemcpy(data, h_data_tmp,
+                          sizeof(float) * num_elems,
+                          cudaMemcpyHostToDevice));
+  free(h_data_tmp);
+}
+
+void SHMatrix::transpose_worker_cpu(float coeff) {
   float *h_data_T = (float *)malloc(sizeof(float) * num_elems);
   float tmp;
   int read_lin_idx = 0, write_lin_idx = 0;
@@ -594,13 +606,17 @@ void SHMatrix::transpose_worker_cpu() {
               write_idx_vect.begin());
     std::reverse(write_idx_vect.begin(), write_idx_vect.end());
     write_lin_idx = vect_to_lin_idx(write_idx_vect, write_data_dims);
-    h_data_T[write_lin_idx] = data[read_lin_idx];
+    h_data_T[write_lin_idx] = coeff * data[read_lin_idx];
     if (read_lin_idx >= num_elems - 1)
       break;
     next_vect_idx(read_idx_vect, read_data_dims);
   }
   free(data);
   data = h_data_T;
+  read_idx_vect.clear();
+  write_idx_vect.clear();
+  read_data_dims.clear();
+  write_data_dims.clear();
 }
 
 void SHMatrix::scale_worker_gpu(float coeff) {
@@ -614,28 +630,16 @@ void SHMatrix::scale_worker_cpu(float coeff) {
   }
 }
 
-void SHMatrix::transpose_worker() {
+void SHMatrix::transpose_worker(float coeff) {
   if (data_loc == GPU) {
-    if (data_dims.size() < 2)
-      transpose_worker_gpu();
-    else { //Operation currently offloaded to CPU; GPU Kernel for this pending!
-      float *h_data_tmp = (float *)malloc(sizeof(float) * num_elems);
-      CudaSafeCall(cudaMemcpy(h_data_tmp, data,
-                              sizeof(float) * num_elems,
-                              cudaMemcpyDeviceToHost));
-      float *tmp = data;
-      data = h_data_tmp;
-      transpose_worker_cpu();
-      h_data_tmp = data;
-      data = tmp;
-      CudaSafeCall(cudaMemcpy(data, h_data_tmp,
-                              sizeof(float) * num_elems,
-                              cudaMemcpyHostToDevice));
-      free(h_data_tmp);
+    if (data_dims.size() < 3)
+      transpose_worker_gpu(coeff);
+    else { 
+      transpose_worker_ndim_gpu(coeff);
     }
   }
   else if (data_loc == CPU) {
-    transpose_worker_cpu();
+    transpose_worker_cpu(coeff);
   }
 }
 
@@ -646,6 +650,7 @@ void SHMatrix::scale_worker() {
   else if (data_loc == CPU) {
     scale_worker_cpu(scalar);
   }
+  scalar = 1.0f;
 }
 
 void SHMatrix::next_vect_idx(std::vector<int> &vect_idx,

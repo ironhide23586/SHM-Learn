@@ -136,13 +136,14 @@ private:
   void duplicate_shmatrix(SHMatrix &src_shmatrix);
   void copy_data_from(SHMatrix &src_shmatrix);
 
-  void transpose_worker_gpu();
-  void transpose_worker_cpu();
+  void transpose_worker_gpu(float coeff = 1.0f);
+  void transpose_worker_ndim_gpu(float coeff = 1.0f);
+  void transpose_worker_cpu(float coeff = 1.0f);
 
   void scale_worker_gpu(float coeff);
   void scale_worker_cpu(float coeff);
   
-  void transpose_worker();
+  void transpose_worker(float coeff = 1.0f);
   void scale_worker();
 
   int vect_to_lin_idx(std::vector<int> &vect_idx,
