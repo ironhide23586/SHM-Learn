@@ -602,6 +602,11 @@ void SHMatrix::transpose_worker_cpu(float coeff) {
 
   while (true) {
     read_lin_idx = vect_to_lin_idx(read_idx_vect, read_data_dims);
+    // DUMMY CODE TO TEST lin_to_vect_idx function
+
+    std::vector<int> idx = lin_to_vect_idx(read_lin_idx, read_data_dims);
+
+    ////////////////////////////////////////////////
     std::copy(read_idx_vect.begin(), read_idx_vect.end(),
               write_idx_vect.begin());
     std::reverse(write_idx_vect.begin(), write_idx_vect.end());
@@ -680,6 +685,22 @@ int SHMatrix::vect_to_lin_idx(std::vector<int> &vect_idx,
       m *= vect_dims[dim];
   }
   return lin_idx;
+}
+
+std::vector<int> SHMatrix::lin_to_vect_idx(int lin_idx,
+                                           std::vector<int> &vect_dims) {
+  std::vector<int> vect_idx(vect_dims.size(), 0);
+  int curr_dim_sz = 1, curr_lin_idx = lin_idx;
+  for (int i = 1; i < vect_dims.size(); i++) {
+    curr_dim_sz *= vect_dims[i];
+  }
+  for (int dim = 0; dim < vect_dims.size(); dim++) {
+    vect_idx[dim] = curr_lin_idx / curr_dim_sz;
+    curr_lin_idx -= vect_idx[dim] * curr_dim_sz;
+    if (dim + 1 < vect_dims.size())
+      curr_dim_sz /= vect_dims[dim + 1];
+  }
+  return vect_idx;
 }
 
 void SHMatrix::reset_metadata() {

@@ -64,7 +64,7 @@ void ScaleUniformSHMatrix(float *d_array, int array_size,
 }
 
 void ElemwiseMultiplyInPlaceGPU(float *d_src, float *d_arg,
-                             int array_size) {
+                                int array_size) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division(array_size, threadblock_size);
   ElemwiseMultiplyInPlaceGPU_GPUKernel << < num_threadblocks,
@@ -72,7 +72,7 @@ void ElemwiseMultiplyInPlaceGPU(float *d_src, float *d_arg,
 }
 
 void ElemwiseAddInPlaceGPU(float *d_src, float *d_arg,
-                                int array_size) {
+                           int array_size) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division(array_size, threadblock_size);
   ElemwiseAddInPlaceGPU_GPUKernel << < num_threadblocks,
@@ -88,7 +88,7 @@ void ElemwiseSubtractInPlaceGPU(float *d_src, float *d_arg,
 }
 
 void ElemwiseDivideInPlaceGPU(float *d_src, float *d_arg,
-                                int array_size) {
+                              int array_size) {
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division(array_size, threadblock_size);
   ElemwiseDivideInPlaceGPU_GPUKernel << < num_threadblocks,
@@ -104,7 +104,7 @@ void ElemwiseMultiplyInPlaceCPU(float *d_src, float *d_arg,
 }
 
 void ElemwiseAddInPlaceCPU(float *d_src, float *d_arg,
-                                int array_size) {
+                           int array_size) {
   for (int i = 0; i < array_size; i++) {
     d_src[i] += d_arg[i];
   }
@@ -117,7 +117,7 @@ void ElemwiseSubtractInPlaceCPU(float *d_src, float *d_arg,
   }
 }
 void ElemwiseDivideInPlaceCPU(float *d_src, float *d_arg,
-                                int array_size) {
+                              int array_size) {
   for (int i = 0; i < array_size; i++) {
     d_src[i] /= d_arg[i];
   }

@@ -278,17 +278,17 @@ int main() {
   cudnnStatus_t cudnn_status;
   CudnnSafeCall(cudnnCreate(&cudnnHandle));
 
-  SHMatrix m0(cublasHandle, std::vector<int>{ 300, 700 }, GPU);
+  SHMatrix m0(cublasHandle, std::vector<int>{ 3, 7, 2, 4 }, CPU);
   m0.GaussianInit();
   m0.Print(false);
   m0.T();
   //m0.Print();
-  //m0.T();
+  m0.T();
   //m0.Print();
 
   m0 /= 2;
-  //m0.T();
-  m0 *= 1.5;
+  m0.T();
+  m0 *= 4;
 
 
   m0.Print(false);

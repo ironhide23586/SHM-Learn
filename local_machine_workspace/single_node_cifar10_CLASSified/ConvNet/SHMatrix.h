@@ -148,6 +148,8 @@ private:
 
   int vect_to_lin_idx(std::vector<int> &vect_idx,
                       std::vector<int> &vect_dims);
+  std::vector<int> lin_to_vect_idx(int lin_idx,
+                                   std::vector<int> &vect_dims);
   void next_vect_idx(std::vector<int> &vect_idx,
                      std::vector<int> &vect_dims);
 
