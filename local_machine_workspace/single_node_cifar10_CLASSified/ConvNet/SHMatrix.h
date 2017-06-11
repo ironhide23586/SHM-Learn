@@ -17,12 +17,16 @@
 
 using namespace std;
 
+enum mem_location { CPU, GPU };
+
 void FloatCUDAMemset(float *d_array, int array_size, float val);
 void ScaleUniformSHMatrix(float *d_array, int array_size,
                           float lower, float higher);
 
 void ElemwiseMultiplyInPlaceGPU(float *d_src, float *d_arg,
-                                int array_size);
+                                int ld_src, int ld_arg,
+                                int array_size, bool src_op = false,
+                                bool arg_op = false);
 void ElemwiseAddInPlaceGPU(float *d_src, float *d_arg,
                            int array_size);
 void ElemwiseSubtractInPlaceGPU(float *d_src, float *d_arg,
@@ -38,8 +42,6 @@ void ElemwiseSubtractInPlaceCPU(float *d_src, float *d_arg,
                                 int array_size);
 void ElemwiseDivideInPlaceCPU(float *d_src, float *d_arg,
                               int array_size);
-
-enum mem_location { CPU, GPU };
 
 class SHMatrix {
 
@@ -150,10 +152,16 @@ private:
                       std::vector<int> &vect_dims);
   std::vector<int> lin_to_vect_idx(int lin_idx,
                                    std::vector<int> &vect_dims);
+  //int lin_to_transpose_lin_idx(int lin_idx,
+  //                             std::vector<int> &vect_dims);
+
   void next_vect_idx(std::vector<int> &vect_idx,
                      std::vector<int> &vect_dims);
 
   void reset_metadata();
   void allocate_memory();
+
+  bool transpose_decider(bool t_called, bool t_done);
+
   void init();
 };

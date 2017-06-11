@@ -18,11 +18,36 @@ __global__ void ScaleUniformSHMatrix_GPUKernel(float *d_array,
   d_array[idx] = lower + (d_array[idx] * abs_range);
 }
 
+// transpose_op_sel -
+// 0 -> no transpose
+// 1 -> transpose on a
+// 2 -> transpose on b
 __global__ void ElemwiseMultiplyInPlaceGPU_GPUKernel(float *d_a,
                                                      float *d_b,
-                                                     int array_size) {
-  int idx = (blockDim.x * blockIdx.x + threadIdx.x) % array_size;
-  d_a[idx] *= d_b[idx];
+                                                     int lda, int ldb,
+                                                     int array_size,
+                                                     int transpose_op_sel) {
+  int org_idx = (blockDim.x * blockIdx.x + threadIdx.x) % array_size;
+  int a_idx = org_idx;
+  int b_idx = org_idx;
+  if (transpose_op_sel == 1) {
+    int cols_a = array_size / lda;
+    int j = a_idx / cols_a;
+    int i = a_idx - (j * cols_a);
+    a_idx = j + i * lda;
+  }
+  else if (transpose_op_sel == 2) {
+    int cols_b = array_size / ldb;
+    int j = b_idx / cols_b;
+    int i = b_idx - (j * cols_b);
+    b_idx = j + i * ldb;
+  }
+  float tmp = d_a[a_idx] * d_b[b_idx];
+  __syncthreads();
+  if (transpose_op_sel == 1)
+    d_a[b_idx] = tmp;
+  else if (transpose_op_sel == 2)
+    d_a[a_idx] = tmp;
 }
 
 __global__ void ElemwiseAddInPlaceGPU_GPUKernel(float *d_a,
@@ -64,11 +89,19 @@ void ScaleUniformSHMatrix(float *d_array, int array_size,
 }
 
 void ElemwiseMultiplyInPlaceGPU(float *d_src, float *d_arg,
-                                int array_size) {
+                                int ld_src, int ld_arg,
+                                int array_size, bool src_T_op,
+                                bool arg_T_op) {
+  int transpose_op_sel;
+  if (src_T_op == arg_T_op)
+    transpose_op_sel = 0;
+  else
+    transpose_op_sel = src_T_op ? 1 : 2;
   int threadblock_size = GPU_WARP_SIZE * GPU_WARP_DISPATCHERS * 2;
   int num_threadblocks = my_ceilf_division(array_size, threadblock_size);
   ElemwiseMultiplyInPlaceGPU_GPUKernel << < num_threadblocks,
-    threadblock_size >> > (d_src, d_arg, array_size);
+    threadblock_size >> > (d_src, d_arg, ld_src, ld_arg,
+                           array_size, transpose_op_sel);
 }
 
 void ElemwiseAddInPlaceGPU(float *d_src, float *d_arg,

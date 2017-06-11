@@ -156,7 +156,7 @@ void SHMatrix::CommitUnaryOps() {
 // Transpose operation : speeds up computation by postponing T operations
 void SHMatrix::T() { //mini_idx & maxi_idx computation pending
   if (!transpose_done)
-    transpose_called ^= 1; //toggling boolean
+    transpose_called ^= true; //toggling boolean
   else
     transpose_called = true;
   transpose_done = false;
@@ -169,18 +169,15 @@ void SHMatrix::T() { //mini_idx & maxi_idx computation pending
 void SHMatrix::Scale(float scale_arg) {
   scale_called = true;
   scalar *= scale_arg;
-  //if (scale_done) {
-  //  scalar = scale_arg;
-  //}
-  //else {
-  //  scalar *= scale_arg;
-  //}
   scale_done = false;
 }
 
 void SHMatrix::operator*=(SHMatrix &arg) {
-  CommitUnaryOps();
-  arg.CommitUnaryOps();
+  if (data_dims.size() > 2) {
+    CommitUnaryOps();
+    arg.CommitUnaryOps();
+  }
+  scalar *= arg.scalar;
   if (data_loc == GPU) {
     gpu2any_elemwise_mult(arg);
   }
@@ -358,7 +355,17 @@ void SHMatrix::gpu2any_elemwise_mult(SHMatrix &arg) {
                             sizeof(float) * arg.num_elems,
                             cudaMemcpyHostToDevice));
   }
-  ElemwiseMultiplyInPlaceGPU(data, d_arg_data, num_elems);
+  int ld_data_real = transpose_decider(transpose_called, transpose_done) ? cols
+    : rows;
+  int ld_arg_data_real = transpose_decider(arg.transpose_called,
+                                           arg.transpose_done)
+    ? arg.cols : arg.rows;
+  ElemwiseMultiplyInPlaceGPU(data, d_arg_data, ld_data_real,
+                             ld_arg_data_real, num_elems,
+                             transpose_decider(transpose_called,
+                                               transpose_done),
+                             transpose_decider(arg.transpose_called,
+                                               arg.transpose_done));
   if (arg.data_loc == CPU) {
     CudaSafeCall(cudaFree(d_arg_data));
   }
@@ -602,11 +609,6 @@ void SHMatrix::transpose_worker_cpu(float coeff) {
 
   while (true) {
     read_lin_idx = vect_to_lin_idx(read_idx_vect, read_data_dims);
-    // DUMMY CODE TO TEST lin_to_vect_idx function
-
-    std::vector<int> idx = lin_to_vect_idx(read_lin_idx, read_data_dims);
-
-    ////////////////////////////////////////////////
     std::copy(read_idx_vect.begin(), read_idx_vect.end(),
               write_idx_vect.begin());
     std::reverse(write_idx_vect.begin(), write_idx_vect.end());
@@ -703,6 +705,33 @@ std::vector<int> SHMatrix::lin_to_vect_idx(int lin_idx,
   return vect_idx;
 }
 
+//int SHMatrix::lin_to_transpose_lin_idx(int lin_idx,
+//                                       std::vector<int> &vect_dims) {
+//  std::vector<int> vect_idx(vect_dims.size(), 0);
+//  int curr_dim_sz = 1, curr_lin_idx = lin_idx;
+//  for (int i = 1; i < vect_dims.size(); i++) {
+//    curr_dim_sz *= vect_dims[i];
+//  }
+//  for (int dim = 0; dim < vect_dims.size(); dim++) {
+//    vect_idx[dim] = curr_lin_idx / curr_dim_sz;
+//    curr_lin_idx -= vect_idx[dim] * curr_dim_sz;
+//    if (dim + 1 < vect_dims.size())
+//      curr_dim_sz /= vect_dims[dim + 1];
+//  }
+//  
+//  std::reverse(vect_idx.begin(), vect_idx.end());
+//  std::reverse(vect_dims.begin(), vect_dims.end());
+//  int ret_lin_idx = vect_idx[vect_idx.size() - 1];
+//  int m = vect_dims[vect_dims.size() - 1];
+//  for (int dim = vect_idx.size() - 2; dim >= 0; dim--) {
+//    ret_lin_idx += vect_idx[dim] * m;
+//    if (dim > 0)
+//      m *= vect_dims[dim];
+//  }
+//  std::reverse(vect_dims.begin(), vect_dims.end());
+//  return ret_lin_idx;
+//}
+
 void SHMatrix::reset_metadata() {
   if (allocated) {
     mean = 0.0f;
@@ -731,6 +760,15 @@ void SHMatrix::allocate_memory() {
     data = (float *)malloc(sizeof(float) * num_elems);
   }
   allocated = true;
+}
+
+//Truth table -
+// 11 - 0
+// 10 - 1
+// 00 - 0
+// 01 - 0
+bool SHMatrix::transpose_decider(bool t_called, bool t_done) {
+  return (t_called ^ t_done) & t_called;
 }
 
 void SHMatrix::init() {
