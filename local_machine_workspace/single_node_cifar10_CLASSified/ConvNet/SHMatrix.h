@@ -35,7 +35,9 @@ void ElemwiseDivideInPlaceGPU(float *d_src, float *d_arg,
                               int array_size);
 
 void ElemwiseMultiplyInPlaceCPU(float *d_src, float *d_arg,
-                                int array_size);
+                                int ld_src, int ld_arg,
+                                int array_size, bool src_T_op,
+                                bool arg_T_op);
 void ElemwiseAddInPlaceCPU(float *d_src, float *d_arg,
                            int array_size);
 void ElemwiseSubtractInPlaceCPU(float *d_src, float *d_arg,

@@ -355,11 +355,11 @@ void SHMatrix::gpu2any_elemwise_mult(SHMatrix &arg) {
                             sizeof(float) * arg.num_elems,
                             cudaMemcpyHostToDevice));
   }
-  int ld_data_real = transpose_decider(transpose_called, transpose_done) ? cols
-    : rows;
+  int ld_data_real = transpose_decider(transpose_called, transpose_done) ? rows
+    : cols;
   int ld_arg_data_real = transpose_decider(arg.transpose_called,
                                            arg.transpose_done)
-    ? arg.cols : arg.rows;
+    ? arg.rows : arg.cols;
   ElemwiseMultiplyInPlaceGPU(data, d_arg_data, ld_data_real,
                              ld_arg_data_real, num_elems,
                              transpose_decider(transpose_called,
@@ -454,7 +454,17 @@ void SHMatrix::cpu2any_elemwise_mult(SHMatrix &arg) {
   else if (arg.data_loc == CPU) {
     h_arg_data = arg.data;
   }
-  ElemwiseMultiplyInPlaceCPU(data, h_arg_data, num_elems);
+  int ld_data_real = transpose_decider(transpose_called, transpose_done) ? rows
+    : cols;
+  int ld_arg_data_real = transpose_decider(arg.transpose_called,
+                                           arg.transpose_done)
+    ? arg.rows : arg.cols;
+  ElemwiseMultiplyInPlaceCPU(data, h_arg_data, ld_data_real,
+                             ld_arg_data_real, num_elems,
+                             transpose_decider(transpose_called,
+                                               transpose_done),
+                             transpose_decider(arg.transpose_called,
+                                               arg.transpose_done));
   if (arg.data_loc == GPU) {
     free(h_arg_data);
   }

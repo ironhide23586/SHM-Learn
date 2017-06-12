@@ -44,9 +44,8 @@ __global__ void ElemwiseMultiplyInPlaceGPU_GPUKernel(float *d_a,
   }
   float tmp = d_a[a_idx] * d_b[b_idx];
   __syncthreads();
+  d_a[org_idx] = tmp;
   if (transpose_op_sel == 1)
-    d_a[b_idx] = tmp;
-  else if (transpose_op_sel == 2)
     d_a[a_idx] = tmp;
 }
 
@@ -130,10 +129,46 @@ void ElemwiseDivideInPlaceGPU(float *d_src, float *d_arg,
 
 
 void ElemwiseMultiplyInPlaceCPU(float *d_src, float *d_arg,
-                                int array_size) {
-  for (int i = 0; i < array_size; i++) {
-    d_src[i] *= d_arg[i];
+                                int lda, int ldb,
+                                int array_size, bool src_T_op,
+                                bool arg_T_op) {
+  int transpose_op_sel;
+  if (src_T_op == arg_T_op)
+    transpose_op_sel = 0;
+  else
+    transpose_op_sel = src_T_op ? 1 : 2;
+  float *tmp = (float *)malloc(sizeof(float) * array_size);
+  for (int org_idx = 0; org_idx < array_size; org_idx++) {
+    int a_idx = org_idx;
+    int b_idx = org_idx;
+    if (transpose_op_sel == 1) {
+      int cols_a = array_size / lda;
+      int j = a_idx / cols_a;
+      int i = a_idx - (j * cols_a);
+      a_idx = j + i * lda;
+    }
+    else if (transpose_op_sel == 2) {
+      int cols_b = array_size / ldb;
+      int j = b_idx / cols_b;
+      int i = b_idx - (j * cols_b);
+      b_idx = j + i * ldb;
+    }
+    tmp[org_idx] = d_src[a_idx] * d_arg[b_idx];
   }
+  for (int org_idx = 0; org_idx < array_size; org_idx++) {
+    if (transpose_op_sel == 1) {
+      int a_idx = org_idx;
+      int cols_a = array_size / lda;
+      int j = a_idx / cols_a;
+      int i = a_idx - (j * cols_a);
+      a_idx = j + i * lda;
+      d_src[a_idx] = tmp[org_idx];
+    }
+    else {
+      d_src[org_idx] = tmp[org_idx];
+    }
+  }
+  free(tmp);
 }
 
 void ElemwiseAddInPlaceCPU(float *d_src, float *d_arg,
