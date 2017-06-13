@@ -77,7 +77,6 @@ void SHMatrix::Move2GPU() {
   free(data);
   data = d_data;
   data_loc = GPU;
-  //commit_unary_operations();
 }
 
 void SHMatrix::Move2CPU() {
@@ -154,7 +153,7 @@ void SHMatrix::CommitUnaryOps() {
 }
 
 // Transpose operation : speeds up computation by postponing T operations
-void SHMatrix::T() { //mini_idx & maxi_idx computation pending
+SHMatrix& SHMatrix::T() { //mini_idx & maxi_idx computation pending
   if (!transpose_done)
     transpose_called ^= true; //toggling boolean
   else
@@ -164,12 +163,14 @@ void SHMatrix::T() { //mini_idx & maxi_idx computation pending
   cols = rows;
   rows = tmp;
   std::reverse(data_dims.begin(), data_dims.end());
+  return *this;
 }
 
-void SHMatrix::Scale(float scale_arg) {
+SHMatrix& SHMatrix::Scale(float scale_arg) {
   scale_called = true;
   scalar *= scale_arg;
   scale_done = false;
+  return *this;
 }
 
 void SHMatrix::operator*=(SHMatrix &arg) {
@@ -205,8 +206,11 @@ void SHMatrix::operator-=(SHMatrix &arg) {
 }
 
 void SHMatrix::operator/=(SHMatrix &arg) {
-  CommitUnaryOps();
-  arg.CommitUnaryOps();
+  if (data_dims.size() > 2) {
+    CommitUnaryOps();
+    arg.CommitUnaryOps();
+  }
+  scalar /= arg.scalar;
   if (data_loc == GPU) {
     gpu2any_elemwise_divide(arg);
   }
@@ -344,71 +348,22 @@ void SHMatrix::print_h_var(float *h_v, int r, int c, bool print_elem) {
 }
 
 void SHMatrix::gpu2any_elemwise_mult(SHMatrix &arg) {
-  float *d_arg_data;
-  if (arg.data_loc == GPU) {
-    d_arg_data = arg.data;
-  }
-  else if (arg.data_loc == CPU) {
-    CudaSafeCall(cudaMalloc((void **)&d_arg_data,
-                            sizeof(float) * arg.num_elems));
-    CudaSafeCall(cudaMemcpy(d_arg_data, arg.data,
-                            sizeof(float) * arg.num_elems,
-                            cudaMemcpyHostToDevice));
-  }
-  int ld_data_real = transpose_decider(transpose_called, transpose_done) ? rows
-    : cols;
-  int ld_arg_data_real = transpose_decider(arg.transpose_called,
-                                           arg.transpose_done)
-    ? arg.rows : arg.cols;
-  ElemwiseMultiplyInPlaceGPU(data, d_arg_data, ld_data_real,
-                             ld_arg_data_real, num_elems,
-                             transpose_decider(transpose_called,
-                                               transpose_done),
-                             transpose_decider(arg.transpose_called,
-                                               arg.transpose_done));
-  if (arg.data_loc == CPU) {
-    CudaSafeCall(cudaFree(d_arg_data));
-  }
-}
-
-void SHMatrix::gpu2any_elemwise_add(SHMatrix &arg) {
-  float *d_arg_data;
-  if (arg.data_loc == GPU) {
-    d_arg_data = arg.data;
-  }
-  else if (arg.data_loc == CPU) {
-    CudaSafeCall(cudaMalloc((void **)&d_arg_data,
-                            sizeof(float) * arg.num_elems));
-    CudaSafeCall(cudaMemcpy(d_arg_data, arg.data,
-                            sizeof(float) * arg.num_elems,
-                            cudaMemcpyHostToDevice));
-  }
-  ElemwiseAddInPlaceGPU(data, d_arg_data, num_elems);
-  //CublasSafeCall(cublasAxpyEx(cublas_handle,
-  if (arg.data_loc == CPU) {
-    CudaSafeCall(cudaFree(d_arg_data));
-  }
-}
-
-void SHMatrix::gpu2any_elemwise_subtract(SHMatrix &arg) {
-  float *d_arg_data;
-  if (arg.data_loc == GPU) {
-    d_arg_data = arg.data;
-  }
-  else if (arg.data_loc == CPU) {
-    CudaSafeCall(cudaMalloc((void **)&d_arg_data,
-                            sizeof(float) * arg.num_elems));
-    CudaSafeCall(cudaMemcpy(d_arg_data, arg.data,
-                            sizeof(float) * arg.num_elems,
-                            cudaMemcpyHostToDevice));
-  }
-  ElemwiseSubtractInPlaceGPU(data, d_arg_data, num_elems);
-  if (arg.data_loc == CPU) {
-    CudaSafeCall(cudaFree(d_arg_data));
-  }
+  gpu2any_elemwise_op_worker(arg, MULT);
 }
 
 void SHMatrix::gpu2any_elemwise_divide(SHMatrix &arg) {
+  gpu2any_elemwise_op_worker(arg, DIV);
+}
+
+void SHMatrix::gpu2any_elemwise_add(SHMatrix &arg) {
+  gpu2any_elemwise_op_worker(arg, ADD);
+}
+
+void SHMatrix::gpu2any_elemwise_subtract(SHMatrix &arg) {
+  gpu2any_elemwise_op_worker(arg, SUB);
+}
+
+void SHMatrix::gpu2any_elemwise_op_worker(SHMatrix &arg, ELEM_OP elem_op) {
   float *d_arg_data;
   if (arg.data_loc == GPU) {
     d_arg_data = arg.data;
@@ -420,29 +375,71 @@ void SHMatrix::gpu2any_elemwise_divide(SHMatrix &arg) {
                             sizeof(float) * arg.num_elems,
                             cudaMemcpyHostToDevice));
   }
-  ElemwiseDivideInPlaceGPU(data, d_arg_data, num_elems);
+  int ld_data_real = transpose_decider(transpose_called, transpose_done) ? rows
+    : cols;
+  int ld_arg_data_real = transpose_decider(arg.transpose_called,
+                                           arg.transpose_done)
+    ? arg.rows : arg.cols;
+  if (elem_op == MULT)
+    ElemwiseMultiplyInPlaceGPU(data, d_arg_data, ld_data_real,
+                               ld_arg_data_real, num_elems,
+                               transpose_decider(transpose_called,
+                                                 transpose_done),
+                               transpose_decider(arg.transpose_called,
+                                                 arg.transpose_done));
+  else if (elem_op == DIV)
+    ElemwiseDivideInPlaceGPU(data, d_arg_data, ld_data_real,
+                             ld_arg_data_real, num_elems,
+                             transpose_decider(transpose_called,
+                                               transpose_done),
+                             transpose_decider(arg.transpose_called,
+                                               arg.transpose_done));
+  else if (elem_op == ADD)
+    ElemwiseAddInPlaceGPU(data, d_arg_data, ld_data_real,
+                          ld_arg_data_real, num_elems,
+                          transpose_decider(transpose_called,
+                                            transpose_done),
+                          transpose_decider(arg.transpose_called,
+                                            arg.transpose_done));
+  else if (elem_op == SUB)
+    ElemwiseSubtractInPlaceGPU(data, d_arg_data, ld_data_real,
+                               ld_arg_data_real, num_elems,
+                               transpose_decider(transpose_called,
+                                                 transpose_done),
+                               transpose_decider(arg.transpose_called,
+                                                 arg.transpose_done));
+
   if (arg.data_loc == CPU) {
     CudaSafeCall(cudaFree(d_arg_data));
   }
 }
 
-void SHMatrix::gpu2any_elemwise_mult(float arg) {
-
-}
-
 void SHMatrix::gpu2any_elemwise_add(float arg) {
-
+  ElemwiseAddInPlaceGPU_Scalar(data, arg, num_elems);
 }
 
 void SHMatrix::gpu2any_elemwise_subtract(float arg) {
-
-}
-
-void SHMatrix::gpu2any_elemwise_divide(float arg) {
-
+  ElemwiseSubtractInPlaceGPU_Scalar(data, arg, num_elems);
 }
 
 void SHMatrix::cpu2any_elemwise_mult(SHMatrix &arg) {
+  cpu2any_elemwise_op_worker(arg, MULT);
+}
+
+void SHMatrix::cpu2any_elemwise_divide(SHMatrix &arg) {
+  cpu2any_elemwise_op_worker(arg, DIV);
+}
+
+void SHMatrix::cpu2any_elemwise_add(SHMatrix &arg) {
+  cpu2any_elemwise_op_worker(arg, ADD);
+}
+
+void SHMatrix::cpu2any_elemwise_subtract(SHMatrix &arg) {
+  cpu2any_elemwise_op_worker(arg, SUB);
+}
+
+void SHMatrix::cpu2any_elemwise_op_worker(SHMatrix &arg,
+                                          ELEM_OP elem_op) {
   float *h_arg_data;
   if (arg.data_loc == GPU) {
     h_arg_data = (float *)malloc(sizeof(float)
@@ -459,85 +456,49 @@ void SHMatrix::cpu2any_elemwise_mult(SHMatrix &arg) {
   int ld_arg_data_real = transpose_decider(arg.transpose_called,
                                            arg.transpose_done)
     ? arg.rows : arg.cols;
-  ElemwiseMultiplyInPlaceCPU(data, h_arg_data, ld_data_real,
+  if (elem_op == MULT)
+    ElemwiseMultiplyInPlaceCPU(data, h_arg_data, ld_data_real,
+                               ld_arg_data_real, num_elems,
+                               transpose_decider(transpose_called,
+                                                 transpose_done),
+                               transpose_decider(arg.transpose_called,
+                                                 arg.transpose_done));
+  else if (elem_op == DIV)
+    ElemwiseDivideInPlaceCPU(data, h_arg_data, ld_data_real,
                              ld_arg_data_real, num_elems,
                              transpose_decider(transpose_called,
                                                transpose_done),
                              transpose_decider(arg.transpose_called,
                                                arg.transpose_done));
+  else if (elem_op == ADD)
+    ElemwiseAddInPlaceCPU(data, h_arg_data, ld_data_real,
+                          ld_arg_data_real, num_elems,
+                          transpose_decider(transpose_called,
+                                            transpose_done),
+                          transpose_decider(arg.transpose_called,
+                                            arg.transpose_done));
+  else if (elem_op == SUB)
+    ElemwiseSubtractInPlaceCPU(data, h_arg_data, ld_data_real,
+                               ld_arg_data_real, num_elems,
+                               transpose_decider(transpose_called,
+                                                 transpose_done),
+                               transpose_decider(arg.transpose_called,
+                                                 arg.transpose_done));
   if (arg.data_loc == GPU) {
     free(h_arg_data);
   }
-}
-
-void SHMatrix::cpu2any_elemwise_add(SHMatrix &arg) {
-  float *h_arg_data;
-  if (arg.data_loc == GPU) {
-    h_arg_data = (float *)malloc(sizeof(float)
-                                 * arg.num_elems);
-    CudaSafeCall(cudaMemcpy(h_arg_data, arg.data,
-                            sizeof(float) * arg.num_elems,
-                            cudaMemcpyDeviceToHost));
-  }
-  else if (arg.data_loc == CPU) {
-    h_arg_data = arg.data;
-  }
-  ElemwiseAddInPlaceCPU(data, h_arg_data, num_elems);
-  if (arg.data_loc == GPU) {
-    free(h_arg_data);
-  }
-}
-
-void SHMatrix::cpu2any_elemwise_subtract(SHMatrix &arg) {
-  float *h_arg_data;
-  if (arg.data_loc == GPU) {
-    h_arg_data = (float *)malloc(sizeof(float)
-                                 * arg.num_elems);
-    CudaSafeCall(cudaMemcpy(h_arg_data, arg.data,
-                            sizeof(float) * arg.num_elems,
-                            cudaMemcpyDeviceToHost));
-  }
-  else if (arg.data_loc == CPU) {
-    h_arg_data = arg.data;
-  }
-  ElemwiseSubtractInPlaceCPU(data, h_arg_data, num_elems);
-  if (arg.data_loc == GPU) {
-    free(h_arg_data);
-  }
-}
-
-void SHMatrix::cpu2any_elemwise_divide(SHMatrix &arg) {
-  float *h_arg_data;
-  if (arg.data_loc == GPU) {
-    h_arg_data = (float *)malloc(sizeof(float)
-                                 * arg.num_elems);
-    CudaSafeCall(cudaMemcpy(h_arg_data, arg.data,
-                            sizeof(float) * arg.num_elems,
-                            cudaMemcpyDeviceToHost));
-  }
-  else if (arg.data_loc == CPU) {
-    h_arg_data = arg.data;
-  }
-  ElemwiseDivideInPlaceCPU(data, h_arg_data, num_elems);
-  if (arg.data_loc == GPU) {
-    free(h_arg_data);
-  }
-}
-
-void SHMatrix::cpu2any_elemwise_mult(float arg) {
-
 }
 
 void SHMatrix::cpu2any_elemwise_add(float arg) {
-
+  for (int i = 0; i < num_elems; i++) {
+    data[i] += arg;
+  }
 }
 
 void SHMatrix::cpu2any_elemwise_subtract(float arg) {
-
-}
-
-void SHMatrix::cpu2any_elemwise_divide(float arg) {
-
+  for (int i = 0; i < num_elems; i++) {
+    data[i] -= arg;
+  }
 }
 
 void SHMatrix::duplicate_shmatrix(SHMatrix &src_shmatrix) {
@@ -547,6 +508,11 @@ void SHMatrix::duplicate_shmatrix(SHMatrix &src_shmatrix) {
   load_dims(data_dims);
   allocate_memory();
   copy_data_from(src_shmatrix);
+  scalar = src_shmatrix.scalar;
+  transpose_called = src_shmatrix.transpose_called;
+  transpose_done = src_shmatrix.transpose_done;
+  scale_called = src_shmatrix.scale_called;
+  scale_done = src_shmatrix.scale_done;
 }
 
 void SHMatrix::copy_data_from(SHMatrix &src_shmatrix) {
@@ -715,33 +681,6 @@ std::vector<int> SHMatrix::lin_to_vect_idx(int lin_idx,
   return vect_idx;
 }
 
-//int SHMatrix::lin_to_transpose_lin_idx(int lin_idx,
-//                                       std::vector<int> &vect_dims) {
-//  std::vector<int> vect_idx(vect_dims.size(), 0);
-//  int curr_dim_sz = 1, curr_lin_idx = lin_idx;
-//  for (int i = 1; i < vect_dims.size(); i++) {
-//    curr_dim_sz *= vect_dims[i];
-//  }
-//  for (int dim = 0; dim < vect_dims.size(); dim++) {
-//    vect_idx[dim] = curr_lin_idx / curr_dim_sz;
-//    curr_lin_idx -= vect_idx[dim] * curr_dim_sz;
-//    if (dim + 1 < vect_dims.size())
-//      curr_dim_sz /= vect_dims[dim + 1];
-//  }
-//  
-//  std::reverse(vect_idx.begin(), vect_idx.end());
-//  std::reverse(vect_dims.begin(), vect_dims.end());
-//  int ret_lin_idx = vect_idx[vect_idx.size() - 1];
-//  int m = vect_dims[vect_dims.size() - 1];
-//  for (int dim = vect_idx.size() - 2; dim >= 0; dim--) {
-//    ret_lin_idx += vect_idx[dim] * m;
-//    if (dim > 0)
-//      m *= vect_dims[dim];
-//  }
-//  std::reverse(vect_dims.begin(), vect_dims.end());
-//  return ret_lin_idx;
-//}
-
 void SHMatrix::reset_metadata() {
   if (allocated) {
     mean = 0.0f;
@@ -778,7 +717,7 @@ void SHMatrix::allocate_memory() {
 // 00 - 0
 // 01 - 0
 bool SHMatrix::transpose_decider(bool t_called, bool t_done) {
-  return (t_called ^ t_done) & t_called;
+  return (t_called ^ t_done) & t_called; //same as t_called && !t_done
 }
 
 void SHMatrix::init() {

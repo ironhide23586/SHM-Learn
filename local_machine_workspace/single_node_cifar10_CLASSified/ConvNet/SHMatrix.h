@@ -18,6 +18,7 @@
 using namespace std;
 
 enum mem_location { CPU, GPU };
+enum ELEM_OP { MULT, DIV, ADD, SUB };
 
 void FloatCUDAMemset(float *d_array, int array_size, float val);
 void ScaleUniformSHMatrix(float *d_array, int array_size,
@@ -27,23 +28,41 @@ void ElemwiseMultiplyInPlaceGPU(float *d_src, float *d_arg,
                                 int ld_src, int ld_arg,
                                 int array_size, bool src_op = false,
                                 bool arg_op = false);
-void ElemwiseAddInPlaceGPU(float *d_src, float *d_arg,
-                           int array_size);
-void ElemwiseSubtractInPlaceGPU(float *d_src, float *d_arg,
-                                int array_size);
 void ElemwiseDivideInPlaceGPU(float *d_src, float *d_arg,
-                              int array_size);
+                              int ld_src, int ld_arg,
+                              int array_size, bool src_op = false,
+                              bool arg_op = false);
+void ElemwiseAddInPlaceGPU(float *d_src, float *d_arg,
+                           int ld_src, int ld_arg,
+                           int array_size, bool src_op = false,
+                           bool arg_op = false);
+void ElemwiseSubtractInPlaceGPU(float *d_src, float *d_arg,
+                                int ld_src, int ld_arg,
+                                int array_size, bool src_op = false,
+                                bool arg_op = false);
+
+void ElemwiseAddInPlaceGPU_Scalar(float *d_src, float scalar,
+                                  int array_size);
+void ElemwiseSubtractInPlaceGPU_Scalar(float *d_src, float scalar,
+                                       int array_size);
 
 void ElemwiseMultiplyInPlaceCPU(float *d_src, float *d_arg,
                                 int ld_src, int ld_arg,
+                                int array_size, bool src_T_op = false,
+                                bool arg_T_op = false);
+void ElemwiseDivideInPlaceCPU(float *d_src, float *d_arg,
+                              int ld_src, int ld_arg,
+                              int array_size, bool src_T_op = false,
+                              bool arg_T_op = false);
+void ElemwiseAddInPlaceCPU(float *d_src, float *d_arg,
+                           int ld_src, int ld_arg,
+                           int array_size, bool src_T_op,
+                           bool arg_T_op);
+void ElemwiseSubtractInPlaceCPU(float *d_src, float *d_arg,
+                                int ld_src, int ld_arg,
                                 int array_size, bool src_T_op,
                                 bool arg_T_op);
-void ElemwiseAddInPlaceCPU(float *d_src, float *d_arg,
-                           int array_size);
-void ElemwiseSubtractInPlaceCPU(float *d_src, float *d_arg,
-                                int array_size);
-void ElemwiseDivideInPlaceCPU(float *d_src, float *d_arg,
-                              int array_size);
+
 
 class SHMatrix {
 
@@ -73,8 +92,8 @@ public:
 
   void CommitUnaryOps(); //commits the transpose & scaling operations
 
-  void T(); //Transpose operation
-  void Scale(float scale_arg); //Scalar multiplication
+  SHMatrix& T(); //Transpose operation
+  SHMatrix& Scale(float scale_arg); //Scalar multiplication
 
   void operator*=(SHMatrix &arg);
   void operator+=(SHMatrix &arg);
@@ -118,24 +137,24 @@ private:
   void uniform_init_cpu(float lower = -0.5f, float higher = 0.5f);
 
   void gpu2any_elemwise_mult(SHMatrix &arg);
+  void gpu2any_elemwise_divide(SHMatrix &arg);
   void gpu2any_elemwise_add(SHMatrix &arg);
   void gpu2any_elemwise_subtract(SHMatrix &arg);
-  void gpu2any_elemwise_divide(SHMatrix &arg);
 
-  void gpu2any_elemwise_mult(float arg);
+  void gpu2any_elemwise_op_worker(SHMatrix &arg, ELEM_OP elem_op);
+
   void gpu2any_elemwise_add(float arg);
   void gpu2any_elemwise_subtract(float arg);
-  void gpu2any_elemwise_divide(float arg);
 
   void cpu2any_elemwise_mult(SHMatrix &arg);
   void cpu2any_elemwise_add(SHMatrix &arg);
   void cpu2any_elemwise_subtract(SHMatrix &arg);
   void cpu2any_elemwise_divide(SHMatrix &arg);
 
-  void cpu2any_elemwise_mult(float arg);
+  void cpu2any_elemwise_op_worker(SHMatrix &arg, ELEM_OP elem_op);
+
   void cpu2any_elemwise_add(float arg);
   void cpu2any_elemwise_subtract(float arg);
-  void cpu2any_elemwise_divide(float arg);
 
   void duplicate_shmatrix(SHMatrix &src_shmatrix);
   void copy_data_from(SHMatrix &src_shmatrix);
@@ -154,8 +173,6 @@ private:
                       std::vector<int> &vect_dims);
   std::vector<int> lin_to_vect_idx(int lin_idx,
                                    std::vector<int> &vect_dims);
-  //int lin_to_transpose_lin_idx(int lin_idx,
-  //                             std::vector<int> &vect_dims);
 
   void next_vect_idx(std::vector<int> &vect_idx,
                      std::vector<int> &vect_dims);
@@ -164,6 +181,5 @@ private:
   void allocate_memory();
 
   bool transpose_decider(bool t_called, bool t_done);
-
   void init();
 };
