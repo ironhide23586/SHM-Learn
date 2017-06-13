@@ -46,9 +46,12 @@ SHMatrix::SHMatrix(const cublasHandle_t &cublas_handle_arg,
 }
 
 void SHMatrix::Equate(SHMatrix &src_shmatrix) {
-  if (allocated)
+  bool mem_alloc_needed = !(num_elems == src_shmatrix.num_elems);
+  if (!mem_alloc_needed)
+    reset_metadata();
+  else
     Clear();
-  duplicate_shmatrix(src_shmatrix);
+  duplicate_shmatrix(src_shmatrix, mem_alloc_needed);
 }
 
 void SHMatrix::Print(bool print_elems) {
@@ -136,6 +139,11 @@ float SHMatrix::GetUniformNum(float lower, float higher) {
 }
 
 void SHMatrix::CommitUnaryOps() {
+  CommitTranspose();
+  CommitScale();
+}
+
+void SHMatrix::CommitTranspose() {
   if (transpose_called && !transpose_done) {
     if (scale_called && !scale_done) {
       transpose_worker(scalar);
@@ -146,6 +154,9 @@ void SHMatrix::CommitUnaryOps() {
       transpose_worker();
     transpose_done = true;
   }
+}
+
+void SHMatrix::CommitScale() {
   if (scale_called && !scale_done) {
     scale_worker();
     scale_done = true;
@@ -160,9 +171,8 @@ SHMatrix& SHMatrix::T() { //mini_idx & maxi_idx computation pending
     transpose_called = true;
   transpose_done = false;
   int tmp = cols;
-  cols = rows;
-  rows = tmp;
   std::reverse(data_dims.begin(), data_dims.end());
+  load_dims(data_dims);
   return *this;
 }
 
@@ -188,6 +198,8 @@ void SHMatrix::operator*=(SHMatrix &arg) {
 }
 
 void SHMatrix::operator+=(SHMatrix &arg) {
+  CommitScale();
+  arg.CommitScale();
   if (data_loc == GPU) {
     gpu2any_elemwise_add(arg);
   }
@@ -197,6 +209,8 @@ void SHMatrix::operator+=(SHMatrix &arg) {
 }
 
 void SHMatrix::operator-=(SHMatrix &arg) {
+  CommitScale();
+  arg.CommitScale();
   if (data_loc == GPU) {
     gpu2any_elemwise_subtract(arg);
   }
@@ -224,6 +238,7 @@ void SHMatrix::operator*=(float arg) {
 }
 
 void SHMatrix::operator+=(float arg) {
+  CommitScale();
   if (data_loc == GPU) {
     gpu2any_elemwise_add(arg);
   }
@@ -233,6 +248,7 @@ void SHMatrix::operator+=(float arg) {
 }
 
 void SHMatrix::operator-=(float arg) {
+  CommitScale();
   if (data_loc == GPU) {
     gpu2any_elemwise_subtract(arg);
   }
@@ -243,22 +259,6 @@ void SHMatrix::operator-=(float arg) {
 
 void SHMatrix::operator/=(float arg) {
   Scale(1.0f / arg);
-}
-
-SHMatrix SHMatrix::operator*(SHMatrix &arg) {
-  return arg;
-}
-
-SHMatrix SHMatrix::operator+(SHMatrix &arg) {
-  return arg;
-}
-
-SHMatrix SHMatrix::operator-(SHMatrix &arg) {
-  return arg;
-}
-
-SHMatrix SHMatrix::operator/(SHMatrix &arg) {
-  return arg;
 }
 
 void SHMatrix::gaussian_init_gpu(float mean, float stddev) {
@@ -501,18 +501,21 @@ void SHMatrix::cpu2any_elemwise_subtract(float arg) {
   }
 }
 
-void SHMatrix::duplicate_shmatrix(SHMatrix &src_shmatrix) {
+void SHMatrix::duplicate_shmatrix(SHMatrix &src_shmatrix, 
+                                  bool mem_alloc_needed) {
   for (int i = 0; i < src_shmatrix.data_dims.size(); i++) {
     data_dims.push_back(src_shmatrix.data_dims[i]);
   }
   load_dims(data_dims);
-  allocate_memory();
+  if (mem_alloc_needed)
+    allocate_memory();
   copy_data_from(src_shmatrix);
   scalar = src_shmatrix.scalar;
   transpose_called = src_shmatrix.transpose_called;
   transpose_done = src_shmatrix.transpose_done;
   scale_called = src_shmatrix.scale_called;
   scale_done = src_shmatrix.scale_done;
+  allocated = true;
 }
 
 void SHMatrix::copy_data_from(SHMatrix &src_shmatrix) {

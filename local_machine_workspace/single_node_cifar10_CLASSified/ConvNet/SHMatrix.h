@@ -91,6 +91,8 @@ public:
   static float GetUniformNum(float lower, float higher);
 
   void CommitUnaryOps(); //commits the transpose & scaling operations
+  void CommitTranspose(); // commits all lazy-tranpose ops
+  void CommitScale(); // commits all lazy-scale ops
 
   SHMatrix& T(); //Transpose operation
   SHMatrix& Scale(float scale_arg); //Scalar multiplication
@@ -104,11 +106,6 @@ public:
   void operator+=(float arg);
   void operator-=(float arg);
   void operator/=(float arg);
-
-  SHMatrix operator*(SHMatrix &arg);
-  SHMatrix operator+(SHMatrix &arg);
-  SHMatrix operator-(SHMatrix &arg);
-  SHMatrix operator/(SHMatrix &arg);
 
   cublasHandle_t cublas_handle;
 
@@ -156,7 +153,8 @@ private:
   void cpu2any_elemwise_add(float arg);
   void cpu2any_elemwise_subtract(float arg);
 
-  void duplicate_shmatrix(SHMatrix &src_shmatrix);
+  void duplicate_shmatrix(SHMatrix &src_shmatrix,
+                          bool mem_alloc_needed = true);
   void copy_data_from(SHMatrix &src_shmatrix);
 
   void transpose_worker_gpu(float coeff = 1.0f);
