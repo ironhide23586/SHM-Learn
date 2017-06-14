@@ -87,6 +87,8 @@ public:
   void GaussianInit(float mean = 0.0f, float stddev = 0.1f);
   void UniformInit(float lower = -0.5f, float higher = 0.5f);
 
+  
+
   static float GetGaussianNum(float mean, float stddev);
   static float GetUniformNum(float lower, float higher);
 
@@ -96,6 +98,7 @@ public:
 
   SHMatrix& T(); //Transpose operation
   SHMatrix& Scale(float scale_arg); //Scalar multiplication
+  SHMatrix& Dot(SHMatrix &arg); //Matrix Dot Product
 
   void operator*=(SHMatrix &arg);
   void operator+=(SHMatrix &arg);
@@ -137,6 +140,7 @@ private:
   void gpu2any_elemwise_divide(SHMatrix &arg);
   void gpu2any_elemwise_add(SHMatrix &arg);
   void gpu2any_elemwise_subtract(SHMatrix &arg);
+  void gpu2any_dotproduct(SHMatrix &arg);
 
   void gpu2any_elemwise_op_worker(SHMatrix &arg, ELEM_OP elem_op);
 
@@ -147,6 +151,7 @@ private:
   void cpu2any_elemwise_add(SHMatrix &arg);
   void cpu2any_elemwise_subtract(SHMatrix &arg);
   void cpu2any_elemwise_divide(SHMatrix &arg);
+  void cpu2any_dotproduct(SHMatrix &arg);
 
   void cpu2any_elemwise_op_worker(SHMatrix &arg, ELEM_OP elem_op);
 

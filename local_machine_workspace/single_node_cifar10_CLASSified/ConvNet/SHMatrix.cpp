@@ -183,6 +183,18 @@ SHMatrix& SHMatrix::Scale(float scale_arg) {
   return *this;
 }
 
+SHMatrix& SHMatrix::Dot(SHMatrix &arg) {
+  if (data_loc == GPU) {
+    gpu2any_dotproduct(arg);
+  }
+  else if (data_loc == CPU) {
+    cpu2any_dotproduct(arg);
+  }
+  cols = arg.cols;
+  num_elems = rows * cols;
+  return *this;
+}
+
 void SHMatrix::operator*=(SHMatrix &arg) {
   if (data_dims.size() > 2) {
     CommitUnaryOps();
@@ -363,6 +375,20 @@ void SHMatrix::gpu2any_elemwise_subtract(SHMatrix &arg) {
   gpu2any_elemwise_op_worker(arg, SUB);
 }
 
+void SHMatrix::gpu2any_dotproduct(SHMatrix &arg) {
+  float *d_arg_data;
+  if (arg.data_loc == GPU) {
+    d_arg_data = arg.data;
+  }
+  else if (arg.data_loc == CPU) {
+    CudaSafeCall(cudaMalloc((void **)&d_arg_data,
+                            sizeof(float) * arg.num_elems));
+    CudaSafeCall(cudaMemcpy(d_arg_data, arg.data,
+                            sizeof(float) * arg.num_elems,
+                            cudaMemcpyHostToDevice));
+  }
+}
+
 void SHMatrix::gpu2any_elemwise_op_worker(SHMatrix &arg, ELEM_OP elem_op) {
   float *d_arg_data;
   if (arg.data_loc == GPU) {
@@ -436,6 +462,32 @@ void SHMatrix::cpu2any_elemwise_add(SHMatrix &arg) {
 
 void SHMatrix::cpu2any_elemwise_subtract(SHMatrix &arg) {
   cpu2any_elemwise_op_worker(arg, SUB);
+}
+
+void SHMatrix::cpu2any_dotproduct(SHMatrix &arg) {
+  int new_rows = rows, new_cols = arg.cols;
+  int new_num_elems = new_rows * new_cols;
+  float *dot_result = (float *)malloc(sizeof(float) * new_num_elems);
+  float val;
+  int vert_idx[2], hor_idx[2], k = rows;
+  for (int i = 0; i < new_rows; i++) {
+    for (int j = 0; j < new_cols; j++) {
+      vert_idx[0] = 0;
+      vert_idx[1] = j;
+      hor_idx[0] = i;
+      hor_idx[1] = 0;
+      val = 0;
+      for (int cnt = 0; cnt < k; cnt++) {
+        val += data[hor_idx[1] + hor_idx[0] * new_cols]
+          * arg.data[vert_idx[1] + vert_idx[0] * new_cols];
+        vert_idx[0]++;
+        hor_idx[1]++;
+      }
+      dot_result[j + i * new_cols] = val;
+    }
+  }
+  free(data);
+  data = dot_result;
 }
 
 void SHMatrix::cpu2any_elemwise_op_worker(SHMatrix &arg,

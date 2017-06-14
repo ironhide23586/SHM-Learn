@@ -282,50 +282,10 @@ int main() {
   m0.GaussianInit();
   m0.Print();
 
-  SHMatrix p(cublasHandle, std::vector<int>{ 2, 10 }, GPU);
-  p.Print();
-  p.Equate(m0);
-  p.Print();
-
-  m0.Print();
-
-  m0 += 2;
-
-  m0.Print();
-
-  m0 -= 2;
-
-  m0.Print();
-
-  m0.Move2CPU();
-
-  m0.Print();
-
-  m0 += 2;
-
-  m0.Print();
-
-  m0 -= 2;
-
-  m0.Print();
-  m0.Move2GPU();
-
   SHMatrix m1(cublasHandle, std::vector<int>{ 7, 3 }, GPU);
   m1.GaussianInit();
 
-  SHMatrix a(cublasHandle, m0, CPU);
-  SHMatrix b(cublasHandle, m1, CPU);
-  a.CommitUnaryOps();
-  b.CommitUnaryOps();
-  b.Print();
-  a -= b.T().Scale(3.0);
   
-  a.Print();
-  b.Print();
-  m0 -= m1.T().Scale(3.0);
-
-  m0.Print();
-  m0.T().Print();
 
   float *x, *y;
   float *h_out;
