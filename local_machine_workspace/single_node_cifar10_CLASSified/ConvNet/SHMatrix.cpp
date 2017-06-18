@@ -22,18 +22,8 @@ SHMatrix::SHMatrix(const cublasHandle_t &cublas_handle_arg,
   init();
   load_dims(dims);
   allocate_memory();
-  if (data_loc == GPU) {
-    if (default_init) {
-      FloatCUDAMemset(data, num_elems, init_val);
-      CudaCheckError();
-    }
-  }
-  else if (data_loc == CPU) {
-    if (default_init) {
-      for (int i = 0; i < num_elems; i++) {
-        data[i] = init_val;
-      }
-    }
+  if (default_init) {
+    init_with_default_value(init_val);
   }
 }
 
@@ -52,6 +42,27 @@ void SHMatrix::Equate(SHMatrix &src_shmatrix) {
   else
     Clear();
   duplicate_shmatrix(src_shmatrix, mem_alloc_needed);
+}
+
+void SHMatrix::Reallocate(std::vector<int> &dims, mem_location mem_loc,
+                          bool default_init, float init_val) {
+  int desired_num_elems = dims[0], desired_rows = dims[0], desired_cols = 1;
+  for (int i = 1; i < dims.size(); i++) {
+    desired_num_elems *= dims[i];
+    desired_cols *= dims[i];
+  }
+  if (num_elems != desired_num_elems || data_loc != mem_loc) {
+    deallocate_memory();
+  }
+  init_list_properties();
+  init_value_properties();
+  data_loc = mem_loc;
+  data_dims = dims;
+  load_dims(dims);
+  allocate_memory();
+  if (default_init) {
+    init_with_default_value(init_val);
+  }
 }
 
 void SHMatrix::Print(bool print_elems) {
@@ -95,14 +106,7 @@ void SHMatrix::Move2CPU() {
 }
 
 void SHMatrix::Clear() {
-  if (data_loc == GPU) {
-    if (allocated)
-      CudaSafeCall(cudaFree(data));
-  }
-  else if (data_loc == CPU) {
-    if (allocated)
-      free(data);
-  }
+  deallocate_memory();
   reset_metadata();
 }
 
@@ -183,16 +187,36 @@ SHMatrix& SHMatrix::Scale(float scale_arg) {
   return *this;
 }
 
-SHMatrix& SHMatrix::Dot(SHMatrix &arg) {
-  if (data_loc == GPU) {
-    gpu2any_dotproduct(arg);
+void SHMatrix::Dot(SHMatrix &A, SHMatrix &B, SHMatrix &C) {
+  if (C.data_loc == GPU) {
+    gpu2any_dotproduct(A, B, C);
   }
-  else if (data_loc == CPU) {
-    cpu2any_dotproduct(arg);
+  else if (C.data_loc == CPU) {
+    cpu2any_dotproduct(A, B, C);
   }
-  cols = arg.cols;
-  num_elems = rows * cols;
-  return *this;
+}
+
+float* SHMatrix::DataPointerAtLoc(SHMatrix &arg,
+                                  mem_location desired_loc) {
+  float *ret_ptr;
+  if (arg.data_loc == desired_loc)
+    ret_ptr = arg.data;
+  else {
+    if (desired_loc == GPU) {
+      CudaSafeCall(cudaMalloc((void **)&ret_ptr,
+                              sizeof(float) * arg.num_elems));
+      CudaSafeCall(cudaMemcpy(ret_ptr, arg.data,
+                              sizeof(float) * arg.num_elems,
+                              cudaMemcpyHostToDevice));
+    }
+    else if (desired_loc == CPU) {
+      ret_ptr = (float *)malloc(sizeof(float) * arg.num_elems);
+      CudaSafeCall(cudaMemcpy(ret_ptr, arg.data,
+                              sizeof(float) * arg.num_elems,
+                              cudaMemcpyDeviceToHost));
+    }
+  }
+  return ret_ptr;
 }
 
 void SHMatrix::operator*=(SHMatrix &arg) {
@@ -375,32 +399,14 @@ void SHMatrix::gpu2any_elemwise_subtract(SHMatrix &arg) {
   gpu2any_elemwise_op_worker(arg, SUB);
 }
 
-void SHMatrix::gpu2any_dotproduct(SHMatrix &arg) {
-  float *d_arg_data;
-  if (arg.data_loc == GPU) {
-    d_arg_data = arg.data;
-  }
-  else if (arg.data_loc == CPU) {
-    CudaSafeCall(cudaMalloc((void **)&d_arg_data,
-                            sizeof(float) * arg.num_elems));
-    CudaSafeCall(cudaMemcpy(d_arg_data, arg.data,
-                            sizeof(float) * arg.num_elems,
-                            cudaMemcpyHostToDevice));
-  }
+void SHMatrix::gpu2any_dotproduct(SHMatrix &A, SHMatrix &B, SHMatrix &C) {
+  float *d_A = DataPointerAtLoc(A, GPU);
+  float *d_B = DataPointerAtLoc(B, GPU);
+  float *d_C = C.data;
 }
 
 void SHMatrix::gpu2any_elemwise_op_worker(SHMatrix &arg, ELEM_OP elem_op) {
-  float *d_arg_data;
-  if (arg.data_loc == GPU) {
-    d_arg_data = arg.data;
-  }
-  else if (arg.data_loc == CPU) {
-    CudaSafeCall(cudaMalloc((void **)&d_arg_data,
-                            sizeof(float) * arg.num_elems));
-    CudaSafeCall(cudaMemcpy(d_arg_data, arg.data,
-                            sizeof(float) * arg.num_elems,
-                            cudaMemcpyHostToDevice));
-  }
+  float *d_arg_data = DataPointerAtLoc(arg, GPU);
   int ld_data_real = transpose_decider(transpose_called, transpose_done) ? rows
     : cols;
   int ld_arg_data_real = transpose_decider(arg.transpose_called,
@@ -464,12 +470,22 @@ void SHMatrix::cpu2any_elemwise_subtract(SHMatrix &arg) {
   cpu2any_elemwise_op_worker(arg, SUB);
 }
 
-void SHMatrix::cpu2any_dotproduct(SHMatrix &arg) {
-  int new_rows = rows, new_cols = arg.cols;
+void SHMatrix::cpu2any_dotproduct(SHMatrix &A, SHMatrix &B, SHMatrix &C) {
+  int new_rows = A.rows, new_cols = B.cols;
   int new_num_elems = new_rows * new_cols;
-  float *dot_result = (float *)malloc(sizeof(float) * new_num_elems);
+  std::vector<int> new_dims(2);
+  new_dims[0] = new_rows;
+  new_dims[1] = new_cols;
+  C.Reallocate(new_dims, CPU);
+  float *h_A = A.data, *h_B = B.data;
+  if (A.data_loc == GPU) {
+    h_A = DataPointerAtLoc(A, CPU);
+  }
+  if (B.data_loc == GPU) {
+    h_B = DataPointerAtLoc(B, CPU);
+  }
   float val;
-  int vert_idx[2], hor_idx[2], k = rows;
+  int vert_idx[2], hor_idx[2], k = B.rows;
   for (int i = 0; i < new_rows; i++) {
     for (int j = 0; j < new_cols; j++) {
       vert_idx[0] = 0;
@@ -478,31 +494,25 @@ void SHMatrix::cpu2any_dotproduct(SHMatrix &arg) {
       hor_idx[1] = 0;
       val = 0;
       for (int cnt = 0; cnt < k; cnt++) {
-        val += data[hor_idx[1] + hor_idx[0] * new_cols]
-          * arg.data[vert_idx[1] + vert_idx[0] * new_cols];
+        val += h_A[hor_idx[1] + hor_idx[0] * new_cols]
+          * h_B[vert_idx[1] + vert_idx[0] * new_cols];
         vert_idx[0]++;
         hor_idx[1]++;
       }
-      dot_result[j + i * new_cols] = val;
+      C.data[j + i * new_cols] = val;
     }
   }
-  free(data);
-  data = dot_result;
+  if (A.data_loc == GPU) {
+    free(h_A);
+  }
+  if (B.data_loc == GPU) {
+    free(h_B);
+  }
 }
 
 void SHMatrix::cpu2any_elemwise_op_worker(SHMatrix &arg,
                                           ELEM_OP elem_op) {
-  float *h_arg_data;
-  if (arg.data_loc == GPU) {
-    h_arg_data = (float *)malloc(sizeof(float)
-                                 * arg.num_elems);
-    CudaSafeCall(cudaMemcpy(h_arg_data, arg.data,
-                            sizeof(float) * arg.num_elems,
-                            cudaMemcpyDeviceToHost));
-  }
-  else if (arg.data_loc == CPU) {
-    h_arg_data = arg.data;
-  }
+  float *h_arg_data = DataPointerAtLoc(arg, CPU);
   int ld_data_real = transpose_decider(transpose_called, transpose_done) ? rows
     : cols;
   int ld_arg_data_real = transpose_decider(arg.transpose_called,
@@ -593,6 +603,18 @@ void SHMatrix::copy_data_from(SHMatrix &src_shmatrix) {
       memcpy(data, src_shmatrix.data, sizeof(float) * num_elems);
     }
   }
+}
+
+void SHMatrix::deallocate_memory() {
+  if (data_loc == GPU) {
+    if (allocated)
+      CudaSafeCall(cudaFree(data));
+  }
+  else if (data_loc == CPU) {
+    if (allocated)
+      free(data);
+  }
+  allocated = false;
 }
 
 void SHMatrix::transpose_worker_gpu(float coeff) {
@@ -738,21 +760,8 @@ std::vector<int> SHMatrix::lin_to_vect_idx(int lin_idx,
 
 void SHMatrix::reset_metadata() {
   if (allocated) {
-    mean = 0.0f;
-    mini = 0.0f;
-    maxi = 0.0f;
-    data_dims.clear();
-    name.clear();
-    rows = 0;
-    cols = 0;
-    num_elems = 0;
-    mini_idx = 0;
-    maxi_idx = 0;
-    transpose_called = false;
-    transpose_done = false;
-    scale_called = false;
-    scale_done = false;
-    allocated = false;
+    init_list_properties();
+    init_value_properties();
   }
 }
 
@@ -776,12 +785,41 @@ bool SHMatrix::transpose_decider(bool t_called, bool t_done) {
 }
 
 void SHMatrix::init() {
-  allocated = false;
-  scalar = 1.0f;
+  init_value_properties();
+}
+
+void SHMatrix::init_value_properties() {
+  rows = 0;
+  cols = 0;
+  num_elems = 0;
+  mini_idx = 0;
+  maxi_idx = 0;
   transpose_called = false;
   transpose_done = false;
   scale_called = false;
   scale_done = false;
+  scalar = 1.0f;
   alpha = 1.0f;
   beta = 0.0f;
+  allocated = false;
+  mean = 0.0f;
+  mini = 0.0f;
+  maxi = 0.0f;
+}
+
+void SHMatrix::init_list_properties() {
+  data_dims.clear();
+  name.clear();
+}
+
+void SHMatrix::init_with_default_value(float init_val) {
+  if (data_loc == GPU) {
+    FloatCUDAMemset(data, num_elems, init_val);
+    CudaCheckError();
+  }
+  else if (data_loc == CPU) {
+    for (int i = 0; i < num_elems; i++) {
+      data[i] = init_val;
+    }
+  }
 }

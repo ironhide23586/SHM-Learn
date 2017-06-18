@@ -182,6 +182,7 @@ void FloatCUDAMemset(float *d_array, int array_size, float val) {
   FloatCUDAMemset_GPUKernel << < num_threadblocks,
     threadblock_size >> >
     (d_array, array_size, val);
+  CudaCheckError();
 }
 
 void ScaleUniformSHMatrix(float *d_array, int array_size,
@@ -191,6 +192,7 @@ void ScaleUniformSHMatrix(float *d_array, int array_size,
   ScaleUniformSHMatrix_GPUKernel << < num_threadblocks,
     threadblock_size >> >
     (d_array, array_size, lower, higher - lower);
+  CudaCheckError();
 }
 
 void ElemwiseMultiplyInPlaceGPU(float *d_src, float *d_arg,
@@ -203,6 +205,7 @@ void ElemwiseMultiplyInPlaceGPU(float *d_src, float *d_arg,
   ElemwiseMultiplyInPlaceGPU_GPUKernel << < num_threadblocks,
     threadblock_size >> > (d_src, d_arg, ld_src, ld_arg,
                            array_size, transpose_op_sel);
+  CudaCheckError();
 }
 
 void ElemwiseDivideInPlaceGPU(float *d_src, float *d_arg,
@@ -215,6 +218,7 @@ void ElemwiseDivideInPlaceGPU(float *d_src, float *d_arg,
   ElemwiseDivideInPlaceGPU_GPUKernel << < num_threadblocks,
     threadblock_size >> > (d_src, d_arg, ld_src, ld_arg,
                            array_size, transpose_op_sel);
+  CudaCheckError();
 }
 
 void ElemwiseAddInPlaceGPU(float *d_src, float *d_arg,
@@ -227,6 +231,7 @@ void ElemwiseAddInPlaceGPU(float *d_src, float *d_arg,
   ElemwiseAddInPlaceGPU_GPUKernel << < num_threadblocks,
     threadblock_size >> > (d_src, d_arg, ld_src, ld_arg,
                            array_size, transpose_op_sel);
+  CudaCheckError();
 }
 
 void ElemwiseSubtractInPlaceGPU(float *d_src, float *d_arg,
@@ -239,6 +244,7 @@ void ElemwiseSubtractInPlaceGPU(float *d_src, float *d_arg,
   ElemwiseSubtractInPlaceGPU_GPUKernel << < num_threadblocks,
     threadblock_size >> > (d_src, d_arg, ld_src, ld_arg,
                            array_size, transpose_op_sel);
+  CudaCheckError();
 }
 
 void ElemwiseAddInPlaceGPU_Scalar(float *d_src, float scalar,
@@ -247,6 +253,7 @@ void ElemwiseAddInPlaceGPU_Scalar(float *d_src, float scalar,
   int num_threadblocks = my_ceilf_division(array_size, threadblock_size);
   ElemwiseAddInPlaceGPU_Scalar_GPUKernel << < num_threadblocks,
     threadblock_size >> > (d_src, scalar, array_size);
+  CudaCheckError();
 }
 
 void ElemwiseSubtractInPlaceGPU_Scalar(float *d_src, float scalar,
@@ -255,6 +262,7 @@ void ElemwiseSubtractInPlaceGPU_Scalar(float *d_src, float scalar,
   int num_threadblocks = my_ceilf_division(array_size, threadblock_size);
   ElemwiseSubtractInPlaceGPU_Scalar_GPUKernel << < num_threadblocks,
     threadblock_size >> > (d_src, scalar, array_size);
+  CudaCheckError();
 }
 
 void ElemwiseMultiplyInPlaceCPU(float *d_src, float *d_arg,

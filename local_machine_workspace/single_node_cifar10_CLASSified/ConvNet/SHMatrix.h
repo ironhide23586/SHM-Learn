@@ -77,6 +77,8 @@ public:
            SHMatrix &src_shmatrix, mem_location = GPU);
 
   void Equate(SHMatrix &src_shmatrix);
+  void Reallocate(std::vector<int> &dims, mem_location mem_loc = GPU,
+                  bool default_init = false, float init_val = 0.0f);
 
   void Print(bool print_elem = true);
   void Move2GPU();
@@ -98,7 +100,10 @@ public:
 
   SHMatrix& T(); //Transpose operation
   SHMatrix& Scale(float scale_arg); //Scalar multiplication
-  SHMatrix& Dot(SHMatrix &arg); //Matrix Dot Product
+  static void Dot(SHMatrix &A, SHMatrix &B, SHMatrix &C); //Matrix Dot Product
+
+  // Returns pointer to data at desired location (GPU or CPU)
+  static float* DataPointerAtLoc(SHMatrix& arg, mem_location desired_loc);
 
   void operator*=(SHMatrix &arg);
   void operator+=(SHMatrix &arg);
@@ -140,7 +145,7 @@ private:
   void gpu2any_elemwise_divide(SHMatrix &arg);
   void gpu2any_elemwise_add(SHMatrix &arg);
   void gpu2any_elemwise_subtract(SHMatrix &arg);
-  void gpu2any_dotproduct(SHMatrix &arg);
+  static void gpu2any_dotproduct(SHMatrix &A, SHMatrix &B, SHMatrix &C);
 
   void gpu2any_elemwise_op_worker(SHMatrix &arg, ELEM_OP elem_op);
 
@@ -151,7 +156,7 @@ private:
   void cpu2any_elemwise_add(SHMatrix &arg);
   void cpu2any_elemwise_subtract(SHMatrix &arg);
   void cpu2any_elemwise_divide(SHMatrix &arg);
-  void cpu2any_dotproduct(SHMatrix &arg);
+  static void cpu2any_dotproduct(SHMatrix &A, SHMatrix &B, SHMatrix &C);
 
   void cpu2any_elemwise_op_worker(SHMatrix &arg, ELEM_OP elem_op);
 
@@ -161,6 +166,7 @@ private:
   void duplicate_shmatrix(SHMatrix &src_shmatrix,
                           bool mem_alloc_needed = true);
   void copy_data_from(SHMatrix &src_shmatrix);
+  void deallocate_memory();
 
   void transpose_worker_gpu(float coeff = 1.0f);
   void transpose_worker_ndim_gpu(float coeff = 1.0f);
@@ -182,7 +188,12 @@ private:
 
   void reset_metadata();
   void allocate_memory();
+  //float* get_desired_data_pointer(SHMatrix &arg, mem_location desired_loc);
 
   bool transpose_decider(bool t_called, bool t_done);
   void init();
+
+  void init_value_properties();
+  void init_list_properties();
+  void init_with_default_value(float init_val);
 };
