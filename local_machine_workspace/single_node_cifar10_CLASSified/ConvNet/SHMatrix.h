@@ -63,6 +63,7 @@ void ElemwiseSubtractInPlaceCPU(float *d_src, float *d_arg,
                                 int array_size, bool src_T_op,
                                 bool arg_T_op);
 
+int get_tranposed_2DLin_idx(int src_idx, int ld_src, int array_size);
 
 class SHMatrix {
 
@@ -190,7 +191,7 @@ private:
   void allocate_memory();
   //float* get_desired_data_pointer(SHMatrix &arg, mem_location desired_loc);
 
-  bool transpose_decider(bool t_called, bool t_done);
+  static bool transpose_decider(bool t_called, bool t_done);
   void init();
 
   void init_value_properties();

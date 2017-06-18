@@ -278,48 +278,20 @@ int main() {
   cudnnStatus_t cudnn_status;
   CudnnSafeCall(cudnnCreate(&cudnnHandle));
 
-  SHMatrix m0(cublasHandle, std::vector<int>{ 3, 7 }, GPU);
-  m0.GaussianInit();
-  m0.Print();
-
-  m0 += 2;
-
-  m0.Print();
-
-  m0 -= 2;
-
-  m0.Print();
-
-  m0.Move2CPU();
-
-  m0.Print();
-
-  m0 += 2;
-
-  m0.Print();
-
-  m0 -= 2;
-
-  m0.Print();
-  m0.Move2GPU();
-
-  SHMatrix m1(cublasHandle, std::vector<int>{ 7, 3 }, GPU);
-  m1.GaussianInit();
-
-  SHMatrix a(cublasHandle, m0, CPU);
-  SHMatrix b(cublasHandle, m1, CPU);
-  a.CommitUnaryOps();
-  b.CommitUnaryOps();
-  b.Print();
-  a -= b.T().Scale(3.0);
-
+  SHMatrix a(cublasHandle, std::vector<int> { 3, 5 }, CPU);
+  a.GaussianInit();
   a.Print();
+
+  SHMatrix b(cublasHandle, std::vector<int> { 5, 3 }, CPU);
+  b.GaussianInit();
+  b.T();
   b.Print();
-  m0 -= m1.T().Scale(3.0);
 
-  m0.Print();
+  SHMatrix c(cublasHandle, std::vector<int> { 3, 3 }, CPU);
 
+  SHMatrix::Dot(a.T(), b, c);
   
+  c.Print();
 
   float *x, *y;
   float *h_out;

@@ -486,6 +486,7 @@ void SHMatrix::cpu2any_dotproduct(SHMatrix &A, SHMatrix &B, SHMatrix &C) {
   }
   float val;
   int vert_idx[2], hor_idx[2], k = B.rows;
+  int a_lin_idx, b_lin_idx;
   for (int i = 0; i < new_rows; i++) {
     for (int j = 0; j < new_cols; j++) {
       vert_idx[0] = 0;
@@ -494,8 +495,15 @@ void SHMatrix::cpu2any_dotproduct(SHMatrix &A, SHMatrix &B, SHMatrix &C) {
       hor_idx[1] = 0;
       val = 0;
       for (int cnt = 0; cnt < k; cnt++) {
-        val += h_A[hor_idx[1] + hor_idx[0] * new_cols]
-          * h_B[vert_idx[1] + vert_idx[0] * new_cols];
+        if (transpose_decider(A.transpose_called, A.transpose_done))
+          a_lin_idx = hor_idx[0] + hor_idx[1] * A.rows;
+        else
+          a_lin_idx = hor_idx[1] + hor_idx[0] * A.cols;
+        if (transpose_decider(B.transpose_called, B.transpose_done))
+          b_lin_idx = vert_idx[0] + vert_idx[1] * B.rows;
+        else
+          b_lin_idx = vert_idx[1] + vert_idx[0] * B.cols;
+        val += h_A[a_lin_idx] * h_B[b_lin_idx];
         vert_idx[0]++;
         hor_idx[1]++;
       }
