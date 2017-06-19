@@ -79,7 +79,8 @@ public:
 
   void Equate(SHMatrix &src_shmatrix);
   void Reallocate(std::vector<int> &dims, mem_location mem_loc = GPU,
-                  bool default_init = false, float init_val = 0.0f);
+                  bool copy_original = false, bool default_init = false,
+                  float init_val = 0.0f);
 
   void Print(bool print_elem = true);
   void Move2GPU();
@@ -89,8 +90,6 @@ public:
 
   void GaussianInit(float mean = 0.0f, float stddev = 0.1f);
   void UniformInit(float lower = -0.5f, float higher = 0.5f);
-
-  
 
   static float GetGaussianNum(float mean, float stddev);
   static float GetUniformNum(float lower, float higher);
@@ -166,8 +165,10 @@ private:
 
   void duplicate_shmatrix(SHMatrix &src_shmatrix,
                           bool mem_alloc_needed = true);
-  void copy_data_from(SHMatrix &src_shmatrix);
-  void deallocate_memory();
+  void copy_data_from(float *dst_ptr, float *src_ptr,
+                      mem_location dst_loc, mem_location src_loc,
+                      int copy_length);
+  void deallocate_memory(float *mem_ptr, mem_location mem_loc);
 
   void transpose_worker_gpu(float coeff = 1.0f);
   void transpose_worker_ndim_gpu(float coeff = 1.0f);
@@ -188,13 +189,13 @@ private:
                      std::vector<int> &vect_dims);
 
   void reset_metadata();
-  void allocate_memory();
-  //float* get_desired_data_pointer(SHMatrix &arg, mem_location desired_loc);
+  float* allocate_memory();
 
   static bool transpose_decider(bool t_called, bool t_done);
   void init();
 
   void init_value_properties();
   void init_list_properties();
-  void init_with_default_value(float init_val);
+  void init_with_default_value(float *mem_ptr, mem_location mem_loc,
+                               float init_val);
 };
