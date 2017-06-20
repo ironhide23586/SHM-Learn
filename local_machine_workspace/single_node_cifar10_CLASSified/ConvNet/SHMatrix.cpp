@@ -203,9 +203,10 @@ SHMatrix& SHMatrix::Scale(float scale_arg) {
   return *this;
 }
 
-void SHMatrix::Dot(SHMatrix &A, SHMatrix &B, SHMatrix &C) {
+void SHMatrix::Dot(cublasHandle_t cublas_handle, SHMatrix &A,
+                   SHMatrix &B, SHMatrix &C) {
   if (C.data_loc == GPU) {
-    gpu2any_dotproduct(A, B, C);
+    gpu2any_dotproduct(cublas_handle, A, B, C);
   }
   else if (C.data_loc == CPU) {
     cpu2any_dotproduct(A, B, C);
@@ -415,7 +416,8 @@ void SHMatrix::gpu2any_elemwise_subtract(SHMatrix &arg) {
   gpu2any_elemwise_op_worker(arg, SUB);
 }
 
-void SHMatrix::gpu2any_dotproduct(SHMatrix &A, SHMatrix &B, SHMatrix &C) {
+void SHMatrix::gpu2any_dotproduct(cublasHandle_t cublas_handle, SHMatrix &A,
+                                  SHMatrix &B, SHMatrix &C) {
   int new_rows = A.rows, new_cols = B.cols;
   int new_num_elems = new_rows * new_cols;
   std::vector<int> new_dims(2);
@@ -429,9 +431,39 @@ void SHMatrix::gpu2any_dotproduct(SHMatrix &A, SHMatrix &B, SHMatrix &C) {
   if (B.data_loc == CPU) {
     d_B = DataPointerAtLoc(B, GPU);
   }
+  float coeff = A.scalar * B.scalar, beta = 0;
 
-  //CublasSafeCall(cublasSgemm_v2(cublas_handle, CUBLAS_OP_N, 
-  //                              CUBLAS_OP_N, ))
+  if (transpose_decider(A.transpose_called, A.transpose_done)) {
+    
+    if (transpose_decider(B.transpose_called, B.transpose_done)) {
+      //FAULTY
+      CublasSafeCall(cublasSgemm_v2(cublas_handle, CUBLAS_OP_N,
+                                    CUBLAS_OP_N, A.cols, B.rows, B.cols,
+                                    &coeff, d_A, A.cols, d_B,
+                                    B.cols, &beta, C.data, C.rows));
+    }
+    else {
+
+    }
+  }
+  else {
+    if (transpose_decider(B.transpose_called, B.transpose_done)) {
+
+    }
+    else {
+      CublasSafeCall(cublasSgemm_v2(cublas_handle, CUBLAS_OP_T,
+                                    CUBLAS_OP_T, A.rows, B.cols, B.rows,
+                                    &coeff, d_A, A.cols, d_B, 
+                                    B.cols, &beta, C.data, C.rows));
+    }
+  }
+  
+  C.transpose_called = true;
+  C.transpose_done = false;
+  //CublasSafeCall(cublasSgemm_v2(cublas_handle, CUBLAS_OP_T,
+  //                              CUBLAS_OP_T, A.rows, B.cols, B.rows,
+  //                              &coeff, d_A, A.cols, d_B, B.cols, &beta,
+  //                              C.data, A.rows));
 
   if (A.data_loc == CPU) {
     CudaSafeCall(cudaFree(d_A));

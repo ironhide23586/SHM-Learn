@@ -282,53 +282,17 @@ int main() {
   a.GaussianInit();
   a.Print();
 
-  a.Reallocate(std::vector<int> { 3, 6 }, GPU, true);
-  a.Print();
-
-  a.Reallocate(std::vector<int> { 3, 8 }, GPU, true, true, 0.365);
-  a.Print();
-
-  a.Reallocate(std::vector<int> { 2, 6 }, GPU, true, true, 0.23586);
-  a.Print();
-  
-  a.Reallocate(std::vector<int> { 2, 5 }, CPU, true);
-  a.Print();
-
-  a.Reallocate(std::vector<int> { 2, 8 }, CPU, true, true, 0.564);
-  a.Print();
-
-  a.Reallocate(std::vector<int> { 4, 4 }, CPU, false, true, 0.3498);
-  a.Print();
-
-  a.Reallocate(std::vector<int> { 2, 8 }, GPU, true);
-  a.Print();
-
-  a.Reallocate(std::vector<int> { 4, 4 }, GPU, false, true, 0.445);
-  a.Print();
-
-  a.Reallocate(std::vector<int> { 4, 4 }, GPU, true);
-  a.Print();
-
-  a.Reallocate(std::vector<int> { 2, 8 }, CPU, true);
-  a.Print();
-
-  a.Reallocate(std::vector<int> { 4, 4 }, CPU, false);
-  a.Print();
-
-  a.Reallocate(std::vector<int> { 4, 4 }, CPU, true);
-  a.Print();
-
-
-
-  SHMatrix b(cublasHandle, std::vector<int> { 5, 3 }, CPU);
+  SHMatrix b(cublasHandle, std::vector<int> { 5, 7 }, CPU);
   b.GaussianInit();
-  b.T();
   b.Print();
 
   SHMatrix c(cublasHandle, std::vector<int> { 3, 3 }, CPU);
 
-  SHMatrix::Dot(a.T(), b, c);
-  
+  SHMatrix::Dot(cublasHandle, a, b, c);
+  c.Print();
+
+  c.Move2GPU();
+  SHMatrix::Dot(cublasHandle, a, b, c);
   c.Print();
 
   float *x, *y;

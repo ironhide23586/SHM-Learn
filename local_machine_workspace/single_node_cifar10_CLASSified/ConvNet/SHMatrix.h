@@ -100,7 +100,8 @@ public:
 
   SHMatrix& T(); //Transpose operation
   SHMatrix& Scale(float scale_arg); //Scalar multiplication
-  static void Dot(SHMatrix &A, SHMatrix &B, SHMatrix &C); //Matrix Dot Product
+  static void Dot(cublasHandle_t cublas_handle, SHMatrix &A, 
+                  SHMatrix &B, SHMatrix &C); //Matrix Dot Product
 
   // Returns pointer to data at desired location (GPU or CPU)
   static float* DataPointerAtLoc(SHMatrix& arg, mem_location desired_loc);
@@ -145,7 +146,8 @@ private:
   void gpu2any_elemwise_divide(SHMatrix &arg);
   void gpu2any_elemwise_add(SHMatrix &arg);
   void gpu2any_elemwise_subtract(SHMatrix &arg);
-  static void gpu2any_dotproduct(SHMatrix &A, SHMatrix &B, SHMatrix &C);
+  static void gpu2any_dotproduct(cublasHandle_t cublas_handle, SHMatrix &A,
+                                 SHMatrix &B, SHMatrix &C);
 
   void gpu2any_elemwise_op_worker(SHMatrix &arg, ELEM_OP elem_op);
 
