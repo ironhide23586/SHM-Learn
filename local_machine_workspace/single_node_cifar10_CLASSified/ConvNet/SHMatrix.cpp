@@ -104,7 +104,8 @@ void SHMatrix::Move2GPU() {
   CudaSafeCall(cudaMalloc((void **)&d_data, sizeof(float) * num_elems));
   CudaSafeCall(cudaMemcpy(d_data, data, sizeof(float) * num_elems,
                           cudaMemcpyHostToDevice));
-  free(data);
+  if (allocated)
+    free(data);
   data = d_data;
   data_loc = GPU;
 }
@@ -123,6 +124,7 @@ void SHMatrix::Move2CPU() {
 
 void SHMatrix::Clear() {
   deallocate_memory(data, data_loc);
+  allocated = true;
   reset_metadata();
 }
 
@@ -434,21 +436,25 @@ void SHMatrix::gpu2any_dotproduct(cublasHandle_t cublas_handle, SHMatrix &A,
   float coeff = A.scalar * B.scalar, beta = 0;
 
   if (transpose_decider(A.transpose_called, A.transpose_done)) {
-    
     if (transpose_decider(B.transpose_called, B.transpose_done)) {
-      //FAULTY
       CublasSafeCall(cublasSgemm_v2(cublas_handle, CUBLAS_OP_N,
-                                    CUBLAS_OP_N, A.cols, B.rows, B.cols,
-                                    &coeff, d_A, A.cols, d_B,
-                                    B.cols, &beta, C.data, C.rows));
+                                    CUBLAS_OP_N, A.rows, B.cols, B.rows,
+                                    &coeff, d_A, A.rows, d_B,
+                                    B.rows, &beta, C.data, C.rows));
     }
     else {
-
+      CublasSafeCall(cublasSgemm_v2(cublas_handle, CUBLAS_OP_N,
+                                    CUBLAS_OP_T, A.rows, B.cols, B.rows,
+                                    &coeff, d_A, A.rows, d_B,
+                                    B.cols, &beta, C.data, C.rows));
     }
   }
   else {
     if (transpose_decider(B.transpose_called, B.transpose_done)) {
-
+      CublasSafeCall(cublasSgemm_v2(cublas_handle, CUBLAS_OP_T,
+                                    CUBLAS_OP_N, A.rows, B.cols, B.rows,
+                                    &coeff, d_A, A.cols, d_B,
+                                    B.rows, &beta, C.data, C.rows));
     }
     else {
       CublasSafeCall(cublasSgemm_v2(cublas_handle, CUBLAS_OP_T,
@@ -457,14 +463,8 @@ void SHMatrix::gpu2any_dotproduct(cublasHandle_t cublas_handle, SHMatrix &A,
                                     B.cols, &beta, C.data, C.rows));
     }
   }
-  
   C.transpose_called = true;
   C.transpose_done = false;
-  //CublasSafeCall(cublasSgemm_v2(cublas_handle, CUBLAS_OP_T,
-  //                              CUBLAS_OP_T, A.rows, B.cols, B.rows,
-  //                              &coeff, d_A, A.cols, d_B, B.cols, &beta,
-  //                              C.data, A.rows));
-
   if (A.data_loc == CPU) {
     CudaSafeCall(cudaFree(d_A));
   }
